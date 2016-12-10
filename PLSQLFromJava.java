@@ -1,7 +1,11 @@
 // thanks http://everythingoracle.com/plsqlfrjv.htm
 
 //import java.util.Calendar;
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Types;
 
 public class PLSQLFromJava {
 
@@ -17,16 +21,10 @@ public class PLSQLFromJava {
          
          // PREPARE PL/SQL FUNCTION CALL ("?" IS A PLACEHOLDER FOR RETURN VALUES AND PARAMETER VALUES, NUMBERED FROM LEFT TO RIGHT)
          CallableStatement vStatement = vDatabaseConnection.prepareCall( "begin ? := t2_bss.getNextBenProg(); end;" );
-         // USE EITHER THE "BLOCK" SYNTAX ABOVE, OR "ANSI 92" SYNTAX BELOW
-         //CallableStatement vStatement = vDatabaseConnection.prepareCall( "{ ? = call javatest( ?, ? ) }" );
-         
-         // SET INPUT PARAMETERS AND DECLARE TYPES FOR RETURN VALUES
-         //  not needed for this statement   ----vStatement.registerOutParameter( 1, Types.VARCHAR );   // declare type of function return value "begin ? ..."
-         //vStatement.setString( 1, "0016NX" );                  // set value of first function parameter "... javatest( ?, ..."
-         //vStatement.setDate( 2, java.sql.Date.valueOf( "2016-12-01" ) );                  // set value of second function parameter 
+
    
          // initialize variable #1
-         vStatement.setString( 1, "      " );                  // set value of first function parameter "... javatest( ?, ..."
+         vStatement.registerOutParameter( 1, Types.VARCHAR );                 // declare the type of the output parameter
          
          // CALL THE PL/SQL FUNCTION
          vStatement.execute();
