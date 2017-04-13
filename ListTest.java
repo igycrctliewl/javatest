@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListTest {
 
@@ -6,13 +7,13 @@ public class ListTest {
 
       System.out.println("started main method");
       
-      ArrayList<String> emailList = new ArrayList<String>();
+      List<String> emailList = new ArrayList<String>();
       
       emailList.add( "mike.bro@att.net" );
-      emailList.add( "yomikebro@gmail.com" );
+/*      emailList.add( "yomikebro@gmail.com" );
       emailList.add( "mike.bro@att.net" );  
       emailList.add( "michael.brothers@trinet.com" );
-      
+  */    
       
       for( String s : emailList ) {
          System.out.println( "::" + s + "::" );
@@ -20,6 +21,7 @@ public class ListTest {
       }
    
       System.out.println( "toString():" + emailList.toString() + ":" );
+      System.out.println( "List contains " + emailList.size() + " elements." );
    }
 
 /*   
