@@ -25,22 +25,28 @@ public class SQLInClause {
                 "   FROM PS_COMPANY_TBL " +
                 "  WHERE COMPANY IN ( ? ) ";
 
+         String getSingleCompany =
+                " SELECT EFFDT, DESCR " +
+                " FROM PS_COMPANY_TBL " +
+                " WHERE COMPANY =  ?  ";
 
-         System.out.println( ">>>>>>\n" + getCompsSQL );
+         //String inSQL = getCompsSQL;
+         String inSQL = getSingleCompany;
 
+
+
+         System.out.println( ">>>>>>\n" + inSQL );
 
          // Prepare statement from SQL string
-         PreparedStatement sqlStmt = vDatabaseConnection.prepareStatement( getCompsSQL );
+         PreparedStatement sqlStmt = vDatabaseConnection.prepareStatement( inSQL );
 
-         String[] list =  new String[3];
-         list[0] = "G9P";
-         list[1] = "OUG";
-         list[2] = "G48";
-
-         Array companies = vDatabaseConnection.createArrayOf("VARCHAR2",list);
+         /*
+         String[] list = { "G9P", "OUG", "G48" };
+         Array companies = vDatabaseConnection.createArrayOf( "banana", list );
+         */
 
          // Set values for parameters
-         sqlStmt.setArray( 1, companies );    // list of COMPANY
+         sqlStmt.setString( 1, "G9P" );
 
          // run the query
          ResultSet qResult = sqlStmt.executeQuery();
@@ -58,7 +64,7 @@ public class SQLInClause {
          vDatabaseConnection.close();
 
       } catch( SQLException e ) {
-         System.out.println( e.toString() );
+         e.printStackTrace();
       }
 
       System.out.println( new java.util.Date() );
