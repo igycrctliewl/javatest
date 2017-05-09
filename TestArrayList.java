@@ -20,6 +20,8 @@ public class TestArrayList {
          System.out.println( "===>  " + planType );
       }
 
+      System.out.println( " " );
+
 
       HashSet<String> planTypeSet =  new HashSet<String>();
 
