@@ -1,7 +1,10 @@
+package ps.test;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
+import ps.benefits.LifeInsuranceBenefit;
+import ps.hcm.PsJob;
 
 /* unit test PsJob class  */
 
@@ -22,6 +25,9 @@ public class PsJobTest {
          System.out.println( "     " + j.getAnnualRate() );
          System.out.println( "     " + j.getAbbr() );
       }
+      
+      LifeInsuranceBenefit life = new LifeInsuranceBenefit( "23", "000TMB" );
+      System.out.println( "life: " + life.toString() );
    }
   
 }
