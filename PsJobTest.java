@@ -1,20 +1,27 @@
-
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /* unit test PsJob class  */
 
 public class PsJobTest {
    
    public static void main(String[] args) {
-      PsJob job1 = new PsJob();
-      PsJob job2 = new PsJob();
-      PsJob job3 = new PsJob( new BigDecimal( "125000" ) );
-      PsJob job4 = new PsJob( new BigDecimal( "125000" ) );
-      PsJob job5 = new PsJob( new BigDecimal( "125000" ) );
-      
-      System.out.println( "job1:" + job1.toString() );
-      System.out.println( "job2:" + job2.toString() );
-      System.out.println( "job3:" + job3.toString() );
+      List<PsJob> jobRecords = new ArrayList<PsJob>();
+
+      jobRecords.add( new PsJob( new BigDecimal( "320000" ), new BigDecimal( "305000" ) ) );
+      jobRecords.add( new PsJob( new BigDecimal( "136000" ), new BigDecimal( "131000" ) ) );
+      jobRecords.add( new PsJob( new BigDecimal( "52800" ) ));
+      jobRecords.add( new PsJob( new BigDecimal( "157500" ), new BigDecimal( "152000" ) ) );
+      jobRecords.add( new PsJob( new BigDecimal( "82600" ), new BigDecimal( "75500" ) ) );
+      jobRecords.add( new PsJob( new BigDecimal( "60000" ), BigDecimal.ZERO ) );
+
+      for( PsJob j : jobRecords ) {      
+         System.out.println( j.toString() );
+         System.out.println( "     " + j.getAnnualRate() );
+         System.out.println( "     " + j.getAbbr() );
+      }
    }
-   
+  
 }

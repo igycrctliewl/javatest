@@ -37,8 +37,18 @@ public class PsJob {
    public int getEmplid() {
       return this.emplid;
    }
+
+   public BigDecimal getAnnualRate() {
+      return this.annualRate;
+   }
+
+   public BigDecimal getAbbr() {
+      return this.abbr;
+   }
    
    public String toString() {
-      return "ee:" + this.emplid + ":annualrt:" + this.annualRate.toString() + ":abbr:" + this.abbr.toString();
+      return "ee:" + this.getEmplid() + 
+             ":annualrt:" + this.getAnnualRate().toString() + 
+             ":abbr:" + this.getAbbr().toString();
    }
 }
