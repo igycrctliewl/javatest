@@ -30,7 +30,7 @@ public class PsJobTest {
    public static void mainJob(String[] args) {
       JobDao jobDao = new JobDaoHCImpl();
 
-      List<PsJob> jobRecords = jobDao.getEmployeesOfCompany( "junk" );
+      List<PsJob> jobRecords = jobDao.getEmployeesOfCompany( "FXS" );
 
       for( PsJob j : jobRecords ) {
          System.out.println( j.toString() );

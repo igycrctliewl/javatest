@@ -37,6 +37,13 @@ public class PsJob {
       this.abbr = abbr;
    }
 
+   public PsJob( String emplid, BigDecimal annualRate, BigDecimal abbr, String benefitProgram ) {
+      this.emplid = emplid;
+      this.annualRate = annualRate;
+      this.abbr = abbr;
+      this.benefitProgram = benefitProgram;
+   }
+
    public String getEmplid() {
       return this.emplid;
    }
