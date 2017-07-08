@@ -7,35 +7,37 @@ import java.math.BigDecimal;
 public class PsJob {
 
    private static int nextEmplid = 1001;
-   
-   private int emplid;
+
+   private String emplid;
    private BigDecimal annualRate;
-   private BigDecimal abbr;   
-   
-   
+   private BigDecimal abbr;
+   private String benefitProgram;
+
+
    public static int getNextEmplid() {
       return nextEmplid++;
    }
-   
+
    public PsJob() {
-      this.emplid = getNextEmplid();
+      this.emplid = Integer.toString( getNextEmplid() );
       this.annualRate = BigDecimal.ZERO;
       this.abbr = BigDecimal.ZERO;
+      this.benefitProgram = "";
    }
-   
+
    public PsJob( BigDecimal annualRate ) {
-      this.emplid = getNextEmplid();
+      this.emplid = Integer.toString( getNextEmplid() );
       this.annualRate = annualRate;
       this.abbr = annualRate;
    }
-   
+
    public PsJob( BigDecimal annualRate, BigDecimal abbr ) {
-      this.emplid = getNextEmplid();
+      this.emplid = Integer.toString( getNextEmplid() );
       this.annualRate = annualRate;
       this.abbr = abbr;
    }
-   
-   public int getEmplid() {
+
+   public String getEmplid() {
       return this.emplid;
    }
 
@@ -46,10 +48,10 @@ public class PsJob {
    public BigDecimal getAbbr() {
       return this.abbr;
    }
-   
+
    public String toString() {
-      return "ee:" + this.getEmplid() + 
-             ":annualrt:" + this.getAnnualRate().toString() + 
+      return "ee:" + this.getEmplid() +
+             ":annualrt:" + this.getAnnualRate().toString() +
              ":abbr:" + this.getAbbr().toString();
    }
 }

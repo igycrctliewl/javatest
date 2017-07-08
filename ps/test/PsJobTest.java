@@ -6,6 +6,8 @@ import java.util.List;
 import ps.benefits.BenefitRate;
 import ps.benefits.CoverageFormula;
 import ps.benefits.LifeInsuranceBenefit;
+import ps.dao.JobDao;
+import ps.dao.impl.JobDaoHCImpl;
 import ps.hcm.PsJob;
 
 /* unit test PsJob class  */
@@ -13,7 +15,7 @@ import ps.hcm.PsJob;
 public class PsJobTest {
 
    public static void main(String[] args) {
-      mainBenefits( args );
+      mainJob( args );
    }
    
    public static void mainBenefits(String[] args) {
@@ -26,14 +28,9 @@ public class PsJobTest {
    }
    
    public static void mainJob(String[] args) {
-      List<PsJob> jobRecords = new ArrayList<PsJob>();
+      JobDao jobDao = new JobDaoHCImpl();
 
-      jobRecords.add( new PsJob( new BigDecimal( "320000" ), new BigDecimal( "305000" ) ) );
-      jobRecords.add( new PsJob( new BigDecimal( "136000" ), new BigDecimal( "131000" ) ) );
-      jobRecords.add( new PsJob( new BigDecimal( "52800" ) ));
-      jobRecords.add( new PsJob( new BigDecimal( "157500" ), new BigDecimal( "152000" ) ) );
-      jobRecords.add( new PsJob( new BigDecimal( "82600" ), new BigDecimal( "75500" ) ) );
-      jobRecords.add( new PsJob( new BigDecimal( "60000" ), BigDecimal.ZERO ) );
+      List<PsJob> jobRecords = jobDao.getEmployeesOfCompany( "junk" );
 
       for( PsJob j : jobRecords ) {
          System.out.println( j.toString() );
