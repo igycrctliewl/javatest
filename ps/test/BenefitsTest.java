@@ -3,7 +3,6 @@ package ps.test;
 import java.util.ArrayList;
 import java.util.List;
 import ps.benefits.BenEnrollment;
-import ps.benefits.BenEnrollment;
 import ps.dao.BenefitsDao;
 import ps.dao.impl.BenefitsDaoHCImpl;
 

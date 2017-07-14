@@ -5,6 +5,6 @@ public abstract class Benefit {
    protected String benefitPlan;
 
    public String toString() {
-      return "plan type " + this.planType + ", benefit plan " + this.benefitPlan;
+      return "planType:" + this.planType + ":plan:" + this.benefitPlan;
    }
 }
