@@ -2,9 +2,12 @@ package ps.test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.HashSet;
 import java.util.Set;
 import ps.benefits.BenEnrollment;
+import ps.benefits.LifeInsuranceBenefit;
 import ps.dao.BenefitsDao;
 import ps.dao.impl.BenefitsDaoHCImpl;
 
@@ -17,15 +20,18 @@ public class BenefitsTest {
       List<BenEnrollment> enrls = new ArrayList<BenEnrollment>();
       enrls = benDao.getLifeADDEnrollments("FXS");
 
-      Set<String> benPlans = new HashSet<String>();
+      Map<String, LifeInsuranceBenefit> benPlanMap = new HashMap<String, LifeInsuranceBenefit>();
 
       for( BenEnrollment b : enrls ) {
-         benPlans.add( b.getBenefitPlan() );
+         LifeInsuranceBenefit pl = new LifeInsuranceBenefit( b.getPlanType(), b.getBenefitPlan() );
+         pl.setRateTblId( "0dummy" );
+
+         benPlanMap.put( b.getBenefitPlan(), pl  );
          System.out.println( b.toString() );
       }
 
-      for( String p : benPlans ) {
-         System.out.println( p );
+      for( LifeInsuranceBenefit p : benPlanMap.values() ) {
+         System.out.println( p.toString() );
       }
 
    }
