@@ -5,7 +5,7 @@ import ps.benefits.BenefitRate;
 import ps.benefits.CoverageFormula;
 import ps.benefits.LifeInsuranceBenefit;
 import ps.dao.JobDao;
-import ps.dao.impl.JobDaoHCImpl;
+import ps.dao.DaoFactory;
 import ps.hcm.PsJob;
 
 /* unit test PsJob class  */
@@ -26,7 +26,7 @@ public class PsJobTest {
    }
    
    public static void mainJob(String[] args) {
-      JobDao jobDao = new JobDaoHCImpl();
+      JobDao jobDao = DaoFactory.getJobDao();
 
       List<PsJob> jobRecords = jobDao.getEmployeesOfCompany( "FXS" );
 
