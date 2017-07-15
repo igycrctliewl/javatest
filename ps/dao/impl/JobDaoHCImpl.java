@@ -10,6 +10,11 @@ import ps.hcm.PsJob;
 
 public class JobDaoHCImpl implements JobDao {
 
+   public JobDaoHCImpl() {
+      System.out.println( "JobDaoHCImpl constructor" );
+   }
+
+
    public List<PsJob> getEmployeesOfCompany( String company ) {
 
       if( company.equals( "FXS" ) ) {
