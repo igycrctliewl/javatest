@@ -28,9 +28,6 @@ public class PsJobTest {
    public static void mainJob(String[] args) {
       JobDao jobDao = DaoFactory.getJobDao();
 
-      JobDao junk = DaoFactory.getJobDao();
-
-
       List<PsJob> jobRecords = jobDao.getEmployeesOfCompany( "FXS" );
 
       for( PsJob j : jobRecords ) {

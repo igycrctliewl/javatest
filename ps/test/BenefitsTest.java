@@ -9,14 +9,14 @@ import java.util.Set;
 import ps.benefits.BenEnrollment;
 import ps.benefits.LifeInsuranceBenefit;
 import ps.dao.BenefitsDao;
-import ps.dao.impl.BenefitsDaoHCImpl;
+import ps.dao.DaoFactory;
 
 /* unit test PsJob class  */
 
 public class BenefitsTest {
 
    public static void main(String[] args) {
-      BenefitsDao benDao = new BenefitsDaoHCImpl();
+      BenefitsDao benDao = DaoFactory.getBenefitsDao();
       List<BenEnrollment> enrls = new ArrayList<BenEnrollment>();
       enrls = benDao.getLifeADDEnrollments("FXS");
 

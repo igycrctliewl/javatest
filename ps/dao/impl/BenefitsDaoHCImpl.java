@@ -4,9 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import ps.benefits.BenEnrollment;
 
-/* Benefits dao interface  */
+/* Benefits dao interface; returns hard-coded data set  */
 
 public class BenefitsDaoHCImpl implements ps.dao.BenefitsDao {
+
+   public BenefitsDaoHCImpl() {
+      System.out.println( "BenefitsDaoHCImpl constructor" );
+   }
+
+
 
    public List<BenEnrollment> getLifeADDEnrollments( String company ) {
 
