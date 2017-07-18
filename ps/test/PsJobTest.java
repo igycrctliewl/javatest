@@ -13,13 +13,14 @@ import ps.hcm.PsJob;
 public class PsJobTest {
 
    public static void main(String[] args) {
-      mainJob( args );
+      mainBenefits( args );
    }
    
    public static void mainBenefits(String[] args) {
       BenefitRate rt = new BenefitRate( "0ORPLF" );
       CoverageFormula cvg = new CoverageFormula( "AMB0000123" );
       LifeInsuranceBenefit life = new LifeInsuranceBenefit( "23", "000TMB" );
+      life.setRate( "0ORPLF" );
       System.out.println( "rate: " + rt.toString() );
       System.out.println( "cvrg: " + cvg.toString() );
       System.out.println( "life: " + life.toString() );
