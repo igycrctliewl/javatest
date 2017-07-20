@@ -17,10 +17,11 @@ public class PsJobTest {
    }
    
    public static void mainBenefits(String[] args) {
-      BenefitRate rt = new BenefitRate( "0ORPLF" );
+      BenefitRate rt = new BenefitRate( "0ORPLD" );
       CoverageFormula cvg = new CoverageFormula( "AMB0000123" );
       LifeInsuranceBenefit life = new LifeInsuranceBenefit( "23", "000TMB" );
-      life.setRate( "0ORPLF" );
+      //life.setRate( "0ORPLF" );
+      life.setRate( rt );
       System.out.println( "rate: " + rt.toString() );
       System.out.println( "cvrg: " + cvg.toString() );
       System.out.println( "life: " + life.toString() );

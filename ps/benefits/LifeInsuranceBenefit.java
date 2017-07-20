@@ -32,6 +32,10 @@ public class LifeInsuranceBenefit extends Benefit {
       this.rate = new BenefitRate( newRateTblId );
    }
 
+   public void setRate( BenefitRate newRate ) {
+      this.rate = newRate;
+   }
+
 
 
    public String toString() {

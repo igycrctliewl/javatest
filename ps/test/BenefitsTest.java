@@ -24,7 +24,7 @@ public class BenefitsTest {
 
       for( BenEnrollment b : enrls ) {
          LifeInsuranceBenefit pl = new LifeInsuranceBenefit( b.getPlanType(), b.getBenefitPlan() );
-         pl.setRateTblId( "0dummy" );
+         pl.setRate( "0dummy" );
 
          benPlanMap.put( b.getBenefitPlan(), pl  );
          System.out.println( b.toString() );
