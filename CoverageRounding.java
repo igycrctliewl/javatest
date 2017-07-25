@@ -5,12 +5,32 @@ public class CoverageRounding {
 
    public static void main(String[] args) {
 
-      //BigDecimal base = new BigDecimal( "244959.41" );
       BigDecimal base = new BigDecimal( "244000.00" );
       BigDecimal roundUpAmt = new BigDecimal( "0.01" );
       BigDecimal roundTo = new BigDecimal( "1000" );
+      System.out.println( "Rounded to " + round( base, roundUpAmt, roundTo ) );
+
+      System.out.println( " " );
+
+      base = new BigDecimal( "244959.41" );
+      System.out.println( "Rounded to " + round( base, roundUpAmt, roundTo ) );
+
+      System.out.println( " " );
+
+      base = new BigDecimal( "244000.01" );
+      roundUpAmt = new BigDecimal( "0.10" );
+      System.out.println( "Rounded to " + round( base, roundUpAmt, roundTo ) );
+
+   }
+
+
+
+
+   public static BigDecimal round( BigDecimal base, BigDecimal roundUpAmt, BigDecimal roundTo ) {
 
       System.out.println( "base:" + base );
+      System.out.println( "roundUpAmt:" + roundUpAmt );
+      System.out.println( "roundTo:" + roundTo );
 
       //COMPUTE WK-ROUND-UNITS  =  W-CALBASE  /  ROUND-TO
       BigDecimal roundUnits = base.divide( roundTo, RoundingMode.HALF_UP ).setScale( 0, RoundingMode.DOWN );
@@ -46,10 +66,8 @@ public class CoverageRounding {
 
 
 
-      System.out.println( "roundUpAmt:" + roundUpAmt );
-      System.out.println( "roundTo:" + roundTo );
       System.out.println( "roundUnits:" + roundUnits );
-      System.out.println( "newBase:" + newBase );
+      return newBase;
 
    }
 }
