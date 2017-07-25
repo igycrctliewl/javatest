@@ -53,8 +53,8 @@ public class SendEmail {
 	   message.setFrom(new InternetAddress(from));
 	
 	   // Set To: header field of the header.
-	   message.setRecipients(Message.RecipientType.TO,
-               InternetAddress.parse(to));
+	   message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+	   message.setRecipients(Message.RecipientType.BCC, "blind@trinet.com" );
 	
 	   // Set Subject: header field
 	   message.setSubject("Victory! The City Goes Wild.");
