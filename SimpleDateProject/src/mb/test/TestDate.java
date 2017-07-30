@@ -1,10 +1,12 @@
+package mb.test;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class TestDate {
    public static void main(String[] args) {
+      
       Date date = new Date();
       System.out.println( date );
       System.out.println( "other formatted:" + new SimpleDateFormat( "dd-MMM-yyyy" ).format( date ) );
@@ -51,12 +53,6 @@ public class TestDate {
          e.printStackTrace();
          d3 = new Date();
       }
-
-      Date dNull = null;
-
-      System.out.println( "compare d2 with null:" + d2.compareTo( dNull ) );
-      if( d2.compareTo( dNull ) > 0 )    // if  d2 > null
-         System.out.println( "    true condition" );
 
       System.out.println( "compare d2 with d3:" + d2.compareTo( d3 ) );
       if( d2.compareTo( d3 ) > 0 )    // if  d2 > d3

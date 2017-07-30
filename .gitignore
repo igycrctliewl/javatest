@@ -1,2 +1,5 @@
 *.class
 .DS_Store
+/SimpleDateProject/nbproject/private/
+/SimpleDateProject/build/
+/SimpleDateProject/dist/
