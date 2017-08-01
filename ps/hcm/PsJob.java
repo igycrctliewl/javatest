@@ -2,7 +2,7 @@ package ps.hcm;
 
 import java.math.BigDecimal;
 
-/* Java representatio of PeopleSoft JOB record  */
+/* Java representation of PeopleSoft JOB record  */
 
 public class PsJob {
 
@@ -12,6 +12,11 @@ public class PsJob {
    private BigDecimal annualRate;
    private BigDecimal abbr;
    private String benefitProgram;
+
+   // new fields added for insurance rate calculations
+   private String sex;
+   private int age;
+   private String smoker;
 
 
    public static int getNextEmplid() {

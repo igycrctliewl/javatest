@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.HashSet;
-import java.util.Set;
 import ps.benefits.BenEnrollment;
 import ps.benefits.LifeInsuranceBenefit;
 import ps.dao.BenefitsDao;
@@ -24,12 +22,12 @@ public class BenefitsTest {
 
       for( BenEnrollment b : enrls ) {
          LifeInsuranceBenefit pl = new LifeInsuranceBenefit( b.getPlanType(), b.getBenefitPlan() );
-         pl.setRate( "0dummy" );
 
          benPlanMap.put( b.getBenefitPlan(), pl  );
          System.out.println( b.toString() );
       }
 
+      System.out.println( "Display life insurance plan list" );
       for( LifeInsuranceBenefit p : benPlanMap.values() ) {
          System.out.println( p.toString() );
       }

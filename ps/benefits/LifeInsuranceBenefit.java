@@ -2,27 +2,12 @@ package ps.benefits;
 
 public class LifeInsuranceBenefit extends Benefit {
 
-   @Deprecated
-   private String rateTblId;
-
    private BenefitRate rate;
 
    public LifeInsuranceBenefit( String planType, String benefitPlan ) {
       super( planType, benefitPlan );
       System.out.println( "LifeInsuranceBenefit constructor" );
    }
-
-   @Deprecated
-   public String getRateTblId() {
-      return this.rateTblId;
-   }
-
-   @Deprecated
-   public void setRateTblId( String newRateTblId ) {
-      this.rateTblId = newRateTblId;
-   }
-
-
 
    public BenefitRate getRate() {
       return this.rate;
@@ -35,7 +20,6 @@ public class LifeInsuranceBenefit extends Benefit {
    public void setRate( BenefitRate newRate ) {
       this.rate = newRate;
    }
-
 
 
    public String toString() {
