@@ -2,23 +2,34 @@ package ps.benefits;
 
 public class LifeInsuranceBenefit extends Benefit {
 
-   private String rateTblId;
+   private BenefitRate rate;
 
    public LifeInsuranceBenefit( String planType, String benefitPlan ) {
-      super.planType = planType;
-      super.benefitPlan = benefitPlan;
+      super( planType, benefitPlan );
+      System.out.println( "LifeInsuranceBenefit constructor" );
    }
 
-   public String getRateTblId() {
-      return this.rateTblId;
+   public BenefitRate getRate() {
+      return this.rate;
    }
 
-   public void setRateTblId( String newRateTblId ) {
-      this.rateTblId = newRateTblId;
+   public void setRate( String newRateTblId ) {
+      this.rate = new BenefitRate( newRateTblId );
    }
+
+   public void setRate( BenefitRate newRate ) {
+      this.rate = newRate;
+   }
+
 
    public String toString() {
-      return super.toString() + ":rateTblId:" + this.getRateTblId();
+      String s = super.toString();
+      if( this.rate == null ) {
+      // continue
+      } else {
+         s = s.concat( ":" + this.rate.toString() );
+      }
+      return s;
    }
 
 }

@@ -8,6 +8,6 @@ public class BenefitRate {
    }
    
    public String toString() {
-      return "rate table id " + this.rateTblId;
+      return "rateTblId:" + this.rateTblId;
    }
 }
