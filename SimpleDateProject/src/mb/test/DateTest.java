@@ -17,12 +17,12 @@ public class DateTest {
       Date date = new Date();
       System.out.println( date );
 
-      //String[] tz = TimeZone.getAvailableIDs();
-      //for( String s : tz ) {
-      //   System.out.println( s );
-      //}
+      String[] tz = TimeZone.getAvailableIDs();
+      for( String s : tz ) {
+         System.out.println( s );
+      }
 
-      Calendar instant = Calendar.getInstance( TimeZone.getTimeZone("UTC"), Locale.UK );
+      Calendar instant = Calendar.getInstance( TimeZone.getTimeZone("America/New_York"), Locale.US );
 
       instant.set( Calendar.HOUR, 0 );
       instant.set( Calendar.HOUR_OF_DAY, 0 );
