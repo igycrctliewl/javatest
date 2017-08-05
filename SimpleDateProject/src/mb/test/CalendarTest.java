@@ -53,15 +53,15 @@ public class CalendarTest {
 
 
 
-      System.out.println( "\n================================================ d2: 4/5/2017 08:21:41\n" );
+      System.out.println( "\n================================================ d2: my birthday\n" );
 
       cal.clear();
-      cal.set( Calendar.MONTH, Calendar.APRIL );
-      cal.set( Calendar.DAY_OF_MONTH, 5 );
-      cal.set( Calendar.YEAR, 2017 );
+      cal.set( Calendar.MONTH, Calendar.JANUARY );
+      cal.set( Calendar.DAY_OF_MONTH, 3 );
+      cal.set( Calendar.YEAR, 1966 );
       cal.set( Calendar.HOUR, 8 );
-      cal.set( Calendar.MINUTE, 21 );
-      cal.set( Calendar.SECOND, 41 );
+      cal.set( Calendar.MINUTE, 31 );
+      cal.set( Calendar.SECOND, 00 );
 
       System.out.println( cal );
       System.out.println( "\ndate: " + cal.getTime() );
