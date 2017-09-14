@@ -1,1 +1,42 @@
 JSON for interpreting return from http://maps.googleapis.com/maps/api/geocode/json?address=92101
+
+
+VERY COOL tool for generating Java classes for Json interpretation:  http://www.jsonschema2pojo.org/
+
+
+$ javac -cp .:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.4.0/jackson-core-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.4.0/jackson-annotations-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0.jar com/main/Main.java
+
+$ java -cp .:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.4.0/jackson-core-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.4.0/jackson-annotations-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0.jar com.main.Main
+
+
+
+example of ObjectMapper usage from our application:
+
+	private HRPUserCompanies InputStreamJsonToObject(InputStream is) {
+		ObjectMapper mapper = new ObjectMapper();
+		HRPUserCompanies mycompanies = null;
+		try {
+			mycompanies = mapper.readValue(is, HRPUserCompanies.class);
+		} catch (JsonParseException e) {
+			log.error("Error while parsing response from HRP-ASP");
+			throw new BISBackendException(e.getMessage());
+		} catch (JsonMappingException e) {
+			log.error("Mapping error for HRPMyself");
+			throw new BISBackendException(e.getMessage());
+		} catch (IOException e) {
+			log.error("Connection error occured while connecting to HRP-ASP");
+			throw new BISBackendException(e.getMessage());
+		}
+		return mycompanies;
+	}
+
+
+notes from https://www.mkyong.com/java/jackson-2-convert-java-object-to-from-json/
+
+//JSON from String to Object
+Staff obj = mapper.readValue(jsonInString, Staff.class);
+
+Differences from Jackson 1.x
+Most of the APIs still maintains the same method name and signature, just the packaging is different.
+Jackson 1.x – org.codehaus.jackson.map
+Jackson 2.x – com.fasterxml.jackson.databind
