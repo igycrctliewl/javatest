@@ -2,6 +2,16 @@
 public class StringTest {
 
    public static void main( String[] args ) {
+      String eligRule = "E";
+      if( ! "I".equals( eligRule ) ) {
+         System.out.println( "not equal" );
+      } else {
+         System.out.println( "else condition" );
+      }
+   }
+
+
+   public static void main1( String[] args ) {
       String str = "mikebro    ";
       System.out.println( ":" + str.trim() + ":" );
  
