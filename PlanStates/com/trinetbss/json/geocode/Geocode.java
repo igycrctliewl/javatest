@@ -1,6 +1,4 @@
-//-----------------------------------com.example.Example.java-----------------------------------
-
-package com.example;
+package com.trinetbss.json.geocode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "results", "status" })
-public class Example {
+public class Geocode {
 
 	@JsonProperty("results")
 	private List<Result> results = null;

@@ -1,8 +1,8 @@
-package com.main;
+package com.trinetbss.main;
 
-import com.example.AddressComponent;
-import com.example.Example;
-import com.example.Result;
+import com.trinetbss.json.geocode.AddressComponent;
+import com.trinetbss.json.geocode.Geocode;
+import com.trinetbss.json.geocode.Result;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
@@ -13,9 +13,9 @@ public class Main {
 		System.out.println(json);
 
 		ObjectMapper mapper = new ObjectMapper();
-		Example obj = null;
+		Geocode obj = null;
 		try {
-			obj = mapper.readValue(json, Example.class);
+			obj = mapper.readValue(json, Geocode.class);
 		} catch (IOException e) {
 			System.out.println("caught IOException");
 			e.printStackTrace();

@@ -1,6 +1,4 @@
-//-----------------------------------com.example.Northeast.java-----------------------------------
-
-package com.example;
+package com.trinetbss.json.geocode;
 
 import java.util.HashMap;
 import java.util.Map;
