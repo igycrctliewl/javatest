@@ -16,7 +16,7 @@ public class Main {
 		Example obj = null;
 		try {
 			obj = mapper.readValue(json, Example.class);
-		catch (IOException e) {
+		} catch (IOException e) {
 			System.out.println("caught IOException");
 			e.printStackTrace();
 		}
