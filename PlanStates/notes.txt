@@ -1,12 +1,16 @@
 JSON for interpreting return from http://maps.googleapis.com/maps/api/geocode/json?address=92101
 
+Adding the components parameter can help limit the output 
+https://maps.googleapis.com/maps/api/geocode/json?address=high+st+hasting&components=country:GB
+
+
 
 VERY COOL tool for generating Java classes for Json interpretation:  http://www.jsonschema2pojo.org/
 
 
-$ javac -cp .:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.4.0/jackson-core-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.4.0/jackson-annotations-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0.jar com/main/Main.java
+$ javac -cp .:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.4.0/jackson-core-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.4.0/jackson-annotations-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0.jar com/trinetbss/main/Main.java
 
-$ java -cp .:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.4.0/jackson-core-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.4.0/jackson-annotations-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0.jar com.main.Main
+$ java -cp .:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.4.0/jackson-core-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.4.0/jackson-annotations-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0.jar com.trinetbss.main.Main
 
 
 
@@ -40,3 +44,45 @@ Differences from Jackson 1.x
 Most of the APIs still maintains the same method name and signature, just the packaging is different.
 Jackson 1.x – org.codehaus.jackson.map
 Jackson 2.x – com.fasterxml.jackson.databind
+
+key types:
+ac.types[0]:postal_code  ==> zip code
+ac.types[0]:locality     ==> city
+ac.types[0]:administrative_area_level_2  ===> county
+ac.types[0]:administrative_area_level_1  ===> state
+ac.types[0]:country               ===> country
+
+Data contents
+>>>> parseAC
+     longName:37996
+     shortName:37996
+ac.types[0]:postal_code  ==> zip code
+>>>> parseAC
+     longName:Knoxville
+     shortName:Knoxville
+ac.types[0]:locality     ==> city
+>>>> parseAC
+     longName:Knox County
+     shortName:Knox County
+ac.types[0]:administrative_area_level_2  ===> county
+>>>> parseAC
+     longName:Tennessee
+     shortName:TN
+ac.types[0]:administrative_area_level_1  ===> state
+State:TN
+>>>> parseAC
+     longName:United States
+     shortName:US
+ac.types[0]:country               ===> country
+
+
+
+
+For running the program with the SQL statements, specify the classpath as shown
+
+$ javac -cp ./ojdbc6-11.2.0.jar:. PlansByState.java
+
+$ java -cp ./ojdbc6-11.2.0.jar:. PlansByState
+
+
+
