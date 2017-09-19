@@ -6,10 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PlansByState {
+public class PlansLocations {
 	public static void main( String[] args ) {
 		System.out.println( "main method" );
-		PlansByState pbs = new PlansByState();
+		PlansLocations pbs = new PlansLocations();
 		pbs.runQuery( "108", "01-OCT-2017" );
 
 		System.out.println( "display results in caller" );
@@ -35,12 +35,12 @@ public class PlansByState {
 	private Connection vDatabaseConnection;
 	public ResultSet queryResult;
 
-	public PlansByState() {
+	public PlansLocations() {
 		
 	}
 
 	public void runQuery( String benefitProgram, String effdtStr ) {
-		System.out.println( "PlansByState.runQuery( " + benefitProgram + ", " + effdtStr + " )" );
+		System.out.println( "PlansLocations.runQuery( " + benefitProgram + ", " + effdtStr + " )" );
 		try {
 
 			// Initialize and connect

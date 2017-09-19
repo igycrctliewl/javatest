@@ -3,7 +3,7 @@ package com.trinetbss.main;
 import com.trinetbss.json.geocode.AddressComponent;
 import com.trinetbss.json.geocode.Geocode;
 import com.trinetbss.json.geocode.Result;
-import com.trinetbss.sql.PlansByState;
+import com.trinetbss.sql.PlansLocations;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URL;
@@ -15,7 +15,7 @@ import java.util.List;
 public class Main {
 	public static void main(String[] args) {
       System.out.println( "Main.main()" );
-      PlansByState.runQuery( "108", "01-OCT-2017" );
+      PlansLocations.runQuery( "108", "01-OCT-2017" );
    }
 
 	public static void main1(String[] args) {
