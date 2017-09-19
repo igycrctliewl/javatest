@@ -8,9 +8,9 @@ https://maps.googleapis.com/maps/api/geocode/json?address=high+st+hasting&compon
 VERY COOL tool for generating Java classes for Json interpretation:  http://www.jsonschema2pojo.org/
 
 
-$ javac -cp .:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.4.0/jackson-core-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.4.0/jackson-annotations-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0.jar com/trinetbss/main/Main.java
+$ javac -cp .:/c/Users/mbrothers/Documents/medicare/ojdbc6-11.2.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.4.0/jackson-core-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.4.0/jackson-annotations-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0.jar com/trinetbss/main/Main.java
 
-$ java -cp .:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.4.0/jackson-core-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.4.0/jackson-annotations-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0.jar com.trinetbss.main.Main
+$ java -cp .:/c/Users/mbrothers/Documents/medicare/ojdbc6-11.2.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.4.0/jackson-core-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.4.0/jackson-annotations-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0.jar com.trinetbss.main.Main
 
 
 
