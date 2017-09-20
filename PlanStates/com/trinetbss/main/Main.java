@@ -3,31 +3,98 @@ package com.trinetbss.main;
 import com.trinetbss.json.geocode.AddressComponent;
 import com.trinetbss.json.geocode.Geocode;
 import com.trinetbss.json.geocode.Result;
+import com.trinetbss.sql.GeoLocations;
+import com.trinetbss.sql.GeoLocRange;
 import com.trinetbss.sql.PlansLocations;
+import com.trinetbss.sql.PSConnect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URL;
 import java.net.MalformedURLException;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main( String[] args ) {
       System.out.println( "Main.main()" );
-      PlansLocations.runQuery( "108", "01-OCT-2017" );
+
+		String benefitProgram = "108";
+		String effdtStr = "01-OCT-2017";
+
+      Map< String, PSGeogLocn > geoLocationStates =  new HashMap<>();
+		PlansLocations pbs = new PlansLocations();
+
+      pbs.runQuery( benefitProgram, effdtStr );
+		try {
+			while( pbs.queryResult.next() ) {
+				String planType = pbs.queryResult.getString( "PLAN_TYPE" );
+				String benefitPlan = pbs.queryResult.getString( "BENEFIT_PLAN" );
+				String planName = pbs.queryResult.getString( "PLAN_NAME" );
+				String geoLoc = pbs.queryResult.getString( "LOCATION_TBL_ID" );
+
+				if( !geoLocationStates.containsKey( geoLoc ) ) {
+					System.out.println( "********** getting geo location definition **********" );
+					PSGeogLocn psGeogLocn = new PSGeogLocn( geoLoc, effdtStr );
+					System.out.println( "********** get geo location ranges **********" );
+					Main.getGeogLocnRangeStates( psGeogLocn );
+					System.out.println( " -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* states so far: " + psGeogLocn.states );
+					geoLocationStates.put( geoLoc, psGeogLocn );
+ 				}
+
+				System.out.println( "********** associate plan with states **********" );
+ 				System.out.println( "=====>" + planType + " <=> " + benefitPlan + " <=> " + planName + " <=> " + geoLoc );
+			}
+		} catch( SQLException e ) {
+			System.out.println( e.toString() );
+		}
+
+		System.out.println( "Geo location map contained " + geoLocationStates.size() + " entries." );
+
+		PSConnect.getInstance().close();
    }
 
-	public static void main1(String[] args) {
+	
+	private static void getGeogLocnRangeStates( PSGeogLocn psGeogLocn ) {
+		GeoLocRange ranges = new GeoLocRange();
+		ranges.runQuery( psGeogLocn.geogLocnId, psGeogLocn.effdt );
+		try {
+			while( ranges.queryResult.next() ) {
+				String fromZip = ranges.queryResult.getString( "LOCN_FROM" );
+				String toZip = ranges.queryResult.getString( "LOCN_TO" );
 
-      // hard-coded test
-		//String json = "{ \"results\" : [ { \"address_components\" : [ { \"long_name\" : \"92101\", \"short_name\" : \"92101\", \"types\" : [ \"postal_code\" ] }, { \"long_name\" : \"San Diego\", \"short_name\" : \"San Diego\", \"types\" : [ \"locality\", \"political\" ] }, { \"long_name\" : \"San Diego County\", \"short_name\" : \"San Diego County\", \"types\" : [ \"administrative_area_level_2\", \"political\" ] }, { \"long_name\" : \"California\", \"short_name\" : \"CA\", \"types\" : [ \"administrative_area_level_1\", \"political\" ] }, { \"long_name\" : \"United States\", \"short_name\" : \"US\", \"types\" : [ \"country\", \"political\" ] } ], \"formatted_address\" : \"San Diego, CA 92101, USA\", \"geometry\" : { \"bounds\" : { \"northeast\" : { \"lat\" : 32.742536, \"lng\" : -117.145741 }, \"southwest\" : { \"lat\" : 32.6943429, \"lng\" : -117.2165131 } }, \"location\" : { \"lat\" : 32.7269669, \"lng\" : -117.1647094 }, \"location_type\" : \"APPROXIMATE\", \"viewport\" : { \"northeast\" : { \"lat\" : 32.742536, \"lng\" : -117.145741 }, \"southwest\" : { \"lat\" : 32.6943429, \"lng\" : -117.2165131 } } }, \"place_id\" : \"ChIJK-YIt0JT2YARI5JWWz1ORQk\", \"types\" : [ \"postal_code\" ] } ], \"status\" : \"OK\" }";
-		//System.out.println(json);
+				System.out.println( "=====>" + fromZip + " <=> " + toZip + " <=" );
+
+				int fromInt = Integer.parseInt( fromZip );
+				int toInt = Integer.parseInt( toZip.substring( 0, 5 ) );
+				for( int a = fromInt; a <= toInt; a++ ) {
+					System.out.println( "     a:" + a );
+					String zipCode = String.valueOf( a );
+					while( zipCode.length() < 5 ) {
+						zipCode = "0".concat( zipCode );
+					}
+					psGeogLocn.states.add( Main.callGeoApi( zipCode ) );
+				}
+			}
+		} catch( SQLException e ) {
+			System.out.println( e.toString() );
+		}
+
+	}
+
+	/**
+	 * @return the state derived from the input zipCode
+	 */
+	private static String callGeoApi( String zipCode ) {
 
       Address addr = new Address();
 
       try {
-         URL geogApi = new URL( "http://maps.googleapis.com/maps/api/geocode/json?address=US&components=postal_code:" + args[0] );
+         URL geogApi = new URL( "http://maps.googleapis.com/maps/api/geocode/json?address=US&components=postal_code:" + zipCode );
 
          ObjectMapper mapper = new ObjectMapper();
          Geocode obj = null;
@@ -38,10 +105,6 @@ public class Main {
             System.out.println(r.getFormattedAddress());
             for (AddressComponent ac : r.getAddressComponents()) {
                parseAC( ac, addr );
-               //System.out.println("ac.types[0]:" + ac.getTypes().get(0));
-               //if ("administrative_area_level_1".equals(ac.getTypes().get(0))) {
-               //   System.out.println("State:" + ac.getShortName());
-               //}
             }
          }
       } catch ( MalformedURLException mal ) {
@@ -54,7 +117,10 @@ public class Main {
 
       if( "US".equals( addr.country ) ) {
          System.out.println( "Determined state is " + addr.state );
-      }
+			return addr.state;
+      } else {
+			return "";
+		}
 	}
 
    private static void parseAC( AddressComponent adr, Address a ) {

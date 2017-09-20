@@ -1,19 +1,20 @@
 package com.trinetbss.sql;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
-public class GeoLocations {
+
+public class GeoLocRange {
 
 	public ResultSet queryResult;
-	public GeoLocations() {
+	public GeoLocRange() {
 	}
 
-   public void runQuery( String geoLoc, String effdtStr ) {
+   public void runQuery( String geoLoc, Date effdt ) {
 
       try {
 
@@ -22,22 +23,17 @@ public class GeoLocations {
          Connection vDatabaseConnection = psconn.getConnection();
 
          String sqlString =
-              "SELECT * " +
-				  "  FROM PS_GEOG_LOCN_TBL LOC " +
+				  "SELECT LOCN_FROM, LOCN_TO " +
+				  "  FROM PS_GEOG_LOCN_RANGE LOC " +
 				  " WHERE LOC.LOCATION_TBL_ID = ? " +
-				  "   AND LOC.EFFDT = ( " +
-				  "       SELECT MAX( EFFDT ) " +
-				  "         FROM PS_GEOG_LOCN_TBL L1 " +
-				  "        WHERE L1.LOCATION_TBL_ID = LOC.LOCATION_TBL_ID " +
-				  "          AND L1.EFFDT <= TO_DATE( ?, 'DD-MON-YYYY' ) ) ";
-
+				  "   AND LOC.EFFDT = ? ";
 
          // Prepare statement from SQL string
          PreparedStatement sqlStmt = vDatabaseConnection.prepareStatement( sqlString );
 
          // Set values for parameters
          sqlStmt.setString( 1, geoLoc );
-         sqlStmt.setString( 2, effdtStr );
+         sqlStmt.setDate( 2, effdt );
 
          // run the query
          queryResult = sqlStmt.executeQuery();
@@ -52,19 +48,22 @@ public class GeoLocations {
 
 	/* main method for testing */
    private static void main( String[] args ) {
-		System.out.println( "GeoLocations.main()" );
-		GeoLocations geo = new GeoLocations();
-		geo.runQuery( "Q124", "01-JAN-2018" );
+		System.out.println( "GeoLocRange.main()" );
+		GeoLocRange geo = new GeoLocRange();
+		//Date effdt = new Date( 117,0,1 ); //deprecated constructor
+		Date effdt = new Date( 1483257600000L ); //cludge 2017-01-01
+		System.out.println( "Date:" + effdt.getTime() );
+		System.out.println( "Date:" + effdt.toString() );
+		geo.runQuery( "Q124", effdt );
 
 		System.out.println( "display results in caller" );
 
 		try {
 			while( geo.queryResult.next() ) {
-				String geoLoc = geo.queryResult.getString( "LOCATION_TBL_ID" );
-				Date effdt = geo.queryResult.getDate( "EFFDT" );
-				String eligFlag = geo.queryResult.getString( "ELIG_FLG_GEO" );
+				String fromZip = geo.queryResult.getString( "LOCN_FROM" );
+				String toZip = geo.queryResult.getString( "LOCN_TO" );
 
-				System.out.println( "=====>" + geoLoc + " <=> " + effdt + " <=> " + eligFlag + " <=" );
+				System.out.println( "=====>" + fromZip + " <=> " + toZip + " <=" );
 			}
 		} catch( SQLException e ) {
 			System.out.println( e.toString() );
@@ -72,7 +71,4 @@ public class GeoLocations {
 
 		PSConnect.getInstance().close();
 	}
-
-
-
 }

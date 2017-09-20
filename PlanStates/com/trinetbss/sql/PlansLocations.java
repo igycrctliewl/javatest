@@ -7,36 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PlansLocations {
-	public static void main( String[] args ) {
-		System.out.println( "main method" );
-		PlansLocations pbs = new PlansLocations();
-		pbs.runQuery( "108", "01-OCT-2017" );
 
-		System.out.println( "display results in caller" );
-
-		try {
-			while( pbs.queryResult.next() ) {
-				String planType = pbs.queryResult.getString( "PLAN_TYPE" );
-				String benefitPlan = pbs.queryResult.getString( "BENEFIT_PLAN" );
-				String planName = pbs.queryResult.getString( "PLAN_NAME" );
-				String geoLoc = pbs.queryResult.getString( "LOCATION_TBL_ID" );
-
-				System.out.println( "=====>" + planType + " <=> " + benefitPlan + " <=> " + planName + " <=> " + geoLoc );
-			}
-		} catch( SQLException e ) {
-			System.out.println( e.toString() );
-		}
-
-		pbs.close();
-
-	}
-
-
-	private Connection vDatabaseConnection;
 	public ResultSet queryResult;
-
 	public PlansLocations() {
-		
 	}
 
 	public void runQuery( String benefitProgram, String effdtStr ) {
@@ -44,10 +17,10 @@ public class PlansLocations {
 		try {
 
 			// Initialize and connect
-			DriverManager.registerDriver( new oracle.jdbc.driver.OracleDriver() );
-			vDatabaseConnection = DriverManager.getConnection( "jdbc:oracle:thin:@dbhrlites.trinet.com:1725:hrlites", "sysadm", "mhall510" );
+			PSConnect psconn = PSConnect.getInstance();
+			Connection vDatabaseConnection = psconn.getConnection();
 
-			String getPlansSQL =
+			String sqlString =
 				  "SELECT DISTINCT PLAN_TYPE " +
 				  "              , BENEFIT_PLAN " +
 				  "              , ( SELECT BP.DESCR " +
@@ -70,7 +43,7 @@ public class PlansLocations {
 				  "   AND NOT ( LOCATION_TBL_ID = ' ' )";
 
 			// Prepare statement from SQL string
-			PreparedStatement sqlStmt = vDatabaseConnection.prepareStatement( getPlansSQL );
+			PreparedStatement sqlStmt = vDatabaseConnection.prepareStatement( sqlString );
 
 			// Set values for parameters
 			sqlStmt.setString( 1, benefitProgram );
@@ -94,13 +67,28 @@ public class PlansLocations {
 	}
 
 	
-	public void close() {
+	/* main method for testing only */
+	public static void main( String[] args ) {
+		System.out.println( "PlansLocations.main()" );
+		PlansLocations pbs = new PlansLocations();
+		pbs.runQuery( "108", "01-OCT-2017" );
+
+		System.out.println( "display results in caller" );
+
 		try {
-			System.out.println( "close the database connection" );
-			vDatabaseConnection.close();
+			while( pbs.queryResult.next() ) {
+				String planType = pbs.queryResult.getString( "PLAN_TYPE" );
+				String benefitPlan = pbs.queryResult.getString( "BENEFIT_PLAN" );
+				String planName = pbs.queryResult.getString( "PLAN_NAME" );
+				String geoLoc = pbs.queryResult.getString( "LOCATION_TBL_ID" );
+
+				System.out.println( "=====>" + planType + " <=> " + benefitPlan + " <=> " + planName + " <=> " + geoLoc );
+			}
 		} catch( SQLException e ) {
 			System.out.println( e.toString() );
 		}
 
+		PSConnect.getInstance().close();
 	}
+
 }

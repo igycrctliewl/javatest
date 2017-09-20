@@ -80,9 +80,9 @@ ac.types[0]:country               ===> country
 
 For running the program with the SQL statements, specify the classpath as shown
 
-$ javac -cp ./ojdbc6-11.2.0.jar:. PlansByState.java
+$ javac -cp ./ojdbc6-11.2.0.jar:. PlansLocations.java
 
-$ java -cp ./ojdbc6-11.2.0.jar:. PlansByState
+$ java -cp ./ojdbc6-11.2.0.jar:. PlansLocations
 
 
 
