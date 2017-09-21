@@ -4,6 +4,9 @@ Adding the components parameter can help limit the output
 https://maps.googleapis.com/maps/api/geocode/json?address=high+st+hasting&components=country:GB
 
 
+different public api option:
+http://ziptasticapi.com/95032
+
 
 VERY COOL tool for generating Java classes for Json interpretation:  http://www.jsonschema2pojo.org/
 
