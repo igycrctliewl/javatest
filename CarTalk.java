@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,15 +10,24 @@ import java.util.regex.Pattern;
 public class CarTalk {
 	public static void main( String[] args ) throws Exception {
 
-		URL test = new URL( "https://play.podtrac.com/npr-510208/npr.mc.tritondigital.com/NPR_510208/media/anon.npr-podcasts/podcast/510208/9930418/npr_9930418.mp3?orgId=1&amp;p=510208&amp;story=9930418&amp;t=podcast&amp;e=9930418&amp;siteplayer=true&amp;dl=1" );
+		URL test = new URL( "https://play.podtrac.com/npr-510208/npr.mc.tritondigital.com/NPR_510208/media/anon.npr-podcasts/podcast/510208/328869101/npr_328869101.mp3?orgId=1&amp;p=510208&amp;story=328869101&amp;t=podcast&amp;e=328869101&amp;siteplayer=true&amp;dl=1" );
 		System.out.println( test.getFile() );
 
 		String path = test.getPath();
-		System.out.println( path.substring( path.lastIndexOf( "/" ) + 1, path.length() )); //
+		String localFileName = path.substring( path.lastIndexOf( "/" ) + 1, path.length() );
+		System.out.println( localFileName );
 
+		byte[] bStream = new byte[1048576];
+		InputStream input = test.openStream();
+		FileOutputStream output = new FileOutputStream( localFileName );
+		for( int readBytes = input.read( bStream ); readBytes > 0; readBytes = input.read( bStream ) ) {
+			output.write( bStream, 0, readBytes );
+		}
 
-
-		lineInputTest();
+		input.close();
+		output.close();
+		
+		//lineInputTest();
 
 	}
 
