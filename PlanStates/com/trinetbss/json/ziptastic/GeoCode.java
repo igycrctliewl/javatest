@@ -1,6 +1,4 @@
-//-----------------------------------com.ziptastic.GeoCode.java-----------------------------------
-
-package com.ziptastic;
+package com.trinetbss.json.ziptastic;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "country", "state", "city" })
-public class GeoCode {
+public class Geocode {
 
 	@JsonProperty("country")
 	private String country;
