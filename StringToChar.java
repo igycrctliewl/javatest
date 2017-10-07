@@ -15,6 +15,9 @@ public class StringToChar {
 			printData[ j ] = srcData[ k ];
 		}
 
+		System.out.println( "printing char array:" );
+		System.out.println( printData );
+		
 		String printLine = new String( printData );
 		System.out.println( printLine );
 
