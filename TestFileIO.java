@@ -12,10 +12,11 @@ public class TestFileIO {
 	public static void lineInputTest() throws Exception {
 		System.out.println( ">>>> TestFileIO.lineInputTest" );
 
-		BufferedReader br = new BufferedReader( new FileReader( "fwOutput.txt" ) );
+		BufferedReader br = new BufferedReader( new FileReader( "TestFileIO.java" ) );
 
+		int i = 0;
 		for( String dataLine = br.readLine(); dataLine != null; dataLine = br.readLine() ) {
-			System.out.println( "00 : " + dataLine );
+			System.out.println( i++ + " : " + dataLine );
 		}
 
 		br.close();
