@@ -17,5 +17,8 @@ public class StringTest {
 
       String c = "abc".substring(2,3);
       System.out.println( "c:" + c + ":" );
+
+      String geog = "123459999".substring( 0, 5 );
+      System.out.println( "substring test:" + geog + ":" );
    }
 }
