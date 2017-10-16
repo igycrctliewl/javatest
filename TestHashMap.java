@@ -8,6 +8,11 @@ import java.util.Set;
 public class TestHashMap {
    public static void main(String[] args) {
 
+		Set<String> s = new HashSet<>();
+		if( s instanceof java.util.Collection ) {
+			System.out.println( "Set is a Collection");
+		}
+
       String[] selections = { "002A5Z","002A50","002A51","002A52" };
       int j = 0;
       List<String> planTypeList =  new ArrayList<String>();
