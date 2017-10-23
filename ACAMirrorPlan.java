@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class ACAMirrorPlan {
 
@@ -24,7 +26,19 @@ public class ACAMirrorPlan {
 	}
 
 	public MirrorPlanData get( String planType, String benefitPlan ) {
-		return mirrorPlansMap.get( planType + benefitPlan );
+		return this.mirrorPlansMap.get( planType + benefitPlan );
+	}
+
+	public Set<String> appendMedicalMirrorPlans( Set<String> planSet ) {
+		Set<String> addPlans = new HashSet<>();
+		for( String benefitPlan : planSet ) {
+			MirrorPlanData mpd = this.get( "10", benefitPlan );
+			if( mpd != null ) {
+				addPlans.add( mpd.getMirrorPlan() );
+			}
+		}
+		planSet.addAll( addPlans );
+		return planSet;
 	}
 
 	@Override
@@ -33,17 +47,17 @@ public class ACAMirrorPlan {
 	}
 
 
-   private void getMirrorPlans() {
+	private void getMirrorPlans() {
 
-      System.out.println( new java.util.Date() );
+		System.out.println( new java.util.Date() );
 
-      try {
+		try {
 
-         // Initialize and connect
-         DriverManager.registerDriver( new oracle.jdbc.driver.OracleDriver() );
-         Connection vDatabaseConnection = DriverManager.getConnection( "jdbc:oracle:thin:@dbhrlites.trinet.com:1725:hrlites", "sysadm", "mhall510" );
+			// Initialize and connect
+			DriverManager.registerDriver( new oracle.jdbc.driver.OracleDriver() );
+			Connection vDatabaseConnection = DriverManager.getConnection( "jdbc:oracle:thin:@dbhrlites.trinet.com:1725:hrlites", "sysadm", "mhall510" );
 
-         String mirrorPlanSQL =
+			String mirrorPlanSQL =
 					"SELECT MIRT.PLAN_TYPE, MIRT.BENEFIT_PLAN, MIRT.T2_MIRR_BEN_PLAN, MIRT.COVRG_CD " +
 					", MIRT.T2_CALCULATE_VALUE " +
 					", MTR.T2_COVRG_AMT_1, MTR.T2_PROV_COVRG_AMT1 " +
@@ -76,8 +90,8 @@ public class ACAMirrorPlan {
 					"       AND MT1.T2_OE_QUARTER = MTR.T2_OE_QUARTER " +
 					"       AND MT1.EFFDT <= TO_DATE( ?, 'DD-MON-YYYY' ) ) " ;
 
-         // Prepare statement from SQL string
-         PreparedStatement sqlStmt = vDatabaseConnection.prepareStatement( mirrorPlanSQL );
+			// Prepare statement from SQL string
+			PreparedStatement sqlStmt = vDatabaseConnection.prepareStatement( mirrorPlanSQL );
 
 			/* SQL parameters
 			1: oeQuarter
@@ -90,47 +104,47 @@ public class ACAMirrorPlan {
 			8: effdtStr
 			*/
 
-         // Set values for parameters
-         sqlStmt.setString( 1, this.company.getQuater() );
-         sqlStmt.setString( 2, this.effdt );
-         sqlStmt.setString( 3, this.effdt );
-         sqlStmt.setString( 4, this.company.getCode() );
-         sqlStmt.setString( 5, this.company.getPfClient() );
-         sqlStmt.setString( 6, this.group.getBenefitProgram() );
-         sqlStmt.setString( 7, this.company.getQuater() );
-         sqlStmt.setString( 8, this.effdt );
+			// Set values for parameters
+			sqlStmt.setString( 1, this.company.getQuater() );
+			sqlStmt.setString( 2, this.effdt );
+			sqlStmt.setString( 3, this.effdt );
+			sqlStmt.setString( 4, this.company.getCode() );
+			sqlStmt.setString( 5, this.company.getPfClient() );
+			sqlStmt.setString( 6, this.group.getBenefitProgram() );
+			sqlStmt.setString( 7, this.company.getQuater() );
+			sqlStmt.setString( 8, this.effdt );
 
-         // run the query
-         ResultSet qResult = sqlStmt.executeQuery();
+			// run the query
+			ResultSet qResult = sqlStmt.executeQuery();
 
-         while( qResult.next() ) {
-       	   String planType = qResult.getString( "PLAN_TYPE" );
-      	   String benPlan = qResult.getString( "BENEFIT_PLAN" );
-     	      String mirrPlan = qResult.getString( "T2_MIRR_BEN_PLAN" );
-            String covrgCd = qResult.getString( "COVRG_CD" );
+			while( qResult.next() ) {
+				String planType = qResult.getString( "PLAN_TYPE" );
+			   String benPlan = qResult.getString( "BENEFIT_PLAN" );
+				String mirrPlan = qResult.getString( "T2_MIRR_BEN_PLAN" );
+				String covrgCd = qResult.getString( "COVRG_CD" );
 		      BigDecimal eeCost = qResult.getBigDecimal( "T2_CALCULATE_VALUE" );
 		      BigDecimal planCost = qResult.getBigDecimal( "T2_COVRG_AMT_1" );
 		      BigDecimal providerRate = qResult.getBigDecimal( "T2_PROV_COVRG_AMT1" );
 
 				MirrorPlanData mpd = new MirrorPlanData( planType, benPlan, mirrPlan
 							, covrgCd, eeCost, planCost, providerRate );
-				mirrorPlansMap.put( mpd.getMapKey(), mpd );
+				this.mirrorPlansMap.put( mpd.getMapKey(), mpd );
 
-            System.out.println( "=====>" + planType + " <=> " + benPlan + " <=> " + mirrPlan + " <=> " + covrgCd + " <=> " + eeCost + " <=> " + planCost + " <=> " + providerRate );
-         }
+				System.out.println( "=====>" + planType + " <=> " + benPlan + " <=> " + mirrPlan + " <=> " + covrgCd + " <=> " + eeCost + " <=> " + planCost + " <=> " + providerRate );
+			}
 
-			System.out.println( "Mirror plans map contains " + mirrorPlansMap.size() + " keys." );
+			System.out.println( "Mirror plans map contains " + this.mirrorPlansMap.size() + " keys." );
 
-         // CLOSE THE DATABASE CONNECTION
-         vDatabaseConnection.close();
+			// CLOSE THE DATABASE CONNECTION
+			vDatabaseConnection.close();
 
-      } catch( SQLException e ) {
-         System.out.println( e.toString() );
+		} catch( SQLException e ) {
+			System.out.println( e.toString() );
 			e.printStackTrace();
-      }
+		}
 
-      System.out.println( new java.util.Date() );
+		System.out.println( new java.util.Date() );
 
-   }
+	}
 
 }
