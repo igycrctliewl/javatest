@@ -17,4 +17,8 @@ public class BenefitGroup {
 		return this.benefitProgram;
 	}
 
+	public String getRateTblId() {
+		return "0DUMMY";
+	}
+
 }

@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -45,6 +46,57 @@ public class ACAMirrorPlan {
 	public String toString() {
 		return this.getClass() + ":[" + this.company.getCode() + "][" + this.group.getBenefitProgram() + "]";
 	}
+
+
+	public boolean addMirrorPlanRates( String planTypeDescr, String benefitPlan ) {
+		System.out.println( ">>>> ACAMirrorPlan.addMirrorPlanRates()" );
+		System.out.println( translatePlanTypeDescr( planTypeDescr ) + ":" + benefitPlan );
+		MirrorPlanData mpd = this.get( translatePlanTypeDescr( planTypeDescr ), benefitPlan );
+		System.out.println( mpd );
+
+		if( mpd != null ) {
+			//insert rate data for this mirror plan
+			//:rateTblId
+			System.out.println( this.group.getRateTblId() );
+			//TO_DATE( :effdt, 'DD-MON-YYYY' )
+			System.out.println( this.effdt );
+			//:benefitPlan
+			System.out.println( mpd.getMirrorPlan() );
+			//:covrgCd
+			System.out.println( "1" );
+			//' '
+			//:eeRate
+			System.out.println( mpd.getEmployeeCost() );
+			//:erRate
+			System.out.println( mpd.getCompanyCost() );
+			//0
+			//0
+			//0
+			//0
+			//0
+			//' '
+			//:providerRate
+			System.out.println( mpd.getProviderRate() );
+			//:pfClient 
+			System.out.println( company.getPfClient() );
+		}
+
+		return false;
+	}
+
+
+	private static String translatePlanTypeDescr( String planTypeDescr ) {
+
+		if( "medical".equals( planTypeDescr ) ) {
+			return "10";
+		} else if( "dental".equals( planTypeDescr ) ) {
+			return "11";
+		} else if( "vision".equals( planTypeDescr ) ) {
+			return "14";
+		}
+		return null;
+	}
+
 
 
 	private void getMirrorPlans() {

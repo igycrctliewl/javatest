@@ -60,7 +60,7 @@ public class TestMirror {
 			System.out.println( "plan: " + s );
 		}
 
-
+		System.out.println( "add rate:" + mirr.addMirrorPlanRates( "medical", "0021GQ" ) );
 
    }
    
