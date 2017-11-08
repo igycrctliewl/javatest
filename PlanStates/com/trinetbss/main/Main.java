@@ -1,13 +1,10 @@
 package com.trinetbss.main;
 
-import com.trinetbss.json.geocode.AddressComponent;
-import com.trinetbss.json.geocode.Geocode;
-import com.trinetbss.json.geocode.Result;
 import com.trinetbss.sql.GeoLocations;
 import com.trinetbss.sql.GeoLocRange;
 import com.trinetbss.sql.PlansLocations;
 import com.trinetbss.sql.PSConnect;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.trinetbss.zipcode.Zipcode;
 import java.io.IOException;
 import java.net.URL;
 import java.net.MalformedURLException;
@@ -20,6 +17,9 @@ import java.util.Map;
 
 
 public class Main {
+
+	private static final Zipcode zip = new Zipcode();
+
 	public static void main( String[] args ) {
       System.out.println( "Main.main()" );
 
@@ -90,75 +90,7 @@ public class Main {
 	 * @return the state derived from the input zipCode
 	 */
 	private static String callGeoApi( String zipCode ) {
-
-      Address addr = new Address();
-
-      try {
-         URL geogApi = new URL( "http://maps.googleapis.com/maps/api/geocode/json?address=US&components=postal_code:" + zipCode );
-
-         ObjectMapper mapper = new ObjectMapper();
-         Geocode obj = null;
-         obj = mapper.readValue( geogApi, Geocode.class);
-         System.out.println(obj);
-
-         for (Result r : obj.getResults()) {
-            System.out.println(r.getFormattedAddress());
-            for (AddressComponent ac : r.getAddressComponents()) {
-               parseAC( ac, addr );
-            }
-         }
-      } catch ( MalformedURLException mal ) {
-         System.out.println("bad url");
-         mal.printStackTrace();
-      } catch ( IOException e ) {
-         System.out.println("caught IOException:" + e.getClass().getName() );
-         e.printStackTrace();
-      }
-
-      if( "US".equals( addr.country ) ) {
-         System.out.println( "Determined state is " + addr.state );
-			return addr.state;
-      } else {
-			return "";
-		}
+		return zip.lookupZip( zipCode );
 	}
 
-   private static void parseAC( AddressComponent adr, Address a ) {
-      String longName = adr.getLongName();
-      String shortName = adr.getShortName();
-      List<String> types = adr.getTypes();
-
-      System.out.println( ">>>> parseAC" );
-      //System.out.println( "     longName:" + longName );
-      //System.out.println( "     shortName:" + shortName );
-
-      if( types.contains( "postal_code" ) ) {
-         System.out.println( "     zip code is " + shortName );
-         a.zip = shortName;
-      } else if( types.contains( "locality" ) ) {
-         System.out.println( "     city is " + shortName );
-         a.city = shortName;
-      } else if( types.contains( "administrative_area_level_2" ) ) {
-         System.out.println( "     county is " + shortName );
-      } else if( types.contains( "administrative_area_level_1" ) ) {
-         System.out.println( "     state is " + shortName );
-         a.state = shortName;
-      } else if( types.contains( "country" ) ) {
-         System.out.println( "     country is " + shortName );
-         a.country = shortName;
-      }
-
-      System.out.println( "     " + a );
-   }
-
-   static class Address {
-      String city;
-      String state;
-      String zip;
-      String country;
-
-      public String toString() {
-         return this.getClass().getName() + ":" + this.city + ", " + this.state + "   " + this.zip + "  " + this.country;
-      }
-   }
 }
