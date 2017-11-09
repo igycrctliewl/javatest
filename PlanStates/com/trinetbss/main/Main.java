@@ -24,7 +24,7 @@ public class Main {
 	public static void main( String[] args ) {
       System.out.println( "Main.main()" );
 
-		String benefitProgram = "108";
+		String benefitProgram = "101";
 		String effdtStr = "01-JAN-2018";
 
       Map< String, PSGeogLocn > geoLocationStates =  new HashMap<>();
@@ -74,7 +74,7 @@ public class Main {
 				// associate plan with states
 				System.out.println( "Main.main() => " + planType + "," + benefitPlan + "," + planName );
 				for( String state : eligibleStates ) {
-					System.out.println( Main.main() => " + planType + "," + benefitPlan + "," + planName + "," + state );
+					System.out.println( "Main.main() => " + planType + "," + benefitPlan + "," + planName + "," + state );
 				}
 			}
 		} catch( SQLException e ) {
