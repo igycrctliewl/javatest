@@ -39,7 +39,11 @@ public class PlansLocations {
 					"     , OP.ELIG_RULES_ID " +
 					"  FROM PS_BEN_DEFN_OPTN OP " +
 					" WHERE OP.BENEFIT_PROGRAM = ? " +
-					"   AND OP.EFFDT = TO_DATE( ?, 'DD-MON-YYYY' ) " +
+					"   AND OP.EFFDT = ( " +
+					"       SELECT MAX(EFFDT) " +
+					"         FROM PS_BEN_DEFN_PGM PG  " +
+					"        WHERE PG.BENEFIT_PROGRAM = OP.BENEFIT_PROGRAM " +
+					"          AND PG.EFFDT <= TO_DATE( ?, 'DD-MON-YYYY' ) )  " +
 					"   AND OP.PLAN_TYPE IN ( '10','11','14','1D','1V','23','30','31' ) " +
 					"   AND OP.OPTION_TYPE = 'O' " +
 					"   AND NOT ( OP.ELIG_RULES_ID IN ('2009', '23GC', '236Q') ) " +
@@ -62,7 +66,8 @@ public class PlansLocations {
 			this.queryResult = sqlStmt.executeQuery();
 
 		} catch( SQLException e ) {
-			System.out.println( e.toString() );
+			System.out.println( "PlansLocations.runQuery => SQL Exception encountered." );
+			e.printStackTrace();
 		}
 	}
 
@@ -81,10 +86,11 @@ public class PlansLocations {
 				String geoLoc = pbs.queryResult.getString( "LOCATION_TBL_ID" );
 				String eligRule = pbs.queryResult.getString( "ELIG_RULES_ID" );
 
-				System.out.println( "====>" + planType + ":" + benefitPlan + ":" + planName + ":" + geoLoc + ":" + eligRule );
+				System.out.println( "PlansLocations.main() =>" + planType + ":" + benefitPlan + ":" + planName + ":" + geoLoc + ":" + eligRule );
 			}
 		} catch( SQLException e ) {
-			System.out.println( e.toString() );
+			System.out.println( "PlansLocations.main() SQL Exception" );
+			e.printStackTrace();
 		}
 
 		PSConnect.getInstance().close();
