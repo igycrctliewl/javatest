@@ -3,13 +3,14 @@ package com.trinetbss.main;
 import com.trinetbss.sql.GeoLocations;
 import java.sql.Date;
 import java.util.HashSet;
+import java.util.Set;
 
 public class PSGeogLocn {
 
 	public String geogLocnId;
 	public Date effdt;
 	public String eligFlag;
-	public HashSet<String> states;
+	public Set<String> states;
 
 	public PSGeogLocn( String geogLocnId, String effdtStr ) {
 		GeoLocations geo = new GeoLocations();
