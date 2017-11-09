@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 public class Main {
@@ -23,10 +24,11 @@ public class Main {
 	public static void main( String[] args ) {
       System.out.println( "Main.main()" );
 
-		String benefitProgram = "101";
+		String benefitProgram = "108";
 		String effdtStr = "01-JAN-2018";
 
       Map< String, PSGeogLocn > geoLocationStates =  new HashMap<>();
+      Map< String, PSEligRule > eligRulesStates =  new HashMap<>();
 		PlansLocations pbs = new PlansLocations();
 
       pbs.runQuery( benefitProgram, effdtStr );
@@ -36,28 +38,51 @@ public class Main {
 				String benefitPlan = pbs.queryResult.getString( "BENEFIT_PLAN" );
 				String planName = pbs.queryResult.getString( "PLAN_NAME" );
 				String geoLoc = pbs.queryResult.getString( "LOCATION_TBL_ID" );
+				String eligRulesId = pbs.queryResult.getString( "ELIG_RULES_ID" );
+				Set<String> eligibleStates = new HashSet<>();
 
 				// if this geo location is already in the map, just reuse it
 				// if not, add it to the map along with the related object
 				if( !geoLocationStates.containsKey( geoLoc ) ) {
-					//System.out.println( "********** getting geo location definition **********" );
+					// getting geo location code definition
 					PSGeogLocn psGeogLocn = new PSGeogLocn( geoLoc, effdtStr );
-					// System.out.println( "********** get geo location ranges **********" );
+					// get states from geo location zip code ranges
 					Main.getGeogLocnRangeStates( psGeogLocn );
-					// System.out.println( " -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* states so far: " + psGeogLocn.states );
+					// add updated geo location object to map
 					geoLocationStates.put( geoLoc, psGeogLocn );
  				}
 
-				// System.out.println( "********** associate plan with states **********" );
-				for( String state : geoLocationStates.get( geoLoc ).states ) {
-					System.out.println( planType + "," + benefitPlan + "," + planName + "," + state );
+				// add the states for this geo location to the complete list for this benefit plan
+				if( geoLocationStates.get( geoLoc ).states != null ) {
+					eligibleStates.addAll( geoLocationStates.get( geoLoc ).states );
+				}
+
+				// evaluate the elig rule state criteria
+				if( !eligRulesStates.containsKey( eligRulesId ) ) {
+					// get elig rule definition
+					PSEligRule psEligRule = new PSEligRule( eligRulesId, effdtStr );
+					// add updated geo location object to map
+					eligRulesStates.put( eligRulesId, psEligRule );
+ 				}
+
+				// add the states for this elig rule to the complete list for this benefit plan
+				if( eligRulesStates.get( eligRulesId ).states != null ) {
+					eligibleStates.addAll( eligRulesStates.get( eligRulesId ).states );
+				}
+
+
+				// associate plan with states
+				System.out.println( "Main.main() => " + planType + "," + benefitPlan + "," + planName );
+				for( String state : eligibleStates ) {
+					System.out.println( Main.main() => " + planType + "," + benefitPlan + "," + planName + "," + state );
 				}
 			}
 		} catch( SQLException e ) {
-			System.out.println( e.toString() );
+			System.out.println( "Main.main() SQL Exception" );
+			e.printStackTrace();
 		}
 
-		System.out.println( "Geo location map contained " + geoLocationStates.size() + " entries." );
+		System.out.println( "Main.main() => Geo location map contained " + geoLocationStates.size() + " entries." );
 
 		PSConnect.getInstance().close();
    }
@@ -75,12 +100,12 @@ public class Main {
 				String fromZip = ranges.queryResult.getString( "LOCN_FROM" );
 				String toZip = ranges.queryResult.getString( "LOCN_TO" );
 
-				// System.out.println( "=====>" + fromZip + " <=> " + toZip + " <=" );
+				// System.out.println( "Main.getGeogLocnRangeStates() => " + fromZip + " <=> " + toZip + " <=" );
 
 				int fromInt = Integer.parseInt( fromZip );
 				int toInt = Integer.parseInt( toZip.substring( 0, 5 ) );
 				for( int a = fromInt; a <= toInt; a++ ) {
-					// System.out.println( "     a:" + a );
+					// System.out.println( "Main.getGeogLocnRangeStates() =>  a:" + a );
 					String zipCode = String.valueOf( a );
 					while( zipCode.length() < 5 ) {
 						zipCode = "0".concat( zipCode );
@@ -92,7 +117,8 @@ public class Main {
 				}
 			}
 		} catch( SQLException e ) {
-			System.out.println( e.toString() );
+			System.out.println( "Main.getGeogLocnRangeStates SQL Exception" );
+			e.printStackTrace();
 		}
 	}
 
