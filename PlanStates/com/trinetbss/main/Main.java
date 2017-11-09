@@ -23,8 +23,8 @@ public class Main {
 	public static void main( String[] args ) {
       System.out.println( "Main.main()" );
 
-		String benefitProgram = "108";
-		String effdtStr = "01-OCT-2017";
+		String benefitProgram = "101";
+		String effdtStr = "01-JAN-2018";
 
       Map< String, PSGeogLocn > geoLocationStates =  new HashMap<>();
 		PlansLocations pbs = new PlansLocations();
@@ -37,17 +37,21 @@ public class Main {
 				String planName = pbs.queryResult.getString( "PLAN_NAME" );
 				String geoLoc = pbs.queryResult.getString( "LOCATION_TBL_ID" );
 
+				// if this geo location is already in the map, just reuse it
+				// if not, add it to the map along with the related object
 				if( !geoLocationStates.containsKey( geoLoc ) ) {
-					System.out.println( "********** getting geo location definition **********" );
+					//System.out.println( "********** getting geo location definition **********" );
 					PSGeogLocn psGeogLocn = new PSGeogLocn( geoLoc, effdtStr );
-					System.out.println( "********** get geo location ranges **********" );
+					// System.out.println( "********** get geo location ranges **********" );
 					Main.getGeogLocnRangeStates( psGeogLocn );
-					System.out.println( " -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* states so far: " + psGeogLocn.states );
+					// System.out.println( " -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* states so far: " + psGeogLocn.states );
 					geoLocationStates.put( geoLoc, psGeogLocn );
  				}
 
-				System.out.println( "********** associate plan with states **********" );
- 				System.out.println( "=====>" + planType + " <=> " + benefitPlan + " <=> " + planName + " <=> " + geoLoc );
+				// System.out.println( "********** associate plan with states **********" );
+				for( String state : geoLocationStates.get( geoLoc ).states ) {
+					System.out.println( planType + "," + benefitPlan + "," + planName + "," + state );
+				}
 			}
 		} catch( SQLException e ) {
 			System.out.println( e.toString() );
@@ -58,7 +62,11 @@ public class Main {
 		PSConnect.getInstance().close();
    }
 
-	
+	/**
+	 * This method returns no value but it has the side-effect of updating the passed
+	 * PSGeogLocn parameter with the list of states found in the associated list of
+	 * zip codes for this geo location
+	 */
 	private static void getGeogLocnRangeStates( PSGeogLocn psGeogLocn ) {
 		GeoLocRange ranges = new GeoLocRange();
 		ranges.runQuery( psGeogLocn.geogLocnId, psGeogLocn.effdt );
@@ -67,23 +75,25 @@ public class Main {
 				String fromZip = ranges.queryResult.getString( "LOCN_FROM" );
 				String toZip = ranges.queryResult.getString( "LOCN_TO" );
 
-				System.out.println( "=====>" + fromZip + " <=> " + toZip + " <=" );
+				// System.out.println( "=====>" + fromZip + " <=> " + toZip + " <=" );
 
 				int fromInt = Integer.parseInt( fromZip );
 				int toInt = Integer.parseInt( toZip.substring( 0, 5 ) );
 				for( int a = fromInt; a <= toInt; a++ ) {
-					System.out.println( "     a:" + a );
+					// System.out.println( "     a:" + a );
 					String zipCode = String.valueOf( a );
 					while( zipCode.length() < 5 ) {
 						zipCode = "0".concat( zipCode );
 					}
-					psGeogLocn.states.add( Main.callGeoApi( zipCode ) );
+					String state = Main.callGeoApi( zipCode );
+					if( state != null ) {
+						psGeogLocn.states.add( state );
+					}
 				}
 			}
 		} catch( SQLException e ) {
 			System.out.println( e.toString() );
 		}
-
 	}
 
 	/**

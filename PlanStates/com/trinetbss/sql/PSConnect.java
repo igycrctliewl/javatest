@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public abstract class PSConnect {
 
-	private static final PSConnect conn = new HRLITESConnect();
+	private static final PSConnect conn = new HRPRODConnect();
 
 	Connection vDatabaseConnection;
 	public PSConnect() {
