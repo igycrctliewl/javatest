@@ -8,14 +8,18 @@ import java.sql.SQLException;
 
 public abstract class PSConnect {
 
-	private static final PSConnect conn = new HRPRODConnect();
+	//private static final PSConnect conn = new HRPRODConnect();
+	private static final PSConnect conn = new HRLITESConnect();
 
 	Connection vDatabaseConnection;
+
 	public PSConnect() {
 		
 	}
 
-	public abstract Connection getConnection();
+	public Connection getConnection() {
+		return this.vDatabaseConnection;
+	}
 
 	public void close() {
 		System.out.println( "PSConnect.close()" );
@@ -27,6 +31,6 @@ public abstract class PSConnect {
 	}
 
 	public static PSConnect getInstance() {
-		return conn;
+		return PSConnect.conn;
 	}
 }

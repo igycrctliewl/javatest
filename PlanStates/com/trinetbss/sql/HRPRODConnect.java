@@ -9,6 +9,7 @@ import java.sql.SQLException;
 public class HRPRODConnect extends PSConnect {
 
 	HRPRODConnect() {
+		super();
 		System.out.println( "HRPRODConnect constructor" );
 		try {
 			// Initialize and connect
@@ -23,10 +24,6 @@ public class HRPRODConnect extends PSConnect {
 			System.out.println( "HRPRODConnect generic exception" );
 			e.printStackTrace();
 		}
-	}
-
-	public Connection getConnection() {
-		return super.vDatabaseConnection;
 	}
 
 }

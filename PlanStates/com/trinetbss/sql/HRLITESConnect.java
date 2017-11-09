@@ -9,6 +9,7 @@ import java.sql.SQLException;
 public class HRLITESConnect extends PSConnect {
 
 	HRLITESConnect() {
+		super();
 		System.out.println( "HRLITESConnect constructor" );
 		try {
 			// Initialize and connect
@@ -17,10 +18,6 @@ public class HRLITESConnect extends PSConnect {
 		} catch( SQLException e ) {
 			e.printStackTrace();
 		}
-	}
-
-	public Connection getConnection() {
-		return super.vDatabaseConnection;
 	}
 
 }
