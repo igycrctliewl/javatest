@@ -43,7 +43,8 @@ public class GeoLocations {
          queryResult = sqlStmt.executeQuery();
 
       } catch( SQLException e ) {
-         System.out.println( e.toString() );
+         System.out.println( "GeoLocations.runQuery() SQL Exception" );
+			e.printStackTrace();
       }
 
    }
@@ -56,7 +57,7 @@ public class GeoLocations {
 		GeoLocations geo = new GeoLocations();
 		geo.runQuery( "Q124", "01-JAN-2018" );
 
-		System.out.println( "display results in caller" );
+		System.out.println( "GeoLocations.main() => display results in caller" );
 
 		try {
 			while( geo.queryResult.next() ) {
@@ -64,10 +65,11 @@ public class GeoLocations {
 				Date effdt = geo.queryResult.getDate( "EFFDT" );
 				String eligFlag = geo.queryResult.getString( "ELIG_FLG_GEO" );
 
-				System.out.println( "=====>" + geoLoc + " <=> " + effdt + " <=> " + eligFlag + " <=" );
+				System.out.println( "GeoLocations.main() =>" + geoLoc + " <=> " + effdt + " <=> " + eligFlag + " <=" );
 			}
 		} catch( SQLException e ) {
-			System.out.println( e.toString() );
+         System.out.println( "GeoLocations.main() SQL Exception" );
+			e.printStackTrace();
 		}
 
 		PSConnect.getInstance().close();

@@ -40,7 +40,8 @@ public class BasEligState {
 			this.queryResult = sqlStmt.executeQuery();
 
 		} catch( SQLException e ) {
-			System.out.println( e.toString() );
+			System.out.println( "BasEligState.runQuery SQL Exception" );
+			e.printStackTrace();
 		}
 	}
 
@@ -58,10 +59,11 @@ public class BasEligState {
 				String country = pbs.queryResult.getString( "COUNTRY" );
 				String state = pbs.queryResult.getString( "STATE" );
 
-				System.out.println( "====>" + eligRulesId + ":" + effdtStr + ":" + country + ":" + state );
+				System.out.println( "BasEligState.main() =>" + eligRulesId + ":" + effdtStr + ":" + country + ":" + state );
 			}
 		} catch( SQLException e ) {
-			System.out.println( e.toString() );
+			System.out.println( "BasEligState.main SQL Exception" );
+			e.printStackTrace();
 		}
 
 		PSConnect.getInstance().close();

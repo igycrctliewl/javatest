@@ -24,7 +24,8 @@ public class PSGeogLocn {
 				this.states = new HashSet<>();
 			}
 		} catch( Exception e ) {
-			System.out.println( e.toString() );
+			System.out.println( "PSGeogLocn constructor => general exception " );
+			e.printStackTrace();
 		}
 
 	}
@@ -35,10 +36,10 @@ public class PSGeogLocn {
 	/* main method for testing only */
 	private static void main( String[] args ) {
 		PSGeogLocn psg = new PSGeogLocn( "Q124", "12-JAN-2018" );
-		System.out.println( "object:geogLocnId:" + psg.geogLocnId );
-		System.out.println( "object:effdt:" + psg.effdt );
-		System.out.println( "object:eligFlag:" + psg.eligFlag );
-		System.out.println( "object:states.size:" + psg.states.size() );
+		System.out.println( "PSGeogLocn.main => object:geogLocnId:" + psg.geogLocnId );
+		System.out.println( "PSGeogLocn.main => object:effdt:" + psg.effdt );
+		System.out.println( "PSGeogLocn.main => object:eligFlag:" + psg.eligFlag );
+		System.out.println( "PSGeogLocn.main => object:states.size:" + psg.states.size() );
 	}
 
 }

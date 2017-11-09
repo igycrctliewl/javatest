@@ -28,7 +28,7 @@ public class Zipcode {
 			e.printStackTrace();
 		}
 
-		//System.out.println( "Build map with " + zipCodes.size() + " entries." );
+		//System.out.println( "Zipcode.Zipcode() => Build map with " + zipCodes.size() + " entries." );
 	}
 
 	public String lookupZip( String zip ) {
@@ -38,7 +38,7 @@ public class Zipcode {
 	/* main method for testing only */
 	private static void main( String[] args ) {
 		Zipcode z = new Zipcode();
-		System.out.println( "Test lookup for my zip code: " + z.lookupZip( "74004" ) );
+		System.out.println( "Zipcode.main() => Test lookup for my zip code: " + z.lookupZip( "74004" ) );
 	}
 
 }

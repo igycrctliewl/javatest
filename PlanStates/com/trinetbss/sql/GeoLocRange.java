@@ -52,21 +52,22 @@ public class GeoLocRange {
 		GeoLocRange geo = new GeoLocRange();
 		//Date effdt = new Date( 117,0,1 ); //deprecated constructor
 		Date effdt = new Date( 1483257600000L ); //cludge 2017-01-01
-		System.out.println( "Date:" + effdt.getTime() );
-		System.out.println( "Date:" + effdt.toString() );
+		System.out.println( "GeoLocRange.main() => Date:" + effdt.getTime() );
+		System.out.println( "GeoLocRange.main() => Date:" + effdt.toString() );
 		geo.runQuery( "Q124", effdt );
 
-		System.out.println( "display results in caller" );
+		System.out.println( "GeoLocRange.main() => display results in caller" );
 
 		try {
 			while( geo.queryResult.next() ) {
 				String fromZip = geo.queryResult.getString( "LOCN_FROM" );
 				String toZip = geo.queryResult.getString( "LOCN_TO" );
 
-				System.out.println( "=====>" + fromZip + " <=> " + toZip + " <=" );
+				System.out.println( "GeoLocRange.main() =>" + fromZip + " <=> " + toZip + " <=" );
 			}
 		} catch( SQLException e ) {
-			System.out.println( e.toString() );
+			System.out.println( "GeoLocRange.main() SQL Exception" );
+			e.printStackTrace();
 		}
 
 		PSConnect.getInstance().close();

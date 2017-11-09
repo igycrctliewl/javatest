@@ -47,7 +47,8 @@ public class BasEligRules {
 			this.queryResult = sqlStmt.executeQuery();
 
 		} catch( SQLException e ) {
-			System.out.println( e.toString() );
+			System.out.println( "BasEligRules.runQuery SQL Exception" );
+			e.printStackTrace();
 		}
 	}
 
@@ -68,10 +69,11 @@ public class BasEligRules {
 				String evalMthdState = pbs.queryResult.getString( "EVAL_MTHD_STATE" );
 				String evalActvState = pbs.queryResult.getString( "EVAL_ACTV_STATE" );
 
-				System.out.println( "====>" + eligRulesId  + ":" + effdtStr  + ":" + eligFlgState  + ":" + eligUseState  + ":" + grpMthdState  + ":" + evalMthdState + ":" + evalActvState );
+				System.out.println( "BasEligRules.main() =>" + eligRulesId  + ":" + effdtStr  + ":" + eligFlgState  + ":" + eligUseState  + ":" + grpMthdState  + ":" + evalMthdState + ":" + evalActvState );
 			}
 		} catch( SQLException e ) {
-			System.out.println( e.toString() );
+			System.out.println( "BasEligRules.runQuery SQL Exception" );
+			e.printStackTrace();
 		}
 
 		PSConnect.getInstance().close();

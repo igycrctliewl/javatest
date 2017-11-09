@@ -28,7 +28,7 @@ public class PSEligRule {
 				this.eligUseState = "Y".equals( rules.queryResult.getString( "ELIG_USE_STATE" ) );
 			}
 		} catch( Exception e ) {
-			System.out.println( "general exception when reading BAS_ELIG_RULES rows" );
+			System.out.println( "PSEligRule constructor => general exception when reading BAS_ELIG_RULES rows" );
 			e.printStackTrace();
 		}
 
@@ -55,10 +55,10 @@ public class PSEligRule {
 					}
 				}
 			} catch( Exception e ) {
-				System.out.println( "general exception when reading BAS_ELIG_STATE rows" );
+				System.out.println( "PSEligRule constructor => general exception when reading BAS_ELIG_STATE rows" );
 				e.printStackTrace();
 			}
-			System.out.println( "state criteria contains " + this.states.size() + " rows." );
+			System.out.println( "PSEligRule constructor => state criteria contains " + this.states.size() + " rows." );
 		}
 
 	}
@@ -69,11 +69,11 @@ public class PSEligRule {
 	/* main method for testing only */
 	public static void main( String[] args ) {
 		PSEligRule elig = new PSEligRule( "2124", "12-JAN-2018" );
-		System.out.println( "object:eligRulesId:" + elig.eligRulesId );
-		System.out.println( "object:effdtStr:" + elig.effdtStr );
-		System.out.println( "object:eligFlagState:" + elig.eligFlagState );
-		System.out.println( "object:eligUseState:" + elig.eligUseState );
-		System.out.println( "object:states:" + elig.states );
+		System.out.println( "PSEligRule.main => object:eligRulesId:" + elig.eligRulesId );
+		System.out.println( "PSEligRule.main => object:effdtStr:" + elig.effdtStr );
+		System.out.println( "PSEligRule.main => object:eligFlagState:" + elig.eligFlagState );
+		System.out.println( "PSEligRule.main => object:eligUseState:" + elig.eligUseState );
+		System.out.println( "PSEligRule.main => object:states:" + elig.states );
 	}
 
 }

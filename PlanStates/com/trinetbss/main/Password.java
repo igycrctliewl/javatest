@@ -8,12 +8,10 @@ public class Password {
 	 * Uses a standard prompt to get input from console
 	 */
 	public static String getInput() throws Exception {
-
 		Console console = System.console();
 		if (console == null) {
 			throw new Exception( "Couldn't get Console instance" );
 		}
-
 		return console.readLine( "Enter your user name: " );
 	}
 
@@ -22,12 +20,10 @@ public class Password {
 	 * Uses a user-supplied prompt to get input from console
 	 */
 	public static String getInput( String prompt ) throws Exception {
-
 		Console console = System.console();
 		if (console == null) {
 			throw new Exception( "Couldn't get Console instance" );
 		}
-
 		return console.readLine( prompt );
 	}
 
@@ -36,12 +32,10 @@ public class Password {
 	 * Uses a standard prompt to get a password without echoing input
 	 */
 	public static String getPassword() throws Exception {
-
 		Console console = System.console();
 		if (console == null) {
 			throw new Exception( "Couldn't get Console instance" );
 		}
-
 		char passwordArray[] = console.readPassword( "Enter your password: " );
 		return new String( passwordArray );
 	}
@@ -51,12 +45,10 @@ public class Password {
 	 * Uses a user-supplied prompt to get a password without echoing input
 	 */
 	public static String getPassword( String prompt ) throws Exception {
-
 		Console console = System.console();
 		if (console == null) {
 			throw new Exception( "Couldn't get Console instance" );
 		}
-
 		char passwordArray[] = console.readPassword( prompt );
 		return new String( passwordArray );
 	}
