@@ -1,5 +1,6 @@
 package com.trinetbss.main;
 
+import com.trinetbss.output.BSSTableData;
 import com.trinetbss.sql.GeoLocations;
 import com.trinetbss.sql.GeoLocRange;
 import com.trinetbss.sql.PlansLocations;
@@ -24,8 +25,12 @@ public class Main {
 	public static void main( String[] args ) {
       System.out.println( "Main.main()" );
 
-		String benefitProgram = "101";
+		int realmYearId = 12;
+		String benefitProgram = "108";
 		String effdtStr = "01-JAN-2018";
+
+		// prepare output object
+		BSSTableData bss = new BSSTableData();
 
       Map< String, PSGeogLocn > geoLocationStates =  new HashMap<>();
       Map< String, PSEligRule > eligRulesStates =  new HashMap<>();
@@ -76,15 +81,23 @@ public class Main {
 				for( String state : eligibleStates ) {
 					System.out.println( "Main.main() => " + planType + "," + benefitPlan + "," + planName + "," + state );
 				}
+
+				// write output to load files
+				bss.writePlanData( realmYearId, planType, benefitPlan, 999, null, eligibleStates.toArray( new String[0] ) );
+
 			}
 		} catch( SQLException e ) {
 			System.out.println( "Main.main() SQL Exception" );
+			e.printStackTrace();
+		} catch( IOException e ) {
+			System.out.println( "Main.main() IO Exception - check status of csv output files" );
 			e.printStackTrace();
 		}
 
 		System.out.println( "Main.main() => Geo location map contained " + geoLocationStates.size() + " entries." );
 
 		PSConnect.getInstance().close();
+		bss.close();
    }
 
 	/**
