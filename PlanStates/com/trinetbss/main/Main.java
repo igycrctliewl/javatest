@@ -1,6 +1,7 @@
 package com.trinetbss.main;
 
 import com.trinetbss.output.BSSTableData;
+import com.trinetbss.portfolio.Portfolio;
 import com.trinetbss.sql.GeoLocations;
 import com.trinetbss.sql.GeoLocRange;
 import com.trinetbss.sql.PlansLocations;
@@ -21,12 +22,13 @@ import java.util.Set;
 public class Main {
 
 	private static final Zipcode zip = new Zipcode();
+	private static final Portfolio port = new Portfolio();
 
 	public static void main( String[] args ) {
       System.out.println( "Main.main()" );
 
 		int realmYearId = 12;
-		String benefitProgram = "108";
+		String benefitProgram = "101";
 		String effdtStr = "01-JAN-2018";
 
 		// prepare output object
@@ -42,6 +44,7 @@ public class Main {
 				String planType = pbs.queryResult.getString( "PLAN_TYPE" );
 				String benefitPlan = pbs.queryResult.getString( "BENEFIT_PLAN" );
 				String planName = pbs.queryResult.getString( "PLAN_NAME" );
+				String vendor = pbs.queryResult.getString( "VENDOR_ID" );
 				String geoLoc = pbs.queryResult.getString( "LOCATION_TBL_ID" );
 				String eligRulesId = pbs.queryResult.getString( "ELIG_RULES_ID" );
 				Set<String> eligibleStates = new HashSet<>();
@@ -83,7 +86,7 @@ public class Main {
 				}
 
 				// write output to load files
-				bss.writePlanData( realmYearId, planType, benefitPlan, 999, null, eligibleStates.toArray( new String[0] ) );
+				bss.writePlanData( realmYearId, planType, benefitPlan, port.lookupPortfolio( vendor ), null, eligibleStates.toArray( new String[0] ) );
 
 			}
 		} catch( SQLException e ) {

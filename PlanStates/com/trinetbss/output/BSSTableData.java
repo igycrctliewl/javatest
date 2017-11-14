@@ -17,7 +17,7 @@ public class BSSTableData {
 
 	public BSSTableData() {
 
-		this.plyrPlanId = 5000;
+		this.plyrPlanId = 4000;
 
 		try {
 			this.plyrPlanTbl = BSSTableData.openFile( "REALM_PLYR_PLAN.txt" );
@@ -46,7 +46,7 @@ public class BSSTableData {
 		this.plyrPlanTbl.write( COMMA );
 		this.plyrPlanTbl.write( QUOTE + benefitPlan + QUOTE );
 		this.plyrPlanTbl.write( COMMA );
-		this.plyrPlanTbl.write( "" + portfolioId );
+		/*if( portfolioId != null )*/ this.plyrPlanTbl.write( "" + portfolioId );
 		this.plyrPlanTbl.write( COMMA );
 		if( situs != null ) this.plyrPlanTbl.write( QUOTE + situs + QUOTE );
 		this.plyrPlanTbl.newLine();

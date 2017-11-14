@@ -35,6 +35,17 @@ public class PlansLocations {
 					"                   AND B1.BENEFIT_PLAN = BP.BENEFIT_PLAN " +
 					"                   AND B1.EFFDT <= OP.EFFDT ) ) " +
 					"          AS PLAN_NAME " +
+					"     , ( SELECT BP.VENDOR_ID " +
+					"           FROM PS_BENEF_PLAN_TBL BP " +
+					"          WHERE BP.PLAN_TYPE = OP.PLAN_TYPE " +
+					"            AND BP.BENEFIT_PLAN = OP.BENEFIT_PLAN " +
+					"            AND BP.EFFDT = ( " +
+					"                SELECT MAX( EFFDT ) " +
+					"                  FROM PS_BENEF_PLAN_TBL B1 " +
+					"                 WHERE B1.PLAN_TYPE = BP.PLAN_TYPE " +
+					"                   AND B1.BENEFIT_PLAN = BP.BENEFIT_PLAN " +
+					"                   AND B1.EFFDT <= OP.EFFDT ) ) " +
+					"          AS VENDOR_ID " +
 					"     , OP.LOCATION_TBL_ID " +
 					"     , OP.ELIG_RULES_ID " +
 					"  FROM PS_BEN_DEFN_OPTN OP " +
@@ -47,9 +58,9 @@ public class PlansLocations {
 					"   AND OP.PLAN_TYPE IN ( '10','11','14','1D','1V','23','30','31' ) " +
 					"   AND OP.OPTION_TYPE = 'O' " +
 					"   AND NOT ( OP.ELIG_RULES_ID IN ('2009', '23GC', '236Q') ) " +
-					"   --EXCLUDE THE INTERNATIONAL PLAN " +
+					// EXCLUDE THE INTERNATIONAL PLAN
 					"   AND NOT ( OP.BENEFIT_PLAN = '0003M3' ) " +
-					"   --EXCLUDE MIRROR PLANS " +
+					// EXCLUDE MIRROR PLANS
 					"   AND NOT EXISTS ( " +
 					"          SELECT 'X' " +
 					"            FROM PS_T2_ACA_MIRR_TBL MIR " +
@@ -83,10 +94,11 @@ public class PlansLocations {
 				String planType = pbs.queryResult.getString( "PLAN_TYPE" );
 				String benefitPlan = pbs.queryResult.getString( "BENEFIT_PLAN" );
 				String planName = pbs.queryResult.getString( "PLAN_NAME" );
+				String vendor = pbs.queryResult.getString( "VENDOR_ID" );
 				String geoLoc = pbs.queryResult.getString( "LOCATION_TBL_ID" );
 				String eligRule = pbs.queryResult.getString( "ELIG_RULES_ID" );
 
-				System.out.println( "PlansLocations.main() =>" + planType + ":" + benefitPlan + ":" + planName + ":" + geoLoc + ":" + eligRule );
+				System.out.println( "PlansLocations.main() =>" + planType + ":" + benefitPlan + ":" + planName + ":" + vendor + ":" + geoLoc + ":" + eligRule );
 			}
 		} catch( SQLException e ) {
 			System.out.println( "PlansLocations.main() SQL Exception" );
