@@ -48,9 +48,9 @@ public class Portfolio {
 	/* main method for testing only */
 	public static void main( String[] args ) {
 		Portfolio z = new Portfolio();
-		System.out.println( "Portfolio.main() => Test lookup for bogus vendor: " + z.lookupPortfolio( "74004" ) );
-		System.out.println( "Portfolio.main() => Test lookup for KAISER vendor: " + z.lookupPortfolio( "KAISER" ) );
-		System.out.println( "Portfolio.main() => Test lookup for OPTUM vendor: " + z.lookupPortfolio( "OPTUM" ) );
+		System.out.println( "Portfolio.main() => Test lookup for bogus vendor: " + z.lookupPortfolio( "74004", " " ) );
+		System.out.println( "Portfolio.main() => Test lookup for KAISER vendor: " + z.lookupPortfolio( "KAISER", " " ) );
+		System.out.println( "Portfolio.main() => Test lookup for OPTUM vendor: " + z.lookupPortfolio( "OPTUM", " " ) );
 	}
 
 }
