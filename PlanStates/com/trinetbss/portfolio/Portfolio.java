@@ -31,8 +31,18 @@ public class Portfolio {
 		System.out.println( "Portfolio constructor => Built map with " + portfolios.size() + " entries." );
 	}
 
-	public Integer lookupPortfolio( String vendorId ) {
-		return portfolios.get( vendorId );
+	public Integer lookupPortfolio( String vendorId, String benefitPlan ) {
+
+		switch( benefitPlan ) {
+			// portfolio ID override for UHC Hawaii plans
+			case "0021DL":
+			case "0024CA":
+			case "002C4B":
+			case "001RLS":
+				return 19;
+			default:
+				return portfolios.get( vendorId );
+		}
 	}
 
 	/* main method for testing only */

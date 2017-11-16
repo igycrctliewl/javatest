@@ -86,7 +86,7 @@ public class Main {
 				}
 
 				// write output to load files
-				bss.writePlanData( realmYearId, planType, benefitPlan, port.lookupPortfolio( vendor ), null, eligibleStates.toArray( new String[0] ) );
+				bss.writePlanData( realmYearId, planType, benefitPlan, port.lookupPortfolio( vendor, benefitPlan ), null, eligibleStates.toArray( new String[0] ) );
 
 			}
 		} catch( SQLException e ) {
