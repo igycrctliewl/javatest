@@ -10,9 +10,11 @@ import java.util.Map;
 public class Portfolio {
 
 	private Map<String,Integer> portfolios;
+	private Map<String,Integer> planPortfolios;
 
 	public Portfolio() {
 
+		// prepare vendor-to-portfolio lookup table
 		this.portfolios = new HashMap<>();
 
 		try {
@@ -22,27 +24,43 @@ public class Portfolio {
 
 			for( String dataLine = buff.readLine(); dataLine != null; dataLine = buff.readLine() ) {
 				String[] parts = dataLine.split( "," );
-				portfolios.put( parts[0], Integer.parseInt( parts[1] ) );
+				this.portfolios.put( parts[0], Integer.parseInt( parts[1] ) );
 			}
 		} catch( Exception e ) {
 			e.printStackTrace();
 		}
 
-		System.out.println( "Portfolio constructor => Built map with " + portfolios.size() + " entries." );
+		System.out.println( "Portfolio constructor => Built portfolio map with " + this.portfolios.size() + " entries." );
+
+
+		// prepare plan-to-portfolio override lookup table
+		this.planPortfolios = new HashMap<>();
+
+		try {
+			InputStream in = getClass().getResourceAsStream("/com/trinetbss/portfolio/planOverrides.txt");
+			Reader fr = new InputStreamReader( in, "utf-8" );
+			BufferedReader buff = new BufferedReader( fr );
+
+			for( String dataLine = buff.readLine(); dataLine != null; dataLine = buff.readLine() ) {
+				String[] parts = dataLine.split( "," );
+				planPortfolios.put( parts[0], Integer.parseInt( parts[1] ) );
+			}
+		} catch( Exception e ) {
+			e.printStackTrace();
+		}
+
+		System.out.println( "Portfolio constructor => Built plan map with " + planPortfolios.size() + " entries." );
 	}
 
 	public Integer lookupPortfolio( String vendorId, String benefitPlan ) {
 
-		switch( benefitPlan ) {
-			// portfolio ID override for UHC Hawaii plans
-			case "0021DL":
-			case "0024CA":
-			case "002C4B":
-			case "001RLS":
-				return 19;
-			default:
-				return portfolios.get( vendorId );
+		Integer portfolioId = this.planPortfolios.get( benefitPlan );
+		System.out.println( "Override lookup found " + portfolioId );
+		if( portfolioId == null ) {
+			portfolioId = this.portfolios.get( vendorId );
 		}
+
+		return portfolioId;
 	}
 
 	/* main method for testing only */
@@ -51,6 +69,10 @@ public class Portfolio {
 		System.out.println( "Portfolio.main() => Test lookup for bogus vendor: " + z.lookupPortfolio( "74004", " " ) );
 		System.out.println( "Portfolio.main() => Test lookup for KAISER vendor: " + z.lookupPortfolio( "KAISER", " " ) );
 		System.out.println( "Portfolio.main() => Test lookup for OPTUM vendor: " + z.lookupPortfolio( "OPTUM", " " ) );
+		System.out.println( "Portfolio.main() => Test lookup for override vendor: " + z.lookupPortfolio( "KAISER", "0021DL" ) );
+		System.out.println( "Portfolio.main() => Test lookup for EYEMED vendor: " + z.lookupPortfolio( "EYEMEDSOI", " " ) );
+		System.out.println( "Portfolio.main() => Test lookup for override EyeMed plan: " + z.lookupPortfolio( "AETNA", "002LXS" ) );
+
 	}
 
 }
