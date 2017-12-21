@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 public abstract class PSConnect {
 
+	// Select the desired environment by un-commenting ONLY ONE of the following lines:
 	private static final PSConnect conn = new HRPRODConnect();
 	//private static final PSConnect conn = new HRLITESConnect();
 

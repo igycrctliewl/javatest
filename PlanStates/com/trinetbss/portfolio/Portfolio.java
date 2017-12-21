@@ -55,7 +55,7 @@ public class Portfolio {
 	public Integer lookupPortfolio( String vendorId, String benefitPlan ) {
 
 		Integer portfolioId = this.planPortfolios.get( benefitPlan );
-		System.out.println( "Override lookup found " + portfolioId );
+		//System.out.println( "Override lookup found " + portfolioId );
 		if( portfolioId == null ) {
 			portfolioId = this.portfolios.get( vendorId );
 		}
