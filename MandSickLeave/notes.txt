@@ -1,0 +1,22 @@
+
+
+/c/Users/mbrothers/Documents/medicare/ojdbc6-11.2.0.jar:
+/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.4.0/jackson-core-2.4.0.jar:
+/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.4.0/jackson-annotations-2.4.0.jar:
+/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0.jar
+
+ com/trinetbss/main/Main.java
+
+
+javac -source 1.6 -target 1.6 -cp .:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.4.0/jackson-core-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.4.0/jackson-annotations-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0.jar com/mb/sickleave/Main.java
+java -cp .:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.4.0/jackson-core-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.4.0/jackson-annotations-2.4.0.jar:/c/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0.jar com.mb.sickleave.Main
+
+
+jar -cf mand-sick-leave.jar com
+
+
+sudo su - hcm
+
+psadmin -c shutdown! -d HCM; psadmin -c shutdown! -d HCMIB; psadmin -c shutdown! -d HCMRN; psadmin -p stop -d HCM; psadmin -s shutdown! -d HCM;
+psadmin -c boot -d HCM; psadmin -c boot -d HCMIB; psadmin -c boot -d HCMRN; psadmin -p start -d HCM; psadmin -s boot -d HCM;
+

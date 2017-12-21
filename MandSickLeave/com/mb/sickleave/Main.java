@@ -4,22 +4,24 @@ import java.math.BigDecimal;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mb.sickleave.json.Data;
 import com.mb.sickleave.json.Response;
+import com.mb.sickleave.json.ResponseWrapper;
 
 public class Main {
 
 	public static void main( String[] args ) throws Exception {
 	
 		ObjectMapper mapper = new ObjectMapper();
-		Response obj = null;
+		ResponseWrapper obj = null;
 		String jsonString = "{ \"data\": {\"increamentSickLeaveBalancePslMandateConfig\": {\"city\": null,\"minimumEmployees\": 5,\"stateCd\": \"CA\"},\"mandateAccrualHours\": 1.7777777777777777,\"pslIncrementSickLeaveBalanceConfig\": {\"accrualRate\": 0.04444444444444444,\"capInHours\": 40,\"daysAfterAccrualBegins\": 0},\"pslResetAccrualConfig\": {\"capInHours\": 40,\"carryOverAllowed\": true,\"resetDay\": 31,\"resetMonth\": \"DECEMBER\"},\"resetAccrualPslMandateConfig\": {\"city\": null,\"minimumEmployees\": 5,\"stateCd\": \"CA\"}},\"_requestId\": \"dc201afe-585b-4a02-aed1-b1a4f430e407\",\"_statusCode\": \"200\",\"_statusText\": \"OK\",\"_statusMessage\": \"Success\"}";
-		obj = mapper.readValue( jsonString, Response.class );
+
+		obj = new ResponseWrapper( mapper, jsonString );
 		System.out.println(obj);
 
 		Data data = obj.getData();
 		System.out.println( data );
-
-		BigDecimal balance = data.getMandateAccrualHours();
-		System.out.println( balance );
+   //
+	//	BigDecimal balance = data.getMandateAccrualHours();
+	//	System.out.println( balance );
 
 	/*   
 		for (Result r : obj.getResults()) {
