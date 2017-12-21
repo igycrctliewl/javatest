@@ -3,6 +3,7 @@
 
 package com.mb.sickleave.json;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -25,7 +26,7 @@ public class Data {
 @JsonProperty("increamentSickLeaveBalancePslMandateConfig")
 private IncreamentSickLeaveBalancePslMandateConfig increamentSickLeaveBalancePslMandateConfig;
 @JsonProperty("mandateAccrualHours")
-private Double mandateAccrualHours;
+private BigDecimal mandateAccrualHours;
 @JsonProperty("pslIncrementSickLeaveBalanceConfig")
 private PslIncrementSickLeaveBalanceConfig pslIncrementSickLeaveBalanceConfig;
 @JsonProperty("pslResetAccrualConfig")
@@ -46,12 +47,12 @@ this.increamentSickLeaveBalancePslMandateConfig = increamentSickLeaveBalancePslM
 }
 
 @JsonProperty("mandateAccrualHours")
-public Double getMandateAccrualHours() {
+public BigDecimal getMandateAccrualHours() {
 return mandateAccrualHours;
 }
 
 @JsonProperty("mandateAccrualHours")
-public void setMandateAccrualHours(Double mandateAccrualHours) {
+public void setMandateAccrualHours(BigDecimal mandateAccrualHours) {
 this.mandateAccrualHours = mandateAccrualHours;
 }
 

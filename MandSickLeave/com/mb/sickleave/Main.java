@@ -1,5 +1,6 @@
 package com.mb.sickleave;
 
+import java.math.BigDecimal;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mb.sickleave.json.Data;
 import com.mb.sickleave.json.Response;
@@ -17,6 +18,8 @@ public class Main {
 		Data data = obj.getData();
 		System.out.println( data );
 
+		BigDecimal balance = data.getMandateAccrualHours();
+		System.out.println( balance );
 
 	/*   
 		for (Result r : obj.getResults()) {

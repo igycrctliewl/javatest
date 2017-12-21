@@ -3,6 +3,7 @@
 
 package com.mb.sickleave.json;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -21,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class PslIncrementSickLeaveBalanceConfig {
 
 @JsonProperty("accrualRate")
-private Double accrualRate;
+private BigDecimal accrualRate;
 @JsonProperty("capInHours")
 private Integer capInHours;
 @JsonProperty("daysAfterAccrualBegins")
@@ -30,12 +31,12 @@ private Integer daysAfterAccrualBegins;
 private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
 @JsonProperty("accrualRate")
-public Double getAccrualRate() {
+public BigDecimal getAccrualRate() {
 return accrualRate;
 }
 
 @JsonProperty("accrualRate")
-public void setAccrualRate(Double accrualRate) {
+public void setAccrualRate(BigDecimal accrualRate) {
 this.accrualRate = accrualRate;
 }
 
