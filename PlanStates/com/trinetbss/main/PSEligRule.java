@@ -33,7 +33,7 @@ public class PSEligRule {
 		}
 
 		if( this.eligUseState ) {
-			// Depending on the eligFlagState value, the state list is Eligible or Inelibible states.
+			// Depending on the eligFlagState value, the state list is Eligible or Ineligible states.
 			// If Ineligible, create a set of all states (ineligible ones will be removed).
 			// If Eligible, create an empty set (eligible states will be added).
 			if( "I".equals( this.eligFlagState ) ) {
