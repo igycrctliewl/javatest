@@ -61,7 +61,8 @@ public class Main {
  				}
 
 				// add the states for this geo location to the complete list for this benefit plan
-				if( geoLocationStates.get( geoLoc ).states != null ) {
+				// as requested by Ramakrishna, state eligibility should only be produced for plan type 10
+				if( "10".equals( planType ) && geoLocationStates.get( geoLoc ).states != null ) {
 					eligibleStates.addAll( geoLocationStates.get( geoLoc ).states );
 				}
 
@@ -74,7 +75,8 @@ public class Main {
  				}
 
 				// add the states for this elig rule to the complete list for this benefit plan
-				if( eligRulesStates.get( eligRulesId ).states != null ) {
+				// as requested by Ramakrishna, state eligibility should only be produced for plan type 10
+				if( "10".equals( planType ) && eligRulesStates.get( eligRulesId ).states != null ) {
 					eligibleStates.addAll( eligRulesStates.get( eligRulesId ).states );
 				}
 
