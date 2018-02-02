@@ -1,49 +1,51 @@
 // interesting scheduled-task code using timer
 // thanks https://stackoverflow.com/questions/9375882/how-i-can-run-my-timertask-everyday-2-pm
 
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 public class MyTimerTask extends TimerTask {
-	private final static long ONCE_PER_DAY = 1000*60*60*24;
 
-	//private final static int ONE_DAY = 1;
+	private final static long ONCE_PER_DAY = 1000 * 60 * 60 * 24;
 	private final static int TWO_AM = 2;
 	private final static int ZERO_MINUTES = 0;
+
+	private Timer timer;
+
+
+	public MyTimerTask() {
+		super();
+		this.timer = new Timer();
+	}
+
+	public Timer getTimer() {
+		return this.timer;
+	}
 
 
 	@Override
 	public void run() {
-		long currennTime = System.currentTimeMillis();
-		long stopTime = currennTime + 2000;//provide the 2hrs time it should execute 1000*60*60*2
-		while(stopTime != System.currentTimeMillis()){
-			// Do your Job Here
-			System.out.println("Start Job"+stopTime);
-			System.out.println("End Job"+System.currentTimeMillis());
-		 }
-	 }
-	 private static Date getTomorrowMorning2AM(){
+		System.out.println( "Start Job : " + System.currentTimeMillis() );
+		// Do your Job Here
+		System.out.println( "  End Job : " + System.currentTimeMillis() );
 
-		  Date date2am = new java.util.Date(); 
-			  date2am.setHours(TWO_AM); 
-			  date2am.setMinutes(ZERO_MINUTES); 
+		// immediately terminate this Timer
+		this.getTimer().cancel();
+	}
 
-			  return date2am;
-		}
-	 //call this method from your servlet init method
-	 public static void startTask(){
-		  MyTimerTask task = new MyTimerTask();
-		  Timer timer = new Timer();  
-		  timer.schedule(task,getTomorrowMorning2AM(),1000*10);// for your case u need to give 1000*60*60*24
-	 }
-	 public static void main(String args[]){
-		  startTask();
 
-	 }
+	//call this method from your servlet init method
+	public static void startTask() {
+		MyTimerTask task = new MyTimerTask();
+
+		// schedule the task after a ten-second delay
+		task.getTimer().schedule( task, 1000 * 10 );
+	}
+
+	public static void main( String args[] ) {
+		System.out.println( "MyTimerTask.main started - " + System.currentTimeMillis() );
+		startTask();
+		System.out.println( "MyTimerTask.main ended - " + System.currentTimeMillis() );
+	}
 
 }
