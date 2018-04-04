@@ -42,8 +42,12 @@ public class Portfolio {
 			BufferedReader buff = new BufferedReader( fr );
 
 			for( String dataLine = buff.readLine(); dataLine != null; dataLine = buff.readLine() ) {
-				String[] parts = dataLine.split( "," );
-				planPortfolios.put( parts[0], Integer.parseInt( parts[1] ) );
+				if( "*".equals( dataLine.substring(0,1) )) {
+					// comment skipped             System.out.println( "comment skipped:" + dataLine );
+				} else {
+					String[] parts = dataLine.split( "," );
+					planPortfolios.put( parts[0], Integer.parseInt( parts[1] ) );
+				}
 			}
 		} catch( Exception e ) {
 			e.printStackTrace();
