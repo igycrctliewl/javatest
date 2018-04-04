@@ -20,5 +20,8 @@ public class StringTest {
 
       String geog = "123459999".substring( 0, 5 );
       System.out.println( "substring test:" + geog + ":" );
+
+      String dataLine = "* this is a comment line";
+      System.out.println( "substring:" + dataLine.substring( 0, 1 ) + ":" );
    }
 }
