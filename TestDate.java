@@ -4,7 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TestDate {
-   public static void main(String[] args) {
+	public static void main( String[] args ) {
+      Date d = new Date( 1506816000000L );
+      System.out.println( d );
+   }
+
+   public static void main1(String[] args) {
       Date date = new Date();
       System.out.println( date );
       System.out.println( "other formatted:" + new SimpleDateFormat( "dd-MMM-yyyy" ).format( date ) );
