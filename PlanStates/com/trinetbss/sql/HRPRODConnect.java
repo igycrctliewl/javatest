@@ -16,7 +16,7 @@ public class HRPRODConnect extends PSConnect {
 			DriverManager.registerDriver( new oracle.jdbc.driver.OracleDriver() );
 			String userid = com.trinetbss.main.Password.getInput( "HRPROD userid: " );
 			String pswd = com.trinetbss.main.Password.getPassword( "HRPROD password: " );
-			super.vDatabaseConnection = DriverManager.getConnection( "jdbc:oracle:thin:@oxdprod1-scan:1521/hrprodsv", userid, pswd );
+			super.vDatabaseConnection = DriverManager.getConnection( "jdbc:oracle:thin:@oxdprod1-scan:1521/hrprod", userid, pswd );
 		} catch( SQLException e ) {
 			System.out.println( "HRPRODConnect SQL exception" );
 			e.printStackTrace();
