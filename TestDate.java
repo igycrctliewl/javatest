@@ -7,6 +7,8 @@ public class TestDate {
 	public static void main( String[] args ) {
       Date d = new Date( 1506816000000L );
       System.out.println( d );
+		long l = System.currentTimeMillis();
+		System.out.println( l );
    }
 
    public static void main1(String[] args) {
