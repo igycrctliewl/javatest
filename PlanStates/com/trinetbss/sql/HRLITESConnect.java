@@ -14,7 +14,8 @@ public class HRLITESConnect extends PSConnect {
 		try {
 			// Initialize and connect
 			DriverManager.registerDriver( new oracle.jdbc.driver.OracleDriver() );
-			super.vDatabaseConnection = DriverManager.getConnection( "jdbc:oracle:thin:@dbhrlites.trinet.com:1725:hrlites", "sysadm", "mhall510" );
+			super.vDatabaseConnection = DriverManager.getConnection( "jdbc:oracle:thin:@dbhrlites.trinet.com:1521:hrlites", "sysadm", "mhall510" );
+			System.out.println( "HRLITESConnect connected" );
 		} catch( SQLException e ) {
 			e.printStackTrace();
 		}
