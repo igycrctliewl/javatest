@@ -55,7 +55,7 @@ public class PlansLocations {
 					"         FROM PS_BEN_DEFN_PGM PG  " +
 					"        WHERE PG.BENEFIT_PROGRAM = OP.BENEFIT_PROGRAM " +
 					"          AND PG.EFFDT <= TO_DATE( ?, 'DD-MON-YYYY' ) )  " +
-					"   AND OP.PLAN_TYPE IN ( '10','11','14','1D','1V','23','30','31' ) " +
+					"   AND OP.PLAN_TYPE IN ( '10','11','14','1D','1V','23','30','31','A3' ) " +
 					"   AND OP.OPTION_TYPE = 'O' " +
 					"   AND NOT ( OP.ELIG_RULES_ID IN ('2009', '23GC', '236Q') ) " +
 					// EXCLUDE THE INTERNATIONAL PLAN
