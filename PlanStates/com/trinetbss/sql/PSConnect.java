@@ -22,6 +22,19 @@ public abstract class PSConnect {
 		return this.vDatabaseConnection;
 	}
 
+
+	public void testConnection() {
+		try {
+			String sqlString = "SELECT NAME FROM V$DATABASE";
+			PreparedStatement sqlStmt = this.vDatabaseConnection.prepareStatement( sqlString );
+			ResultSet rs = sqlStmt.executeQuery();
+			System.out.println( "Database connection complete" );
+		} catch( SQLException e ) {
+			System.out.println( "Database connection failed" );
+		}
+	}
+
+
 	public void close() {
 		System.out.println( "PSConnect.close()" );
 		try {
@@ -34,4 +47,12 @@ public abstract class PSConnect {
 	public static PSConnect getInstance() {
 		return PSConnect.conn;
 	}
+
+
+	public static void main( String[] args ) {
+		PSConnect psconn = PSConnect.getInstance();
+		psconn.testConnection();
+
+	}
+
 }
