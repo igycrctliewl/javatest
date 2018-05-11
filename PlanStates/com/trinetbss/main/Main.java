@@ -82,7 +82,7 @@ public class Main {
 
 
 				// associate plan with states
-				System.out.println( "Main.main() => " + planType + "," + benefitPlan + "," + planName );
+				System.out.println( "Main.main() => " + planType + "," + benefitPlan + "," + planName + "  (" + vendor + ")" );
 				for( String state : eligibleStates ) {
 					System.out.println( "Main.main() => " + planType + "," + benefitPlan + "," + planName + "," + state );
 				}
@@ -98,8 +98,6 @@ public class Main {
 			System.out.println( "Main.main() IO Exception - check status of csv output files" );
 			e.printStackTrace();
 		}
-
-		System.out.println( "Main.main() => Geo location map contained " + geoLocationStates.size() + " entries." );
 
 		PSConnect.getInstance().close();
 		bss.close();
