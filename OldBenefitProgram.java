@@ -9,15 +9,41 @@ import java.sql.SQLException;
 
 public class OldBenefitProgram {
 
+	private String benProg;
+	private java.sql.Date effdt;
+
+	public OldBenefitProgram( String benProg, String effdtStr ) {
+		this.benProg = benProg;
+		this.effdt = java.sql.Date.valueOf( effdtStr );
+	}
+
+
+	private static final Connection dbConnection = initConnection();
+	private static Connection initConnection() {
+		try {
+			return DriverManager.getConnection( "jdbc:oracle:thin:@dbhrslm06.trinet.com:1521:hrslm06", "sysadm", "mhall510" );
+		} catch( Exception e ) {
+			return null;
+		}
+	}
+	public static Connection getConnection() {
+		return dbConnection;
+	}
+
+
    public static void main( String[] args ) {
 
       System.out.println( new java.util.Date() );
+
+		OldBenefitProgram obp = new OldBenefitProgram( "001AAF", "2018-04-01" );
+		System.out.println( obp );
+
 
       try {
 
          // Initialize and connect
          DriverManager.registerDriver( new oracle.jdbc.driver.OracleDriver() );
-         Connection vDatabaseConnection = DriverManager.getConnection( "jdbc:oracle:thin:@dbhrslm06.trinet.com:1521:hrslm06", "sysadm", "mhall510" );
+         Connection vDatabaseConnection = OldBenefitProgram.getConnection();
 
          String getRatesSQL =
                 "SELECT NAME " +
