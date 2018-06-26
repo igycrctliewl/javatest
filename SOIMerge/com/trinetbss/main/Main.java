@@ -1,3 +1,4 @@
+package com.trinetbss.main;
 
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
@@ -23,6 +24,8 @@ public class OldBenefitProgram {
 		try {
 			return DriverManager.getConnection( "jdbc:oracle:thin:@dbhrslm06.trinet.com:1521:hrslm06", "sysadm", "mhall510" );
 		} catch( Exception e ) {
+			System.out.println( "The database connection was not established." );
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -30,8 +33,48 @@ public class OldBenefitProgram {
 		return dbConnection;
 	}
 
+	private static String pgmSqlStr = 
+			"SELECT  " +
+			"  BENEFIT_PROGRAM      " +
+			", EFFDT                " +
+			", DESCR                " +
+			", PF_CLIENT            " +
+			", DESCRSHORT           " +
+			", EFF_STATUS           " +
+			", PROGRAM_TYPE         " +
+			", FSA_RUN_ID           " +
+			", FSA_MAX_ANNL_PLDG    " +
+			", CURRENCY_CD          " +
+			", DFLT_EXPIRATION_DD   " +
+			", DFLT_CREDIT_RLLOVR   " +
+			", COBRA_SURCHARGE      " +
+			", COBRA_DISABL_SURCG   " +
+			", FMLA_PLAN_ID         " +
+			", SHOW_CREDIT          " +
+			", COST_FREQUENCY       " +
+			", HANDBOOK_URL_ID      " +
+			", INCLD_CNSLSTX        " +
+			", COBRA_CONTACT_ID     " +
+			", BAS_SHOW_ER_COSTS    " +
+			", BAS_SHOW_TAX_IMPCT " +
+			"FROM PS_BEN_DEFN_PGM " +
+			"WHERE BENEFIT_PROGRAM = ? " +
+			"AND EFFDT = ? ";
+	private static final PreparedStatement pgmStmt = initPgmStmt();
+	private static PreparedStatement initPgmStmt() {
+		System.out.println( "prepare statement" );
+		try {
+			return getConnection().prepareStatement( pgmSqlStr );
+		} catch( Exception e ) {
+			System.out.println( "The PGM statement was not prepared." );
+			e.printStackTrace();
+			return null;
+		}
+	}
 
-   public static void main( String[] args ) {
+
+
+	public static void main( String[] args ) {
 
       System.out.println( new java.util.Date() );
 
@@ -49,7 +92,7 @@ public class OldBenefitProgram {
                 "SELECT NAME " +
                 "  FROM V$DATABASE ";
 
-         System.out.println( ">>>>>>\n" + getRatesSQL );
+
 
 
          // Prepare statement from SQL string
