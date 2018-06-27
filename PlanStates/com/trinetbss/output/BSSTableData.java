@@ -17,7 +17,7 @@ public class BSSTableData {
 
 	public BSSTableData() {
 
-		this.plyrPlanId = 11000;
+		this.plyrPlanId = 11100;
 
 		try {
 			this.plyrPlanTbl = BSSTableData.openFile( "REALM_PLYR_PLAN.txt" );

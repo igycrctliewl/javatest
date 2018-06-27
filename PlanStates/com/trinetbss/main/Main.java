@@ -27,8 +27,8 @@ public class Main {
 	public static void main( String[] args ) {
       System.out.println( "Main.main()" );
 
-		int realmYearId = 10;
-		String benefitProgram = "108";
+		int realmYearId = 15;
+		String benefitProgram = "098";
 		String effdtStr = "01-OCT-2018";
 
 		// prepare output object
