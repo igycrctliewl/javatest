@@ -1,8 +1,9 @@
 package com.trinetbss.model;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 
-public class BenDefnPgm {
+public class BenDefnPgm implements Comparable<BenDefnPgm> {
 
 	public String benefitProgram;
 	public java.sql.Date effdt;
@@ -26,5 +27,31 @@ public class BenDefnPgm {
 	public BigDecimal cobraContactId;
 	public String basShowErCosts;
 	public String basShowTaxImpct;
-}
 
+
+	public int compareTo( BenDefnPgm other ) {
+		//returns a negative integer, zero, or a positive integer as this 
+		//is less than, equal to, or greater than other
+		try {
+			if( this.benefitProgram.compareTo( other.benefitProgram ) == 0 ) {
+				if( this.effdt.compareTo( other.effdt ) == 0 ) {
+					return 0;
+				} else {
+					return this.effdt.compareTo( other.effdt );
+				}
+			} else {
+				return this.benefitProgram.compareTo( other.benefitProgram );
+			}
+		} catch( Exception e ) {
+			return 0;
+		}
+	}
+
+
+	public static Comparator<BenDefnPgm> PgmComparator = new Comparator<BenDefnPgm>() {
+		public int compare( BenDefnPgm obj1, BenDefnPgm obj2 ) {
+			return obj1.compareTo( obj2 );
+		}
+	};
+
+}
