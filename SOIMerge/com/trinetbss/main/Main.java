@@ -1,6 +1,7 @@
 package com.trinetbss.main;
 
 import com.trinetbss.model.BenDefnOptn;
+import com.trinetbss.model.OptnMapKey;
 import com.trinetbss.dao.BenDefnOptnDao;
 
 import java.math.BigDecimal;
@@ -10,6 +11,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public class Main {
 
@@ -17,14 +24,39 @@ public class Main {
 
 		System.out.println( "Main.main()" );
 
+		System.out.println( "Getting client benefit program options..." );
 		List<BenDefnOptn> optn = BenDefnOptnDao.getAllOptnRows( "001AAF", "2018-04-01" );
 		System.out.println( "returned rows: " + optn.size() );
-
-		// test comparator and print sorted result
-		optn.sort( BenDefnOptn.PlanCovrgCdComparator );
+		Map<OptnMapKey, BenDefnOptn> newPgmMap = new HashMap<OptnMapKey, BenDefnOptn>();
+		// add unique options to the map containing the new merged benefit program
+		System.out.println( "Loading map..." );
 		for( BenDefnOptn o : optn ) {
-			System.out.println( o.benefitProgram + "<->" + o.effdt + "<->" + o.planType + "<->" + o.benefitPlan + "<->" + o.covrgCd );
+			newPgmMap.put( new OptnMapKey( o.planType, o.optionType, o.benefitPlan, o.covrgCd ), o );
 		}
+		System.out.println( "Map contains: " + newPgmMap.size() );
+
+		System.out.println( "Getting clone benefit program options..." );
+		List<BenDefnOptn> clone = BenDefnOptnDao.getAllOptnRows( "113", "2018-04-01" );
+		System.out.println( "returned rows: " + clone.size() );
+
+		// add new options from the clone benefit program to the map
+		System.out.println( "Updating map..." );
+		for( BenDefnOptn o : clone ) {
+			newPgmMap.put( new OptnMapKey( o.planType, o.optionType, o.benefitPlan, o.covrgCd ), o );
+		}
+		System.out.println( "Map contains: " + newPgmMap.size() );
+
+
+		System.out.println( "Get collection from map..." );
+		List<BenDefnOptn> newPgmList = new ArrayList( newPgmMap.values() );
+
+		// sort rows and print sorted result
+		newPgmList.sort( BenDefnOptn.PlanCovrgCdComparator );
+		for( BenDefnOptn o : newPgmList ) {
+			System.out.println( o.benefitProgram + "<->" + o.effdt + "<->" + o.planType + "<->" + o.benefitPlan + "<->" + o.covrgCd + "<->" + o.optionId );
+		}
+		System.out.println( "New benefit program contains " + newPgmList.size() + " rows." );
+		
 
    }
 

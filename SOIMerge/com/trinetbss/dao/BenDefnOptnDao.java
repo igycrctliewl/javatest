@@ -72,6 +72,10 @@ public class BenDefnOptnDao {
 	}
 
 
+	public static void getMatchingCostRows( BenDefnOptn optn ) {
+		// for each row in optn, lookup the cost rows and add to the collection
+	}
+
 
 	private static BenDefnOptn getRowObj( ResultSet dbRow ) throws SQLException {
 		BenDefnOptn obj = new BenDefnOptn();

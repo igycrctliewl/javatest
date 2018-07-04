@@ -125,26 +125,18 @@ public class BenDefnOptn implements Comparable<BenDefnOptn> {
 			//returns a negative integer, zero, or a positive integer as obj1 
 			//is less than, equal to, or greater than obj2
 			try {
-				if( obj1.benefitProgram.compareTo( obj2.benefitProgram ) == 0 ) {
-					if( obj1.effdt.compareTo( obj2.effdt ) == 0 ) {
-						if( obj1.planType.compareTo( obj2.planType ) == 0 ) {
-							if( obj1.benefitPlan.compareTo( obj2.benefitPlan ) == 0 ) {
-								if( obj1.covrgCd.compareTo( obj2.covrgCd ) == 0 ) {
-									return 0;
-								} else {
-									return BenDefnOptn.getCovrgCdEq( obj1.covrgCd ) - BenDefnOptn.getCovrgCdEq( obj2.covrgCd );
-								}
-							} else {
-								return obj1.benefitPlan.compareTo( obj2.benefitPlan );
-							}
+				if( obj1.planType.compareTo( obj2.planType ) == 0 ) {
+					if( obj1.benefitPlan.compareTo( obj2.benefitPlan ) == 0 ) {
+						if( obj1.covrgCd.compareTo( obj2.covrgCd ) == 0 ) {
+							return 0;
 						} else {
-							return obj1.planType.compareTo( obj2.planType );
+							return BenDefnOptn.getCovrgCdEq( obj1.covrgCd ) - BenDefnOptn.getCovrgCdEq( obj2.covrgCd );
 						}
 					} else {
-						return obj1.effdt.compareTo( obj2.effdt );
+						return obj1.benefitPlan.compareTo( obj2.benefitPlan );
 					}
 				} else {
-					return obj1.benefitProgram.compareTo( obj2.benefitProgram );
+					return obj1.planType.compareTo( obj2.planType );
 				}
 			} catch( Exception e ) {
 				return 0;
