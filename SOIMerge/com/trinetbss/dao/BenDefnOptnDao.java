@@ -101,9 +101,15 @@ public class BenDefnOptnDao {
 	public static void main( String[] args ) {
 		System.out.println( "BenDefnOptnDao.main()" );
 
-		List<BenDefnOptn> pgm = BenDefnOptnDao.getAllOptnRows( "001AAF", "2018-04-01" );
-		System.out.println( "returned rows: " + pgm.size() );
-		PSConnect.getInstance().close();
+		List<BenDefnOptn> optn = BenDefnOptnDao.getAllOptnRows( "001AAF", "2018-04-01" );
+		System.out.println( "returned rows: " + optn.size() );
+
+		// test comparator and print sorted result
+		optn.sort( BenDefnOptn.PlanCovrgCdComparator );
+		for( BenDefnOptn o : optn ) {
+			System.out.println( o.benefitProgram + "<->" + o.effdt + "<->" + o.planType + "<->" + o.benefitPlan + "<->" + o.covrgCd );
+		}
+
 	}
 
 }

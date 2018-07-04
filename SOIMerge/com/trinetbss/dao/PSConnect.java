@@ -44,6 +44,11 @@ public abstract class PSConnect {
 		}
 	}
 
+	public void finalize() throws Throwable {
+		this.close();
+	}
+
+
 	public static PSConnect getInstance() {
 		return PSConnect.conn;
 	}

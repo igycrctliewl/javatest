@@ -111,7 +111,7 @@ public class BenDefnPgmDao {
 
 		List<BenDefnPgm> pgm = BenDefnPgmDao.getAllPgmRows( "001AAF", "2018-04-01" );
 		System.out.println( "returned rows: " + pgm.size() );
-		PSConnect.getInstance().close();
+
 	}
 
 }

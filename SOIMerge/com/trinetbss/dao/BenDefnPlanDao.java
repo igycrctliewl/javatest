@@ -105,7 +105,7 @@ public class BenDefnPlanDao {
 		for( BenDefnPlan p : plan ) {
 			System.out.println( p.benefitProgram + "<->" + p.effdt + "<->" + p.planType );
 		}
-		PSConnect.getInstance().close();
+
 	}
 
 }
