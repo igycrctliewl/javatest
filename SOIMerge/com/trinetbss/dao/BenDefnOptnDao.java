@@ -40,7 +40,7 @@ public class BenDefnOptnDao {
 			"AND EFFDT = ? ";
 	private static final PreparedStatement optnStmt = initOptnStmt();
 	private static PreparedStatement initOptnStmt() {
-		System.out.println( "prepare statement" );
+		System.out.println( "prepare OPTN statement" );
 		try {
 			return psconn.getConnection().prepareStatement( optnSqlStr );
 		} catch( Exception e ) {
@@ -73,7 +73,16 @@ public class BenDefnOptnDao {
 
 
 	public static void getMatchingCostRows( BenDefnOptn optn ) {
+		// lookup the cost rows and add to the BenDefnOptn object
+		optn.cost = BenDefnCostDao.getCostRowsForOptn( optn );
+	}
+
+
+	public static void getMatchingCostRows( List<BenDefnOptn> optns ) {
 		// for each row in optn, lookup the cost rows and add to the collection
+		for( BenDefnOptn op : optns ) {
+			getMatchingCostRows( op );
+		}
 	}
 
 

@@ -1,5 +1,6 @@
 package com.trinetbss.main;
 
+import com.trinetbss.model.BenDefnCost;
 import com.trinetbss.model.BenDefnOptn;
 import com.trinetbss.model.OptnMapKey;
 import com.trinetbss.dao.BenDefnOptnDao;
@@ -28,12 +29,28 @@ public class Main {
 		List<BenDefnOptn> optn = BenDefnOptnDao.getAllOptnRows( "001AAF", "2018-04-01" );
 		System.out.println( "returned rows: " + optn.size() );
 		Map<OptnMapKey, BenDefnOptn> newPgmMap = new HashMap<OptnMapKey, BenDefnOptn>();
+
+		// get cost rows for optn rows in the collection
+		System.out.println( "Getting matching cost rows..." );
+		BenDefnOptnDao.getMatchingCostRows( optn );
+
+
 		// add unique options to the map containing the new merged benefit program
 		System.out.println( "Loading map..." );
 		for( BenDefnOptn o : optn ) {
-			newPgmMap.put( new OptnMapKey( o.planType, o.optionType, o.benefitPlan, o.covrgCd ), o );
+			newPgmMap.put( OptnMapKey.getInstance( o.planType, o.optionType, o.benefitPlan, o.covrgCd ), o );
 		}
 		System.out.println( "Map contains: " + newPgmMap.size() );
+
+/*		// print all options and associated cost rows
+		for( BenDefnOptn o : optn ) {
+			System.out.println( o.benefitProgram + "<->" + o.effdt + "<->" + o.planType + "<->" + o.benefitPlan + "<->" + o.covrgCd + "<->" + o.optionId );
+			for( BenDefnCost c : o.cost ) {
+				System.out.println( "         " + c.costId + "<->" + c.rateType + "<->" + c.rateTblId );
+			}
+		}
+*/
+
 
 		System.out.println( "Getting clone benefit program options..." );
 		List<BenDefnOptn> clone = BenDefnOptnDao.getAllOptnRows( "113", "2018-04-01" );
@@ -42,7 +59,7 @@ public class Main {
 		// add new options from the clone benefit program to the map
 		System.out.println( "Updating map..." );
 		for( BenDefnOptn o : clone ) {
-			newPgmMap.put( new OptnMapKey( o.planType, o.optionType, o.benefitPlan, o.covrgCd ), o );
+			newPgmMap.put( OptnMapKey.getInstance( o.planType, o.optionType, o.benefitPlan, o.covrgCd ), o );
 		}
 		System.out.println( "Map contains: " + newPgmMap.size() );
 
