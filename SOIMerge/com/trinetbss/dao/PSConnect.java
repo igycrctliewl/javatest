@@ -1,9 +1,7 @@
 package com.trinetbss.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class PSConnect {
@@ -27,7 +25,7 @@ public abstract class PSConnect {
 		try {
 			String sqlString = "SELECT NAME FROM V$DATABASE";
 			PreparedStatement sqlStmt = this.vDatabaseConnection.prepareStatement( sqlString );
-			ResultSet rs = sqlStmt.executeQuery();
+			sqlStmt.executeQuery();
 			System.out.println( "Database connection complete" );
 		} catch( SQLException e ) {
 			System.out.println( "Database connection failed" );

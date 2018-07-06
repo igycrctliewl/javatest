@@ -1,7 +1,5 @@
 package com.trinetbss.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +11,6 @@ import com.trinetbss.model.BenDefnOptn;
 public class BenDefnOptnDao {
 
 	private static PSConnect psconn = PSConnect.getInstance();
-	private static Connection dbConnection = psconn.getConnection();
 
 	private static String optnSqlStr =
 			"SELECT  " +
