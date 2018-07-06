@@ -1,11 +1,7 @@
 package com.trinetbss.model;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 
 
 public class OptnMapKey {
@@ -15,16 +11,17 @@ public class OptnMapKey {
 	private String benefitPlan;
 	private String covrgCd;
 
+	@SuppressWarnings("rawtypes")
 	private static Map<String,Map> planTypeMap = new HashMap<String,Map>();
 
 	/* This nested map structure will make sure that a key object is only created once for a particular
       set of values.  This way, the OptnMapKey can be used as a key for the map of OPTN rows*/
 	public static OptnMapKey getInstance( String planType, String optionType, String benefitPlan, String covrgCd ) {
 		if( OptnMapKey.planTypeMap.containsKey( planType ) ) {
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			Map<String,Map> optionMap = OptnMapKey.planTypeMap.get( planType );
 			if( optionMap.containsKey( optionType ) ) {
-				@SuppressWarnings("unchecked")
+				@SuppressWarnings({ "unchecked", "rawtypes" })
 				Map<String,Map> covrgCdMap = optionMap.get( optionType );
 				if( covrgCdMap.containsKey( covrgCd ) ) {
 					@SuppressWarnings("unchecked")
@@ -52,6 +49,7 @@ public class OptnMapKey {
 				OptnMapKey newKey = new OptnMapKey( planType, optionType, benefitPlan, covrgCd );
 				Map<String,OptnMapKey> benefPlanMap = new HashMap<String,OptnMapKey>();
 				benefPlanMap.put( benefitPlan, newKey );
+				@SuppressWarnings("rawtypes")
 				Map<String,Map> covrgCdMap = new HashMap<String,Map>();
 				covrgCdMap.put( covrgCd, benefPlanMap );
 				optionMap.put( optionType, covrgCdMap );
@@ -62,8 +60,10 @@ public class OptnMapKey {
 			OptnMapKey newKey = new OptnMapKey( planType, optionType, benefitPlan, covrgCd );
 			Map<String,OptnMapKey> benefPlanMap = new HashMap<String,OptnMapKey>();
 			benefPlanMap.put( benefitPlan, newKey );
+			@SuppressWarnings("rawtypes")
 			Map<String,Map> covrgCdMap = new HashMap<String,Map>();
 			covrgCdMap.put( covrgCd, benefPlanMap );
+			@SuppressWarnings("rawtypes")
 			Map<String,Map> optionMap = new HashMap<String,Map>();
 			optionMap.put( optionType, covrgCdMap );
 			OptnMapKey.planTypeMap.put( planType, optionMap );
