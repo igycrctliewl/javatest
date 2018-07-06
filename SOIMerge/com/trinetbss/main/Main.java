@@ -42,19 +42,17 @@ public class Main {
 		}
 		System.out.println( "Map contains: " + newPgmMap.size() );
 
-/*		// print all options and associated cost rows
-		for( BenDefnOptn o : optn ) {
-			System.out.println( o.benefitProgram + "<->" + o.effdt + "<->" + o.planType + "<->" + o.benefitPlan + "<->" + o.covrgCd + "<->" + o.optionId );
-			for( BenDefnCost c : o.cost ) {
-				System.out.println( "         " + c.costId + "<->" + c.rateType + "<->" + c.rateTblId );
-			}
-		}
-*/
 
 
+		// get the OPTN rows for the clone benefit program
 		System.out.println( "Getting clone benefit program options..." );
 		List<BenDefnOptn> clone = BenDefnOptnDao.getAllOptnRows( "113", "2018-04-01" );
 		System.out.println( "returned rows: " + clone.size() );
+
+		// get the cost rows for the clone benefit program
+		System.out.println( "Getting clone benefit cost rows..." );
+		BenDefnOptnDao.getMatchingCostRows( clone );
+
 
 		// add new options from the clone benefit program to the map
 		System.out.println( "Updating map..." );
@@ -65,15 +63,39 @@ public class Main {
 
 
 		System.out.println( "Get collection from map..." );
-		List<BenDefnOptn> newPgmList = new ArrayList( newPgmMap.values() );
-
-		// sort rows and print sorted result
+		List<BenDefnOptn> newPgmList = new ArrayList<BenDefnOptn>( newPgmMap.values() );
+		// sort rows before re-sequence
 		newPgmList.sort( BenDefnOptn.PlanCovrgCdComparator );
+
+		// re-sequence options
+		BigDecimal newOptionId = BigDecimal.ONE;
+		BigDecimal newCostId = BigDecimal.ONE;
+		String prevPlanType = "  ";
+		for( BenDefnOptn o : newPgmList ) {
+			if( ! prevPlanType.equals( o.planType ) ) {
+				prevPlanType = o.planType;
+				newOptionId = BigDecimal.ONE;
+				newCostId = BigDecimal.ONE;
+			}
+			o.optionId = newOptionId;
+			for( BenDefnCost c : o.cost ) {
+				c.optionId = newOptionId;
+				c.costId = newCostId;
+				newCostId = newCostId.add( BigDecimal.ONE );
+			}
+			newOptionId = newOptionId.add( BigDecimal.ONE );
+		}
+
+
+
+		// print result
 		for( BenDefnOptn o : newPgmList ) {
 			System.out.println( o.benefitProgram + "<->" + o.effdt + "<->" + o.planType + "<->" + o.benefitPlan + "<->" + o.covrgCd + "<->" + o.optionId );
+			for( BenDefnCost c : o.cost ) {
+				System.out.println( "         " + c.costId + "<->" + c.rateType + "<->" + c.rateTblId );
+			}
 		}
 		System.out.println( "New benefit program contains " + newPgmList.size() + " rows." );
-		
 
    }
 
