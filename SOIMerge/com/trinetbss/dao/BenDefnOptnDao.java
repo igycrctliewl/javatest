@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.trinetbss.model.BenDefnOptn;
+import com.trinetbss.model.BenDefnPgm;
 
 public class BenDefnOptnDao {
 
@@ -49,11 +50,19 @@ public class BenDefnOptnDao {
 
 
 	public static List<BenDefnOptn> getAllOptnRows( String benProg, String effdtStr ) {
+		BenDefnPgm pgm = new BenDefnPgm();
+		pgm.benefitProgram = benProg;
+		pgm.effdt = java.sql.Date.valueOf( effdtStr );
+		return getAllOptnRows( pgm );
+	}
+
+
+	public static List<BenDefnOptn> getAllOptnRows( BenDefnPgm pgm ) {
 
 		List<BenDefnOptn> result = new ArrayList<BenDefnOptn>();
 		try {
-			optnStmt.setString( 1, benProg );
-			optnStmt.setDate( 2, java.sql.Date.valueOf( effdtStr ) );
+			optnStmt.setString( 1, pgm.benefitProgram );
+			optnStmt.setDate( 2, pgm.effdt );
 			ResultSet queryResult = optnStmt.executeQuery();
 
 			while( queryResult.next() ) {
@@ -68,13 +77,25 @@ public class BenDefnOptnDao {
 		return result;
 	}
 
-
+	/**
+	 * Deprecated because of poor performance.  Instead, look for the matchCostWithOptn
+	 * method of BenefitProgramStructure
+	 * 
+	 * @param optn A single OPTN row object
+	 */
+	@Deprecated
 	public static void getMatchingCostRows( BenDefnOptn optn ) {
 		// lookup the cost rows and add to the BenDefnOptn object
 		optn.cost = BenDefnCostDao.getCostRowsForOptn( optn );
 	}
 
-
+	/**
+	 * Deprecated because of poor performance.  Instead, look for the matchCostWithOptn
+	 * method of BenefitProgramStructure
+	 * 
+	 * @param optns A List of OPTN row objects
+	 */
+	@Deprecated
 	public static void getMatchingCostRows( List<BenDefnOptn> optns ) {
 		// for each row in optn, lookup the cost rows and add to the collection
 		for( BenDefnOptn op : optns ) {

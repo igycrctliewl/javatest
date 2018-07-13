@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.trinetbss.model.BenDefnCost;
 import com.trinetbss.model.BenDefnOptn;
+import com.trinetbss.model.BenDefnPgm;
 
 public class BenDefnCostDao {
 
@@ -73,11 +74,19 @@ public class BenDefnCostDao {
 
 
 	public static List<BenDefnCost> getAllCostRows( String benProg, String effdtStr ) {
+		BenDefnPgm pgm = new BenDefnPgm();
+		pgm.benefitProgram = benProg;
+		pgm.effdt = java.sql.Date.valueOf( effdtStr );
+		return getAllCostRows( pgm );
+	}
+
+
+	public static List<BenDefnCost> getAllCostRows( BenDefnPgm pgm ) {
 
 		List<BenDefnCost> result = new ArrayList<BenDefnCost>();
 		try {
-			costStmt.setString( 1, benProg );
-			costStmt.setDate( 2, java.sql.Date.valueOf( effdtStr ) );
+			costStmt.setString( 1, pgm.benefitProgram );
+			costStmt.setDate( 2, pgm.effdt );
 			ResultSet queryResult = costStmt.executeQuery();
 
 			while( queryResult.next() ) {

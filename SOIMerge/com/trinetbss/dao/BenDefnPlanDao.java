@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.trinetbss.model.BenDefnPgm;
 import com.trinetbss.model.BenDefnPlan;
 
 public class BenDefnPlanDao {
@@ -47,11 +48,19 @@ public class BenDefnPlanDao {
 
 
 	public static List<BenDefnPlan> getAllPlanRows( String benProg, String effdtStr ) {
+		BenDefnPgm pgm = new BenDefnPgm();
+		pgm.benefitProgram = benProg;
+		pgm.effdt = java.sql.Date.valueOf( effdtStr );
+		return getAllPlanRows( pgm );
+	}
+
+
+	public static List<BenDefnPlan> getAllPlanRows( BenDefnPgm pgm ) {
 
 		List<BenDefnPlan> result = new ArrayList<BenDefnPlan>();
 		try {
-			planStmt.setString( 1, benProg );
-			planStmt.setDate( 2, java.sql.Date.valueOf( effdtStr ) );
+			planStmt.setString( 1, pgm.benefitProgram );
+			planStmt.setDate( 2, pgm.effdt );
 			ResultSet queryResult = planStmt.executeQuery();
 
 			while( queryResult.next() ) {

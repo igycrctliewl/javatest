@@ -3,7 +3,13 @@ package com.trinetbss.model;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * This class is tentatively deprecated since the old method of matching COST rows to OPTN rows
+ * is also deprecated.  This class was only required for that old matching process.
+ * @author mbrothers
+ *
+ */
+@Deprecated
 public class OptnMapKey {
 
 	private String planType;

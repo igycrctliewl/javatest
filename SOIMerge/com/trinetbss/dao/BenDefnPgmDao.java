@@ -66,10 +66,30 @@ public class BenDefnPgmDao {
 			}
 		} catch( SQLException e ) {
 			System.out.println( "BenDefnPgmDao.getAllPgmRows() SQL Exception" );
+			System.out.println( e.getMessage() );
 			e.printStackTrace();
 		}
 
 		return result;
+	}
+
+
+	public static BenDefnPgm getPgmRow( BenDefnPgm pgm ) {
+
+		try {
+			pgmStmt.setString( 1, pgm.benefitProgram );
+			pgmStmt.setDate( 2, pgm.effdt );
+			ResultSet queryResult = pgmStmt.executeQuery();
+
+			while( queryResult.next() ) {
+				pgm = getRowObj( queryResult );
+			}
+		} catch( SQLException e ) {
+			System.out.println( "BenDefnPgmDao.getPgmRow() SQL Exception" );
+			System.out.println( e.getMessage() );
+			e.printStackTrace();
+		}
+		return pgm;
 	}
 
 
