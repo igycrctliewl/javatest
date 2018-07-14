@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class is tentatively deprecated since the old method of matching COST rows to OPTN rows
- * is also deprecated.  This class was only required for that old matching process.
+ * This class provides a structure for building a unique OPTN row key.  The combination of PLAN_TYPE,
+ * OPTION_TYPE, BENEFIT_PLAN and COVRG_CD constitute a unique option.  This key can be used as the
+ * key to a Map of option rows.
  * @author mbrothers
  *
  */
-@Deprecated
 public class OptnMapKey {
 
 	private String planType;
@@ -20,8 +20,17 @@ public class OptnMapKey {
 	@SuppressWarnings("rawtypes")
 	private static Map<String,Map> planTypeMap = new HashMap<String,Map>();
 
-	/* This nested map structure will make sure that a key object is only created once for a particular
-      set of values.  This way, the OptnMapKey can be used as a key for the map of OPTN rows*/
+	/**
+	 * This static method ensures that one and only one OptnMapKey object will be created for any
+	 * given combination of key values.  The object returned by this method can be used as a key
+	 * to a Map of OptnMapKey keys to BenDefnOptn values.
+	 * @param planType
+	 * @param optionType
+	 * @param benefitPlan
+	 * @param covrgCd
+	 * @return the previously created instance of OptnMapKey matching this combination of keys, or a new
+	 * instance of OptnMapKey if this combination of keys was never used before.
+	 */
 	public static OptnMapKey getInstance( String planType, String optionType, String benefitPlan, String covrgCd ) {
 		if( OptnMapKey.planTypeMap.containsKey( planType ) ) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })

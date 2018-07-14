@@ -3,7 +3,7 @@ package com.trinetbss.model;
 import java.math.BigDecimal;
 import java.util.Comparator;
 
-public class BenDefnPlan implements Comparable<BenDefnPlan> {
+public class BenDefnPlan implements Cloneable, Comparable<BenDefnPlan> {
 
 	public String benefitProgram;
 	public java.sql.Date effdt;
@@ -24,7 +24,7 @@ public class BenDefnPlan implements Comparable<BenDefnPlan> {
 
 
 	public int compareTo( BenDefnPlan other ) {
-		//returns a negative integer, zero, or a positive integer as this 
+		//returns a negative integer, zero, or a positive integer as this
 		//is less than, equal to, or greater than other
 		try {
 			if( this.benefitProgram.compareTo( other.benefitProgram ) == 0 ) {
@@ -43,6 +43,28 @@ public class BenDefnPlan implements Comparable<BenDefnPlan> {
 		} catch( Exception e ) {
 			return 0;
 		}
+	}
+
+	@Override
+	public BenDefnPlan clone() {
+		BenDefnPlan newPlan = new BenDefnPlan();
+		newPlan.benefitProgram   = this.benefitProgram;
+		newPlan.effdt            = this.effdt;
+		newPlan.planType         = this.planType;
+		newPlan.displayPlnSeq    = this.displayPlnSeq;
+		newPlan.minAnnualContrib = this.minAnnualContrib;
+		newPlan.maxAnnualContrib = this.maxAnnualContrib;
+		newPlan.waiveCoverage    = this.waiveCoverage;
+		newPlan.restrictEntryMm  = this.restrictEntryMm;
+		newPlan.eventRulesId     = this.eventRulesId;
+		newPlan.cobraPlan        = this.cobraPlan;
+		newPlan.hipaaPlan        = this.hipaaPlan;
+		newPlan.collectDepben    = this.collectDepben;
+		newPlan.collectFunds     = this.collectFunds;
+		newPlan.showPlanType     = this.showPlanType;
+		newPlan.handbookUrlId    = this.handbookUrlId;
+		newPlan.depRuleId        = this.depRuleId;
+		return newPlan;
 	}
 
 

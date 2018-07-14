@@ -41,7 +41,7 @@ public class BenDefnPgmDao {
 			"AND EFFDT = ? ";
 	private static final PreparedStatement pgmStmt = initPgmStmt();
 	private static PreparedStatement initPgmStmt() {
-		System.out.println( "prepare statement" );
+		System.out.println( "prepare PGM statement" );
 		try {
 			return psconn.getConnection().prepareStatement( pgmSqlStr );
 		} catch( Exception e ) {

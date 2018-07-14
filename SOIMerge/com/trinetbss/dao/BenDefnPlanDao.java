@@ -36,7 +36,7 @@ public class BenDefnPlanDao {
 			"AND EFFDT = ? ";
 	private static final PreparedStatement planStmt = initPlanStmt();
 	private static PreparedStatement initPlanStmt() {
-		System.out.println( "prepare statement" );
+		System.out.println( "prepare PLAN statement" );
 		try {
 			return psconn.getConnection().prepareStatement( planSqlStr );
 		} catch( Exception e ) {
