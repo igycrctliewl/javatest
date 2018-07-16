@@ -40,7 +40,9 @@ public class BenDefnOptnDao {
 	private static PreparedStatement initOptnStmt() {
 		System.out.println( "prepare OPTN statement" );
 		try {
-			return psconn.getConnection().prepareStatement( optnSqlStr );
+			PreparedStatement st = psconn.getConnection().prepareStatement( optnSqlStr );
+			st.setFetchSize( 10000 );
+			return st;
 		} catch( Exception e ) {
 			System.out.println( "The OPTN statement was not prepared." );
 			e.printStackTrace();
@@ -80,7 +82,7 @@ public class BenDefnOptnDao {
 	/**
 	 * Deprecated because of poor performance.  Instead, look for the matchCostWithOptn
 	 * method of BenefitProgramStructure
-	 * 
+	 *
 	 * @param optn A single OPTN row object
 	 */
 	@Deprecated
@@ -92,7 +94,7 @@ public class BenDefnOptnDao {
 	/**
 	 * Deprecated because of poor performance.  Instead, look for the matchCostWithOptn
 	 * method of BenefitProgramStructure
-	 * 
+	 *
 	 * @param optns A List of OPTN row objects
 	 */
 	@Deprecated

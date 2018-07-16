@@ -34,7 +34,9 @@ public class BenDefnCostDao {
 	private static PreparedStatement initCostStmt() {
 		System.out.println( "prepare COST statement" );
 		try {
-			return psconn.getConnection().prepareStatement( costSqlStr );
+			PreparedStatement st = psconn.getConnection().prepareStatement( costSqlStr );
+			st.setFetchSize( 10000 );
+			return st;
 		} catch( Exception e ) {
 			System.out.println( "The COST statement was not prepared." );
 			e.printStackTrace();
