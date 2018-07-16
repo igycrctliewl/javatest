@@ -92,6 +92,7 @@ public class SQLFromJava {
 
          // Prepare statement from SQL string
          PreparedStatement sqlStmt = vDatabaseConnection.prepareStatement( getRatesSQL );
+			sqlStmt.setFetchSize( 10000 );
 
 			{
 				long now = System.currentTimeMillis();
