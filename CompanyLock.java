@@ -1,6 +1,7 @@
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class CompanyLock {
 	private String companyCode;
@@ -16,16 +17,19 @@ public class CompanyLock {
 
 	private static Map<String,CompanyLock> lockObjMap = new HashMap<>();
 
-	public static CompanyLock getLockObj( String companyCode ) {
-		if( lockObjMap.containsKey( companyCode ) ) {
-			System.out.println( "return lock object for " + companyCode );
-			return lockObjMap.get( companyCode );
-		} else {
-			System.out.println( "create and return lock object for " + companyCode );
-			CompanyLock cLock = new CompanyLock( companyCode );
-			lockObjMap.put( companyCode, cLock );
-			return cLock;
+	public synchronized static CompanyLock getLockObj( String companyCode ) {
+		// is there already a String key that is equals() to this key?
+		Set<String> keys = lockObjMap.keySet();
+		for( String s : keys ) {
+			if( s.equals( companyCode ) ) {
+				return lockObjMap.get( s );
+			}
 		}
+		// there was no match so create a new lock object and add to the map
+		System.out.println( "create and return lock object for " + companyCode );
+		CompanyLock cLock = new CompanyLock( companyCode );
+		lockObjMap.put( companyCode, cLock );
+		return cLock;
 	}
 
 
@@ -45,18 +49,4 @@ public class CompanyLock {
 	}
 
 
-	public static void mainBad( String[] args ) {
-		CompanyLock lock = new CompanyLock( "G9P" );
-		System.out.println( lock );
-		lock = new CompanyLock( "4M7" );
-		System.out.println( lock );
-		lock = new CompanyLock( "G49" );
-		System.out.println( lock );
-		lock = new CompanyLock( "G9P" );
-		System.out.println( lock );
-		lock = new CompanyLock( "OVO" );
-		System.out.println( lock );
-		lock = new CompanyLock( "G49" );
-		System.out.println( lock );
-	}
 }
