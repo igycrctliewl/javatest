@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class TestDate {
 	public static void main( String[] args ) {
-      Date d = new Date( 1506816000000L );
+      Date d = new Date( 1514764800000L );
       System.out.println( d );
 		long l = System.currentTimeMillis();
 		System.out.println( l );
