@@ -67,6 +67,10 @@ public class BenDefnPlan implements Cloneable, Comparable<BenDefnPlan> {
 		return newPlan;
 	}
 
+	@Override
+	public String toString() {
+		return super.toString() + " [" + this.planType + "]";
+	}
 
 	public static Comparator<BenDefnPlan> PlanComparator = new Comparator<BenDefnPlan>() {
 		public int compare( BenDefnPlan obj1, BenDefnPlan obj2 ) {

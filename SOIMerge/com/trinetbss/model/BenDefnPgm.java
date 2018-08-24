@@ -47,6 +47,55 @@ public class BenDefnPgm implements Comparable<BenDefnPgm> {
 		}
 	}
 
+	public String toCsvOutput() {
+		final String QUOTE = "\"";
+		final String COMMA = ",";
+		String csv = new StringBuilder()
+				.append(QUOTE).append( this.benefitProgram ).append(QUOTE)
+				.append(COMMA)
+				.append( effdt.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.descr ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.pfClient ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.descrShort ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.effStatus ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.programType ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.fsaRunId ).append(QUOTE)
+				.append(COMMA)
+				.append( fsaMaxAnnlPldg.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.currencyCd ).append(QUOTE)
+				.append(COMMA)
+				.append( dfltExpirationDd.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.dfltCreditRllovr ).append(QUOTE)
+				.append(COMMA)
+				.append( cobraSurcharge.toString() )
+				.append(COMMA)
+				.append( cobraDisablSurcg.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.fmlaPlanId ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.showCredit ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.costFrequency ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.HandbookUrlId ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.incldCnslstx ).append(QUOTE)
+				.append(COMMA)
+				.append( cobraContactId.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.basShowErCosts ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.basShowTaxImpct ).append(QUOTE).toString();
+		return csv;
+	}
 
 	public static Comparator<BenDefnPgm> PgmComparator = new Comparator<BenDefnPgm>() {
 		public int compare( BenDefnPgm obj1, BenDefnPgm obj2 ) {

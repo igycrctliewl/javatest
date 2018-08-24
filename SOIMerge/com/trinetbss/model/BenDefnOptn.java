@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 
-public class BenDefnOptn implements Comparable<BenDefnOptn> {
+public class BenDefnOptn implements Cloneable, Comparable<BenDefnOptn> {
 
 	public String benefitProgram;
 	public java.sql.Date effdt;
@@ -55,8 +55,32 @@ public class BenDefnOptn implements Comparable<BenDefnOptn> {
 		}
 	}
 
+	@Override
+	public BenDefnOptn clone() {
+		BenDefnOptn newOptn = new BenDefnOptn();
+		newOptn.benefitProgram   = this.benefitProgram;
+		newOptn.effdt            = this.effdt;
+		newOptn.planType         = this.planType;
+		newOptn.optionId         = this.optionId;
+		newOptn.displayOptSeq    = this.displayOptSeq;
+		newOptn.optionType       = this.optionType;
+		newOptn.benefitPlan      = this.benefitPlan;
+		newOptn.covrgCd          = this.covrgCd;
+		newOptn.optionCd         = this.optionCd;
+		newOptn.optionLvl        = this.optionLvl;
+		newOptn.dedcd            = this.dedcd;
+		newOptn.dfltOptionInd    = this.dfltOptionInd;
+		newOptn.eligRulesId      = this.eligRulesId;
+		newOptn.locationTblId    = this.locationTblId;
+		newOptn.crossPlanType    = this.crossPlanType;
+		newOptn.crossBenefPlan   = this.crossBenefPlan;
+		newOptn.coverageLimitPct = this.coverageLimitPct;
+		newOptn.crossPlnDpndChk  = this.crossPlnDpndChk;
+		newOptn.cost = new ArrayList<BenDefnCost>( this.cost );
+		return newOptn;
+	}
 
-	public static int getCovrgCdEq( String covrgCd ) {
+	private static int getCovrgCdEq( String covrgCd ) {
 		if( "1".equals( covrgCd ) )
 			return 1;
 		else if( "2".equals( covrgCd ) )

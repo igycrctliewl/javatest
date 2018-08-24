@@ -1,5 +1,7 @@
 package com.trinetbss.model;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,15 +64,16 @@ public class BenefitProgramStructure {
 	 * Merge the source benefit structure into this benefit structure
 	 * @param mergeSrc the source benefit structure to be merged into this object
 	 */
-	public void merge( BenefitProgramStructure mergeSrc ) {
+	public BenefitProgramStructure merge( BenefitProgramStructure mergeSrc ) {
+		System.out.println( "BenefitProgramStructure.merge()" );
 		// merge PLAN
-		// first, create a map of the PLAN rows for this object
+		// first, create a map of the PLAN rows for this object and load from this instance
 		Map<String,BenDefnPlan> planMap = new HashMap<String,BenDefnPlan>();
 		for( BenDefnPlan p : this.plans ) {
 			planMap.put( p.planType, p );
 		}
 
-		// second, add rows from the source that are not found in this benefit program structure
+		// second, add rows from the merge source that are not found in this benefit program structure instance
 		for( BenDefnPlan p : mergeSrc.plans ) {
 			if( planMap.containsKey( p.planType ) ) {
 				// leave the existing row alone
@@ -82,13 +85,62 @@ public class BenefitProgramStructure {
 			}
 		}
 
-		// third, get Collection of values from map and replace this collection of PLAN rows
+		// third, get Collection of values from map and replace PLAN rows in this instance
+		this.plans = new ArrayList<BenDefnPlan>( planMap.values() );
+
+		// merge OPTN
+		// first, create a map of the OPTN rows for this object and load from this instance
+		Map<OptnMapKey,BenDefnOptn> optnMap = new HashMap<OptnMapKey,BenDefnOptn>();
+		for( BenDefnOptn o : this.optns ) {
+			optnMap.putIfAbsent( OptnMapKey.getInstance( o.planType, o.optionType, o.benefitPlan, o.covrgCd ), o );
+		}
+
+		// second, add rows from the merge source that are not found in this benefit program structure instance
+		for( BenDefnOptn o : mergeSrc.optns ) {
+			if( optnMap.containsKey( OptnMapKey.getInstance( o.planType, o.optionType, o.benefitPlan, o.covrgCd ) ) ) {
+				// leave the existing row alone
+			} else {
+				BenDefnOptn newRow = o.clone();
+				newRow.benefitProgram = this.pgm.benefitProgram;
+				newRow.effdt = this.pgm.effdt;
+				optnMap.put( OptnMapKey.getInstance( o.planType, o.optionType, o.benefitPlan, o.covrgCd ), o );
+			}
+		}
+
+		// third, get Collection of values from map and replace OPTN rows in this instance
+		this.optns = new ArrayList<BenDefnOptn>( optnMap.values() );
 
 
-		//merge OPTN
-		//if desired, rebuild List<COST> from OPTN collection
+		// rebuild List<COST> from OPTN collection
+		this.costs = new ArrayList<BenDefnCost>();
+		for( BenDefnOptn o : this.optns ) {
+			for( BenDefnCost c : o.cost ) {
+				this.costs.add( c );
+			}
+		}
+		
+		
+		return this;
 	}
 
+	
+	
+	
+	public void writeBenProgStrucToFile() {
+		System.out.println( "BenefitProgramStructure.writeBenProgStrucToFile()" );
+		try {
+			FileWriter fw = new FileWriter( "C:\\temp\\" + this.pgm.benefitProgram + ".txt" );
+			fw.write( this.pgm.toCsvOutput() );
+			fw.flush();
+			fw.close();
+		} catch( IOException e ) {
+			System.out.println( "An output file was requested, but could not be produced.  See Java messages for details." );
+			e.printStackTrace();
+		}
+	}
+
+	
+	
 	public String toString() {
 		return super.toString() + "-" + this.pgm.benefitProgram;
 	}
@@ -107,5 +159,8 @@ public class BenefitProgramStructure {
 		clone.matchCostWithOptn();
 
 		struc.merge( clone );
+		struc.writeBenProgStrucToFile();
+		
+		System.out.println( "BenefitProgramStructure.main finished" );
 	}
 }
