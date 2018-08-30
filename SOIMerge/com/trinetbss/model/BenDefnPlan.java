@@ -67,6 +67,101 @@ public class BenDefnPlan implements Cloneable, Comparable<BenDefnPlan> {
 		return newPlan;
 	}
 
+	public String toCsvOutput() {
+		final String QUOTE = "\"";
+		final String COMMA = ",";
+		String csv = new StringBuilder()
+				.append(QUOTE).append( this.benefitProgram ).append(QUOTE)
+				.append(COMMA)
+				.append( this.effdt.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.planType ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.displayPlnSeq ).append(QUOTE)
+				.append(COMMA)
+				.append( this.minAnnualContrib.toString() )
+				.append(COMMA)
+				.append( this.maxAnnualContrib.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.waiveCoverage ).append(QUOTE)
+				.append(COMMA)
+				.append( this.restrictEntryMm.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.eventRulesId ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.cobraPlan ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.hipaaPlan ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.collectDepben ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.collectFunds ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.showPlanType ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.handbookUrlId ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.depRuleId ).append(QUOTE).toString();
+		return csv;
+	}
+
+	public String toInsertStatement() {
+		final String QUOTE = "'";
+		final String COMMA = ",";
+		String sql = new StringBuilder()
+				.append( "INSERT INTO PS_BEN_DEFN_PLAN (" )
+				.append( " BENEFIT_PROGRAM" )
+				.append(COMMA).append( " EFFDT" )
+				.append(COMMA).append( " PLAN_TYPE" )
+				.append(COMMA).append( " DISPLAY_PLN_SEQ" )
+				.append(COMMA).append( " MIN_ANNUAL_CONTRIB" )
+				.append(COMMA).append( " MAX_ANNUAL_CONTRIB" )
+				.append(COMMA).append( " WAIVE_COVERAGE" )
+				.append(COMMA).append( " RESTRICT_ENTRY_MM" )
+				.append(COMMA).append( " EVENT_RULES_ID" )
+				.append(COMMA).append( " COBRA_PLAN" )
+				.append(COMMA).append( " HIPAA_PLAN" )
+				.append(COMMA).append( " COLLECT_DEPBEN" )
+				.append(COMMA).append( " COLLECT_FUNDS" )
+				.append(COMMA).append( " SHOW_PLAN_TYPE" )
+				.append(COMMA).append( " HANDBOOK_URL_ID" )
+				.append(COMMA).append( " DEP_RULE_ID" )
+				.append(" ) VALUES ( ")
+				.append(QUOTE).append( this.benefitProgram ).append(QUOTE)
+				.append(COMMA)
+				.append("DATE ").append(QUOTE).append( this.effdt.toString() ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.planType ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.displayPlnSeq ).append(QUOTE)
+				.append(COMMA)
+				.append( this.minAnnualContrib.toString() )
+				.append(COMMA)
+				.append( this.maxAnnualContrib.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.waiveCoverage ).append(QUOTE)
+				.append(COMMA)
+				.append( this.restrictEntryMm.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.eventRulesId ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.cobraPlan ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.hipaaPlan ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.collectDepben ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.collectFunds ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.showPlanType ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.handbookUrlId ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.depRuleId ).append(QUOTE)
+				.append(" );").toString();
+		return sql;
+	}
+
 	@Override
 	public String toString() {
 		return super.toString() + " [" + this.planType + "]";

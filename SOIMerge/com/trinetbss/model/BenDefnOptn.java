@@ -76,10 +76,62 @@ public class BenDefnOptn implements Cloneable, Comparable<BenDefnOptn> {
 		newOptn.crossBenefPlan   = this.crossBenefPlan;
 		newOptn.coverageLimitPct = this.coverageLimitPct;
 		newOptn.crossPlnDpndChk  = this.crossPlnDpndChk;
-		newOptn.cost = new ArrayList<BenDefnCost>( this.cost );
+		newOptn.cost = new ArrayList<BenDefnCost>();
+		for( BenDefnCost c : this.cost ) {
+			newOptn.cost.add( c.clone() );
+		}
 		return newOptn;
 	}
 
+	public String toCsvOutput() {
+		final String QUOTE = "\"";
+		final String COMMA = ",";
+		String csv = new StringBuilder()
+				.append(QUOTE).append( this.benefitProgram ).append(QUOTE)
+				.append(COMMA)
+				.append( this.effdt.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.planType ).append(QUOTE)
+				.append(COMMA)
+				.append( this.optionId.toString() )
+				.append(COMMA)
+				.append( this.displayOptSeq.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.optionType ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.benefitPlan ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.covrgCd ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.optionCd ).append(QUOTE)
+				.append(COMMA)
+				.append( this.optionLvl.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.dedcd ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.dfltOptionInd ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.eligRulesId ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.locationTblId ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.crossPlanType ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.crossBenefPlan ).append(QUOTE)
+				.append(COMMA)
+				.append( this.coverageLimitPct.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.crossPlnDpndChk ).append(QUOTE).toString();
+		return csv;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " [" + this.optionType + "-" + this.benefitPlan + "-" + this.covrgCd + "]";
+	}
+
+	
+	
 	private static int getCovrgCdEq( String covrgCd ) {
 		if( "1".equals( covrgCd ) )
 			return 1;

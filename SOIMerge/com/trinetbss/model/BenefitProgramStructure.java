@@ -1,6 +1,5 @@
 package com.trinetbss.model;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +10,7 @@ import com.trinetbss.dao.BenDefnPgmDao;
 import com.trinetbss.dao.BenDefnPlanDao;
 import com.trinetbss.dao.BenDefnOptnDao;
 import com.trinetbss.dao.BenDefnCostDao;
+import com.trinetbss.io.FileWriter;
 
 public class BenefitProgramStructure {
 	private BenDefnPgm pgm;
@@ -103,7 +103,11 @@ public class BenefitProgramStructure {
 				BenDefnOptn newRow = o.clone();
 				newRow.benefitProgram = this.pgm.benefitProgram;
 				newRow.effdt = this.pgm.effdt;
-				optnMap.put( OptnMapKey.getInstance( o.planType, o.optionType, o.benefitPlan, o.covrgCd ), o );
+				for( BenDefnCost c : newRow.cost ) {
+					c.benefitProgram = this.pgm.benefitProgram;
+					c.effdt = this.pgm.effdt;
+				}
+				optnMap.put( OptnMapKey.getInstance( newRow.planType, newRow.optionType, newRow.benefitPlan, newRow.covrgCd ), newRow );
 			}
 		}
 
@@ -123,14 +127,42 @@ public class BenefitProgramStructure {
 		return this;
 	}
 
-	
-	
-	
+
 	public void writeBenProgStrucToFile() {
-		System.out.println( "BenefitProgramStructure.writeBenProgStrucToFile()" );
 		try {
 			FileWriter fw = new FileWriter( "C:\\temp\\" + this.pgm.benefitProgram + ".txt" );
-			fw.write( this.pgm.toCsvOutput() );
+			fw.writeLine( this.pgm.toCsvOutput() );
+			//for( BenDefnPlan p : this.plans ) {
+			//	fw.writeLine( p.toCsvOutput() );
+			//}
+			//for( BenDefnOptn o : this.optns ) {
+			//	fw.writeLine( o.toCsvOutput() );
+			//}
+			//for( BenDefnCost c : this.costs ) {
+			//	fw.writeLine( c.toCsvOutput() );
+			//}
+			fw.flush();
+			fw.close();
+		} catch( IOException e ) {
+			System.out.println( "An output file was requested, but could not be produced.  See Java messages for details." );
+			e.printStackTrace();
+		}
+	}
+
+
+	public void writeSQLInsertStatements() {
+		try {
+			FileWriter fw = new FileWriter( "C:\\temp\\pgmPlan.sql" );
+			fw.writeLine( this.pgm.toInsertStatement() );
+			for( BenDefnPlan p : this.plans ) {
+				fw.writeLine( p.toInsertStatement() );
+			}
+			//for( BenDefnOptn o : this.optns ) {
+			//	fw.writeLine( o.toCsvOutput() );
+			//}
+			//for( BenDefnCost c : this.costs ) {
+			//	fw.writeLine( c.toCsvOutput() );
+			//}
 			fw.flush();
 			fw.close();
 		} catch( IOException e ) {
@@ -142,7 +174,7 @@ public class BenefitProgramStructure {
 	
 	
 	public String toString() {
-		return super.toString() + "-" + this.pgm.benefitProgram;
+		return super.toString() + " [" + this.pgm.benefitProgram + "]";
 	}
 
 
@@ -159,7 +191,7 @@ public class BenefitProgramStructure {
 		clone.matchCostWithOptn();
 
 		struc.merge( clone );
-		struc.writeBenProgStrucToFile();
+		struc.writeSQLInsertStatements();
 		
 		System.out.println( "BenefitProgramStructure.main finished" );
 	}

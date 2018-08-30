@@ -3,7 +3,7 @@ package com.trinetbss.model;
 import java.math.BigDecimal;
 import java.util.Comparator;
 
-public class BenDefnCost implements Comparable<BenDefnCost> {
+public class BenDefnCost implements Cloneable, Comparable<BenDefnCost> {
 
 	public String benefitProgram;
 	public java.sql.Date effdt;
@@ -47,7 +47,55 @@ public class BenDefnCost implements Comparable<BenDefnCost> {
 		}
 	}
 
+	@Override
+	public BenDefnCost clone() {
+		BenDefnCost newCost = new BenDefnCost();
+		newCost.benefitProgram = this.benefitProgram;
+		newCost.effdt          = this.effdt;
+		newCost.planType       = this.planType;
+		newCost.optionId       = this.optionId;
+		newCost.costId         = this.costId;
+		newCost.costType       = this.costType;
+		newCost.erncd          = this.erncd;
+		newCost.rateType       = this.rateType;
+		newCost.rateTblId      = this.rateTblId;
+		newCost.calcRulesId    = this.calcRulesId;
+		return newCost;
+	}
 
+	@Override
+	public String toString() {
+		return super.toString() + " [" + this.rateType + "-" + this.rateTblId + "]";
+	}
+
+	public String toCsvOutput() {
+		final String QUOTE = "\"";
+		final String COMMA = ",";
+		String csv = new StringBuilder()
+				.append(QUOTE).append( this.benefitProgram ).append(QUOTE)
+				.append(COMMA)
+				.append( this.effdt.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.planType ).append(QUOTE)
+				.append(COMMA)
+				.append( this.optionId.toString() )
+				.append(COMMA)
+				.append( this.costId.toString() )
+				.append(COMMA)
+				.append(QUOTE).append( this.costType ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.erncd ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.rateType ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.rateTblId ).append(QUOTE)
+				.append(COMMA)
+				.append(QUOTE).append( this.calcRulesId ).append(QUOTE).toString();
+		return csv;
+	}
+
+	
+	
 	public static Comparator<BenDefnCost> CostComparator = new Comparator<BenDefnCost>() {
 		public int compare( BenDefnCost obj1, BenDefnCost obj2 ) {
 			return obj1.compareTo( obj2 );
