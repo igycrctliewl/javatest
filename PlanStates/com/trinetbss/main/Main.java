@@ -27,9 +27,9 @@ public class Main {
 	public static void main( String[] args ) {
       System.out.println( "Main.main()" );
 
-		int realmYearId = 16;
-		String benefitProgram = "112";
-		String effdtStr = "01-JAN-2019";
+		int realmYearId = 18;
+		String benefitProgram = "114";
+		String effdtStr = "01-APR-2019";
 
 		// prepare output object
 		BSSTableData bss = new BSSTableData();
