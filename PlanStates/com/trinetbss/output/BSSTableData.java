@@ -24,7 +24,7 @@ public class BSSTableData {
 			this.plyrPlanTbl.write( "ID,REALM_YEAR_ID,PLAN_TYPE,BENEFIT_PLAN,PORTFOLIO_ID,SITUS" );
 			this.plyrPlanTbl.newLine();
 			this.rlRegionPlansTbl = BSSTableData.openFile( "RL_REGION_PLANS.txt" );
-			this.rlRegionPlansTbl.write( "REALM_PLYR_PLAN_ID,REGION,MANDATORY_FLAG" );
+			this.rlRegionPlansTbl.write( "REALM_PLYR_PLAN_ID,REGION,MANDATORY_FLAG,SUB_REGION" );
 			this.rlRegionPlansTbl.newLine();
 		} catch( IOException e ) {
 			System.out.println( "BSSTableData constructor FATAL error" );
