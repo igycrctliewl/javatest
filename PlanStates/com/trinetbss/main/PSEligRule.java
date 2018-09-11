@@ -1,12 +1,11 @@
 package com.trinetbss.main;
 
-import com.trinetbss.main.Constants;
-import com.trinetbss.sql.BasEligRules;
-import com.trinetbss.sql.BasEligState;
-import java.sql.Date;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.trinetbss.sql.BasEligRules;
+import com.trinetbss.sql.BasEligState;
 
 public class PSEligRule {
 

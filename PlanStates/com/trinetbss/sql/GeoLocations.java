@@ -1,7 +1,6 @@
 package com.trinetbss.sql;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,7 +51,7 @@ public class GeoLocations {
 
 
 	/* main method for testing */
-   private static void main( String[] args ) {
+	public static void main( String[] args ) {
 		System.out.println( "GeoLocations.main()" );
 		GeoLocations geo = new GeoLocations();
 		geo.runQuery( "Q124", "01-JAN-2018" );

@@ -2,7 +2,6 @@ package com.trinetbss.sql;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,7 +46,7 @@ public class GeoLocRange {
 
 
 	/* main method for testing */
-   private static void main( String[] args ) {
+	public static void main( String[] args ) {
 		System.out.println( "GeoLocRange.main()" );
 		GeoLocRange geo = new GeoLocRange();
 		//Date effdt = new Date( 117,0,1 ); //deprecated constructor

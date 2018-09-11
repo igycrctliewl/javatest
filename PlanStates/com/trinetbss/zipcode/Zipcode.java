@@ -36,7 +36,7 @@ public class Zipcode {
 	}
 
 	/* main method for testing only */
-	private static void main( String[] args ) {
+	public static void main( String[] args ) {
 		Zipcode z = new Zipcode();
 		System.out.println( "Zipcode.main() => Test lookup for my zip code: " + z.lookupZip( "74004" ) );
 	}

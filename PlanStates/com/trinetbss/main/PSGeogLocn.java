@@ -34,7 +34,7 @@ public class PSGeogLocn {
 
 
 	/* main method for testing only */
-	private static void main( String[] args ) {
+	public static void main( String[] args ) {
 		PSGeogLocn psg = new PSGeogLocn( "Q124", "12-JAN-2018" );
 		System.out.println( "PSGeogLocn.main => object:geogLocnId:" + psg.geogLocnId );
 		System.out.println( "PSGeogLocn.main => object:effdt:" + psg.effdt );

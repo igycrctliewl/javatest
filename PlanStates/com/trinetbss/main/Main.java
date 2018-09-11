@@ -1,23 +1,19 @@
 package com.trinetbss.main;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import com.trinetbss.output.BSSTableData;
 import com.trinetbss.portfolio.Portfolio;
 import com.trinetbss.region.Region;
-import com.trinetbss.sql.GeoLocations;
 import com.trinetbss.sql.GeoLocRange;
-import com.trinetbss.sql.PlansLocations;
 import com.trinetbss.sql.PSConnect;
+import com.trinetbss.sql.PlansLocations;
 import com.trinetbss.zipcode.Zipcode;
-import java.io.IOException;
-import java.net.URL;
-import java.net.MalformedURLException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 
 public class Main {
