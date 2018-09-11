@@ -2,6 +2,7 @@ package com.trinetbss.main;
 
 import com.trinetbss.output.BSSTableData;
 import com.trinetbss.portfolio.Portfolio;
+import com.trinetbss.region.Region;
 import com.trinetbss.sql.GeoLocations;
 import com.trinetbss.sql.GeoLocRange;
 import com.trinetbss.sql.PlansLocations;
@@ -23,6 +24,7 @@ public class Main {
 
 	private static final Zipcode zip = new Zipcode();
 	private static final Portfolio port = new Portfolio();
+	private static final Region reg = new Region();
 
 	public static void main( String[] args ) {
       System.out.println( "Main.main()" );
