@@ -23,7 +23,7 @@ public class Main {
 	private static final Region reg = new Region();
 
 	public static void main( String[] args ) {
-      System.out.println( "Main.main()" );
+		System.out.println( "Main.main()" );
 
 		int realmYearId = 18;
 		String benefitProgram = "114";
@@ -32,11 +32,11 @@ public class Main {
 		// prepare output object
 		BSSTableData bss = new BSSTableData();
 
-      Map< String, PSGeogLocn > geoLocationStates =  new HashMap<>();
-      Map< String, PSEligRule > eligRulesStates =  new HashMap<>();
+		Map< String, PSGeogLocn > geoLocationStates =  new HashMap<>();
+		Map< String, PSEligRule > eligRulesStates =  new HashMap<>();
 		PlansLocations pbs = new PlansLocations();
 
-      pbs.runQuery( benefitProgram, effdtStr );
+		pbs.runQuery( benefitProgram, effdtStr );
 		try {
 			while( pbs.queryResult.next() ) {
 				String planType = pbs.queryResult.getString( "PLAN_TYPE" );
@@ -56,7 +56,7 @@ public class Main {
 					Main.getGeogLocnRangeStates( psGeogLocn );
 					// add updated geo location object to map
 					geoLocationStates.put( geoLoc, psGeogLocn );
- 				}
+				}
 
 				// add the states for this geo location to the complete list for this benefit plan
 				// as requested by Ramakrishna, state eligibility should only be produced for plan type 10
@@ -70,7 +70,7 @@ public class Main {
 					PSEligRule psEligRule = new PSEligRule( eligRulesId, effdtStr );
 					// add updated geo location object to map
 					eligRulesStates.put( eligRulesId, psEligRule );
- 				}
+				}
 
 				// add the states for this elig rule to the complete list for this benefit plan
 				// as requested by Ramakrishna, state eligibility should only be produced for plan type 10
@@ -99,7 +99,7 @@ public class Main {
 
 		PSConnect.getInstance().close();
 		bss.close();
-   }
+	}
 
 	/**
 	 * This method returns no value but it has the side-effect of updating the passed
