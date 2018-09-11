@@ -11,7 +11,6 @@ public class Region {
 
 	private Map<String,String> regions;
 
-
 	public Region() {
 		// prepare location-to-subRegion lookup table
 		this.regions = new HashMap<String,String>();
@@ -33,7 +32,11 @@ public class Region {
 	}
 
 	public String lookupSubRegion( String location ) {
-		return regions.get( location );
+		String result = regions.get( location );
+		if( result == null ) {
+			result = "";
+		}
+		return result;
 	}
 
 	
@@ -44,7 +47,7 @@ public class Region {
 		System.out.println( "Region.main() => Test lookup for Ambrose location: " + z.lookupSubRegion( "AM08" ) );
 		System.out.println( "Region.main() => Test lookup for Accord location: " + z.lookupSubRegion( "AC27" ) );
 		System.out.println( "Region.main() => Test lookup for SOI location: " + z.lookupSubRegion( "SY72" ) );
-
+		System.out.println( "Region.main() => Test lookup for bogus location:" + z.lookupSubRegion( "xyz" ) + ":" );
 	}
 
 }

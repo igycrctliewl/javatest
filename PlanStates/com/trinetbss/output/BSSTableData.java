@@ -36,7 +36,7 @@ public class BSSTableData {
 	}
 
 
-	public void writePlanData( int realmYearId, String planType, String benefitPlan, int portfolioId, String situs, String[] states ) throws IOException {
+	public void writePlanData( int realmYearId, String planType, String benefitPlan, int portfolioId, String situs, String[] states, String subRegion ) throws IOException {
 		this.plyrPlanId++;
 		this.plyrPlanTbl.write( "" + this.plyrPlanId );
 		this.plyrPlanTbl.write( COMMA );
@@ -57,6 +57,8 @@ public class BSSTableData {
 			this.rlRegionPlansTbl.write( QUOTE + state + QUOTE );
 			this.rlRegionPlansTbl.write( COMMA );
 			this.rlRegionPlansTbl.write( "0" );
+			this.rlRegionPlansTbl.write( COMMA );
+			this.rlRegionPlansTbl.write( QUOTE + subRegion + QUOTE );
 			this.rlRegionPlansTbl.newLine();
 		}
 	}
@@ -83,7 +85,7 @@ public class BSSTableData {
 
 		try {
 			BSSTableData bss = new BSSTableData();
-			bss.writePlanData( 12,"10","000SR2",5,null, new String[] {"CA","NV"} );
+			bss.writePlanData( 12,"10","000SR2",5,null, new String[] {"CA","NV"}, "" );
 			bss.close();
 
 		} catch( IOException e ) {

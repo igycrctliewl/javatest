@@ -78,15 +78,17 @@ public class Main {
 					eligibleStates.addAll( eligRulesStates.get( eligRulesId ).states );
 				}
 
-
 				// associate plan with states
 				System.out.println( "Main.main() => " + planType + "," + benefitPlan + "," + planName + "  (" + vendor + ")" );
 				for( String state : eligibleStates ) {
 					System.out.println( "Main.main() => " + planType + "," + benefitPlan + "," + planName + "," + state );
 				}
 
+				// See if we have defined a BSS sub region for this PeopleSoft geo location
+				String subRegion = reg.lookupSubRegion( geoLoc );
+
 				// write output to load files
-				bss.writePlanData( realmYearId, planType, benefitPlan, port.lookupPortfolio( vendor, benefitPlan ), null, eligibleStates.toArray( new String[0] ) );
+				bss.writePlanData( realmYearId, planType, benefitPlan, port.lookupPortfolio( vendor, benefitPlan ), null, eligibleStates.toArray( new String[0] ), subRegion );
 
 			}
 		} catch( SQLException e ) {
