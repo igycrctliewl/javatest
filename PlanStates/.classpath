@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.4.0/jackson-core-2.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.4.0/jackson-annotations-2.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mbrothers/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.4.0/jackson-databind-2.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mbrothers/Documents/javatest/ojdbc6-11.2.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
