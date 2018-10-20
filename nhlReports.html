@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function myFunction() {
+	var x = document.forms["reports"]["gsRptCk"].checked;
+
+	document.getElementById("demo").innerHTML = x;
+	document.getElementById("ts").innerHTML = Date();
+}
+</script>
+</head>
+
+<body>
+
+<h2>NHL Game Reports</h2>
+
+<form name="reports" action="myFunction()">
+	<input type="checkbox" name="gsRptCk" >Game Summary<br>
+	<input type="checkbox" name="esRptCk" value="true">Event Summary<br>
+	<input type="checkbox" name="plRptCk" value="true">Full Play-by-Play<br>
+	<input type="checkbox" name="fsRptCk" value="true">Face-off Summary<br>
+	<input type="checkbox" name="fcRptCk" value="true">Face-off Comparison<br>
+	<input type="checkbox" name="roRptCk" value="true">Roster Report<br>
+	<input type="checkbox" name="tvRptCk" value="true">TOI - Visitors<br>
+	<input type="checkbox" name="thRptCk" value="true">TOI - Home<br>
+	<input type="checkbox" name="ssRptCk" value="true">Shot Report<br>
+	<input type="checkbox" name="scRptCk" value="true" disabled>Shift Chart<br>
+	<input type="checkbox" name="soRptCk" value="true">Shootout Report<br><br>
+	Game Number:<br>  <input type="text" name="gameNumber"><br><br>
+	<button type="button" onclick="myFunction()">Try it</button>
+</form>
+
+	<p id="demo">A Paragraph.</p>
+	<p id="ts">A Paragraph.</p>
+
+</body>
+</html>
