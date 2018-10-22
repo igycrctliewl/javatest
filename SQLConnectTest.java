@@ -18,7 +18,7 @@ public class SQLConnectTest {
 
          // Initialize and connect
          DriverManager.registerDriver( new oracle.jdbc.driver.OracleDriver() );
-         Connection vDatabaseConnection = DriverManager.getConnection( "jdbc:oracle:thin:@dbhpdev.trinet.com:1752:hpdev", "hrdb", "starfish510400" );
+         Connection vDatabaseConnection = DriverManager.getConnection( "jdbc:oracle:thin:@dbhpslm21.trinet.com:1521:hpslm21", "hrdb", "starfish510400" );
 
          String getDbSql = "SELECT NAME FROM V$DATABASE";
 
