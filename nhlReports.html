@@ -2,12 +2,111 @@
 <html>
 <head>
 <script>
-function myFunction() {
-	var x = document.forms["reports"]["gsRptCk"].checked;
+var season = "20182019";
+var part = "02";
 
-	document.getElementById("demo").innerHTML = x;
-	document.getElementById("ts").innerHTML = Date();
+function launchReports() {
+	var x = document.forms["reports"]["gsRptCk"].checked;
+	var gameNum = numberFormat( document.forms["reports"]["gameNumber"].value );
+	
+	if( gameNum == "0000" ) {
+		alert( "Please provide a game number" );
+		throw( "arg missing" );
+	}
+	
+	if( document.forms["reports"]["gsRptCk"].checked ) {
+		launchGS( gameNum );
+	}
+	if( document.forms["reports"]["esRptCk"].checked ) {
+		launchES( gameNum );
+	}
+	if( document.forms["reports"]["plRptCk"].checked ) {
+		launchPL( gameNum );
+	}
+	if( document.forms["reports"]["fsRptCk"].checked ) {
+		launchFS( gameNum );
+	}
+	if( document.forms["reports"]["fcRptCk"].checked ) {
+		launchFC( gameNum );
+	}
+	if( document.forms["reports"]["roRptCk"].checked ) {
+		launchRO( gameNum );
+	}
+	if( document.forms["reports"]["tvRptCk"].checked ) {
+		launchTV( gameNum );
+	}
+	if( document.forms["reports"]["thRptCk"].checked ) {
+		launchTH( gameNum );
+	}
+	if( document.forms["reports"]["ssRptCk"].checked ) {
+		launchSS( gameNum );
+	}
+	if( document.forms["reports"]["scRptCk"].checked ) {
+		launchSC( gameNum );
+	}
+	if( document.forms["reports"]["soRptCk"].checked ) {
+		launchSO( gameNum );
+	}
 }
+
+function numberFormat( i ) {
+	var fmt = "" + i;
+	for( ; fmt.length < 4; fmt = "0" + fmt );
+	return fmt;
+}
+
+
+function launchGS( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/GS" + part + gameNumber + ".HTM" );
+}
+
+function launchES( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/ES" + part + gameNumber + ".HTM" );
+}
+
+function launchPL( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/PL" + part + gameNumber + ".HTM" );
+}
+
+function launchFS( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/FS" + part + gameNumber + ".HTM" );
+}
+
+function launchFC( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/FC" + part + gameNumber + ".HTM" );
+}
+
+function launchRO( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/RO" + part + gameNumber + ".HTM" );
+}
+
+function launchTH( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/TH" + part + gameNumber + ".HTM" );
+}
+
+function launchTV( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/TV" + part + gameNumber + ".HTM" );
+}
+
+function launchSS( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/SS" + part + gameNumber + ".HTM" );
+}
+
+function launchSC( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/stats/shiftcharts?id=2018" + part + gameNumber );
+}
+
+
 </script>
 </head>
 
@@ -15,24 +114,21 @@ function myFunction() {
 
 <h2>NHL Game Reports</h2>
 
-<form name="reports" action="myFunction()">
+<form name="reports" action="launchReports()">
 	<input type="checkbox" name="gsRptCk" >Game Summary<br>
-	<input type="checkbox" name="esRptCk" value="true">Event Summary<br>
-	<input type="checkbox" name="plRptCk" value="true">Full Play-by-Play<br>
-	<input type="checkbox" name="fsRptCk" value="true">Face-off Summary<br>
-	<input type="checkbox" name="fcRptCk" value="true">Face-off Comparison<br>
-	<input type="checkbox" name="roRptCk" value="true">Roster Report<br>
-	<input type="checkbox" name="tvRptCk" value="true">TOI - Visitors<br>
-	<input type="checkbox" name="thRptCk" value="true">TOI - Home<br>
-	<input type="checkbox" name="ssRptCk" value="true">Shot Report<br>
-	<input type="checkbox" name="scRptCk" value="true" disabled>Shift Chart<br>
-	<input type="checkbox" name="soRptCk" value="true">Shootout Report<br><br>
+	<input type="checkbox" name="esRptCk" >Event Summary<br>
+	<input type="checkbox" name="plRptCk" >Full Play-by-Play<br>
+	<input type="checkbox" name="fsRptCk" >Face-off Summary<br>
+	<input type="checkbox" name="fcRptCk" >Face-off Comparison<br>
+	<input type="checkbox" name="roRptCk" >Roster Report<br>
+	<input type="checkbox" name="tvRptCk" >TOI - Visitors<br>
+	<input type="checkbox" name="thRptCk" >TOI - Home<br>
+	<input type="checkbox" name="ssRptCk" >Shot Report<br>
+	<input type="checkbox" name="scRptCk" >Shift Chart<br>
+	<input type="checkbox" name="soRptCk" >Shootout Report<br><br>
 	Game Number:<br>  <input type="text" name="gameNumber"><br><br>
-	<button type="button" onclick="myFunction()">Try it</button>
+	<button type="button" onclick="launchReports()">Launch</button>
 </form>
-
-	<p id="demo">A Paragraph.</p>
-	<p id="ts">A Paragraph.</p>
 
 </body>
 </html>
