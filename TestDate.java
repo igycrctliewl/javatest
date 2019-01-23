@@ -4,6 +4,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TestDate {
+
+	public static void main( String[] args ) {
+		Date d = new Date( new Long( 11447 * 400 ) );
+		System.out.println( d );
+		d = new Date( 884874L );
+		System.out.println( d );
+		d = new Date( 0L );
+		System.out.println( d );
+	}
+
+
+
 	public static void main1( String[] args ) {
 		Date d = new Date( 1514764800000L );
 		System.out.println( d );
@@ -11,7 +23,7 @@ public class TestDate {
 		System.out.println( l );
 	}
 
-	public static void main(String[] args) {
+	public static void main3(String[] args) {
 		Date date = new Date();
 		System.out.println( date );
 		System.out.println( "other formatted:" + new SimpleDateFormat( "dd-MMM-yyyy" ).format( date ) );
