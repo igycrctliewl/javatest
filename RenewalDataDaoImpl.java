@@ -220,32 +220,6 @@ public class RenewalDataDaoImpl {
 		enrollmentsStmt.setString( 4, effdt );
 		ResultSet qResult = enrollmentsStmt.executeQuery();
 
-		List<HeadcountQueryResult> resultList = new ArrayList<HeadcountQueryResult>();
-
-		while( qResult.next() ) {
-			HeadcountQueryResult hqr = new HeadcountQueryResult();
-			hqr.emplid = qResult.getString( "EMPLID" );
-			hqr.emplRcd = qResult.getLong( "EMPL_RCD" );
-
-			Map<Long,String> item = emplBenProgMap.get( hqr.emplid );
-			if( item == null ) {
-				hqr.benefitProgram = "";
-			} else {
-				hqr.benefitProgram = emplBenProgMap.get( hqr.emplid ).get( hqr.emplRcd );
-			}
-
-			hqr.effdt = qResult.getDate( "EFFDT" );
-			hqr.planType = qResult.getString( "PLAN_TYPE" );
-			hqr.benefitPlan = qResult.getString( "BENEFIT_PLAN" );
-			hqr.coverageElect = qResult.getString( "COVERAGE_ELECT" );
-			hqr.covrgCd = qResult.getString( "COVRG_CD" );
-			hqr.dpEffdt = qResult.getDate( "HBD_EFFDT" );
-			hqr.dpPlanType = qResult.getString( "HBD_PLAN_TYPE" );
-			hqr.dpBenefitPlan = qResult.getString( "HBD_BENEFIT_PLAN" );
-			hqr.dpCoverageElect = qResult.getString( "HBD_COVERAGE_ELECT" );
-			hqr.dpCovrgCd = qResult.getString( "HBD_COVRG_CD" );
-			resultList.add( hqr );
-		}
 
 		/* superMap provides a path from benefitProgram -> benefitPlan -> coverageCd -> headcount */
 		Map<String,Map<String,Map<String,Integer>>> superMap = new HashMap<String,Map<String,Map<String,Integer>>>();
@@ -253,28 +227,53 @@ public class RenewalDataDaoImpl {
 		/* benPlanMap provides the plan type for each benefit plan */
 		Map<String,String> benPlanMap = new HashMap<String,String>();
 
-		for( HeadcountQueryResult r : resultList ) {
-			System.out.println( r.emplid + ":" + r.emplRcd + ":" + r.benefitProgram + ":" + r.effdt + ":" + r.planType + ":" + r.benefitPlan + ":" + r.coverageElect + ":" + r.covrgCd + ":" + r.dpEffdt + ":" + r.dpPlanType + ":" + r.dpBenefitPlan + ":" + r.dpCoverageElect + ":" + r.dpCovrgCd );
+		while( qResult.next() ) {
+			// obtain result from query and save in temporary variables
+			String emplid = qResult.getString( "EMPLID" );
+			Long emplRcd = qResult.getLong( "EMPL_RCD" );
 
-			benPlanMap.put( r.benefitPlan, r.planType );
+			String benefitProgram;
+			Map<Long,String> item = emplBenProgMap.get( emplid );
+			if( item == null ) {
+				benefitProgram = "";
+			} else {
+				benefitProgram = emplBenProgMap.get( emplid ).get( emplRcd );
+			}
 
-			Map<String,Map<String,Integer>> benPlanCountMap = superMap.get( r.benefitProgram );
+			Date enrollmentEffdt = qResult.getDate( "EFFDT" );
+			String planType = qResult.getString( "PLAN_TYPE" );
+			String benefitPlan = qResult.getString( "BENEFIT_PLAN" );
+			String coverageElect = qResult.getString( "COVERAGE_ELECT" );
+			String covrgCd = qResult.getString( "COVRG_CD" );
+			Date dpEffdt = qResult.getDate( "HBD_EFFDT" );
+			String dpPlanType = qResult.getString( "HBD_PLAN_TYPE" );
+			String dpBenefitPlan = qResult.getString( "HBD_BENEFIT_PLAN" );
+			String dpCoverageElect = qResult.getString( "HBD_COVERAGE_ELECT" );
+			String dpCovrgCd = qResult.getString( "HBD_COVRG_CD" );
+
+			System.out.println( emplid + ":" + emplRcd + ":" + benefitProgram + ":" + enrollmentEffdt + ":" + planType + ":" + benefitPlan + ":" + coverageElect + ":" + covrgCd + ":" + dpEffdt + ":" + dpPlanType + ":" + dpBenefitPlan + ":" + dpCoverageElect + ":" + dpCovrgCd );
+
+			// Save the benefit plan and plan type relationship (this will be needed when I build the final result object
+			benPlanMap.put( benefitPlan, planType );
+
+			// Update superMap with the count represented by this result row
+			Map<String,Map<String,Integer>> benPlanCountMap = superMap.get( benefitProgram );
 			if( benPlanCountMap == null ) {
 				benPlanCountMap = new HashMap<String,Map<String,Integer>>();
-				superMap.put( r.benefitProgram, benPlanCountMap );
+				superMap.put( benefitProgram, benPlanCountMap );
 			}
 
-			Map<String,Integer> covrgCdMap = benPlanCountMap.get( r.benefitPlan );
+			Map<String,Integer> covrgCdMap = benPlanCountMap.get( benefitPlan );
 			if( covrgCdMap == null ) {
 				covrgCdMap = new HashMap<String,Integer>();
-				benPlanCountMap.put( r.benefitPlan, covrgCdMap );
+				benPlanCountMap.put( benefitPlan, covrgCdMap );
 			}
 
-			Integer headCount = covrgCdMap.get( r.covrgCd );
+			Integer headCount = covrgCdMap.get( covrgCd );
 			if( headCount == null ) {
 				headCount = Integer.valueOf( 0 );
 			}
-			covrgCdMap.put( r.covrgCd, Integer.valueOf( headCount.intValue() + 1 ));
+			covrgCdMap.put( covrgCd, Integer.valueOf( headCount.intValue() + 1 ));
 		}
 
 		// CLOSE THE DATABASE CONNECTION
@@ -304,22 +303,6 @@ public class RenewalDataDaoImpl {
 
 	}
 
-
-   static class HeadcountQueryResult {
-		public String emplid;
-		public long emplRcd;
-		public String benefitProgram;
-		public Date effdt;
-		public String planType;
-		public String benefitPlan;
-		public String coverageElect;
-		public String covrgCd;
-		public Date dpEffdt;
-		public String dpPlanType;
-		public String dpBenefitPlan;
-		public String dpCoverageElect;
-		public String dpCovrgCd;
-	}
 
 
 	static class CoverageLevelHeadCount {
