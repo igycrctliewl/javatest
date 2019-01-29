@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class RenewalDataDaoImpl {
 
-	public static void getPlanHeadCountByGroups() throws SQLException {
+	public static Map<String,List<BenefitPlanHeadCount>> getPlanHeadCountByGroups() throws SQLException {
 
 		// Set values for parameters
 		String effdt = "30-SEP-2018";
@@ -297,10 +297,28 @@ public class RenewalDataDaoImpl {
 		}
 
 
+		// move mapped data to output object (this will be returned by the application method)
 		Map<String,List<BenefitPlanHeadCount>> bmap = new HashMap<String,List<BenefitPlanHeadCount>>();
+		for( Map.Entry<String,Map<String,Map<String,Integer>>> superEntry : superMap.entrySet() ) {
+			bmap.put( superEntry.getKey(), new ArrayList<BenefitPlanHeadCount>() );
+			for( Map.Entry<String,Map<String,Integer>> planEntry : superEntry.getValue().entrySet() ) {
+				BenefitPlanHeadCount bphc = new BenefitPlanHeadCount();
+				bphc.setBenefitPlan( planEntry.getKey() );
+				bphc.setPlanType( benPlanMap.get( planEntry.getKey() ));
+				bphc.setCoverageLevelHeadCount( new ArrayList<CoverageLevelHeadCount>() );
+				bmap.get( superEntry.getKey() ).add( bphc );
+				for( Map.Entry<String,Integer> covrgEntry : planEntry.getValue().entrySet() ) {
+					CoverageLevelHeadCount clhc = new CoverageLevelHeadCount();
+					clhc.setBenefitProgram( superEntry.getKey() );
+					clhc.setCoverageLevel( covrgEntry.getKey() );
+					clhc.setHeadCount( covrgEntry.getValue() );
+					bphc.getCoverageLevelHeadCount().add( clhc );
+				}
+			}
+		}
 
 
-
+		return bmap;
 	}
 
 
@@ -363,8 +381,19 @@ public class RenewalDataDaoImpl {
 
 
 	public static void main( String[] args ) {
+
 		try {
-			RenewalDataDaoImpl.getPlanHeadCountByGroups();
+			Map<String,List<BenefitPlanHeadCount>> hcMap = RenewalDataDaoImpl.getPlanHeadCountByGroups();
+			System.out.println( "\nPrinting result of method call...." );
+			for( Map.Entry<String,List<BenefitPlanHeadCount>> entry : hcMap.entrySet() ) {
+				System.out.println( entry.getKey() );
+				for( BenefitPlanHeadCount phc : entry.getValue() ) {
+					System.out.println( "   " + phc.getBenefitPlan() + ":" + phc.getPlanType() );
+					for( CoverageLevelHeadCount clhc : phc.getCoverageLevelHeadCount() ) {
+						System.out.println( "      " + clhc.getBenefitProgram() + ":" + clhc.getCoverageLevel() + ":" + clhc.getHeadCount() );
+					}
+				}
+			}
 		} catch( SQLException e ) {
 			System.out.println( e.toString() );
 		}
