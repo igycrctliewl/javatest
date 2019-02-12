@@ -7,11 +7,14 @@ public class TestDate {
 
 	public static void main( String[] args ) {
 		Date d = new Date( new Long( 11447 * 400 ) );
-		System.out.println( d );
+		Date ozzie = d;
+		System.out.println( d + " - " + ozzie );
 		d = new Date( 884874L );
-		System.out.println( d );
+		System.out.println( d + " - " + ozzie );
 		d = new Date( 0L );
-		System.out.println( d );
+		System.out.println( d + " - " + ozzie );
+		ozzie = new Date();
+		System.out.println( d + " - " + ozzie );
 	}
 
 
