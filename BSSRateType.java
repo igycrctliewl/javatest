@@ -43,6 +43,10 @@ public enum BSSRateType {
 		return this.rateDescr;
 	}
 
+	public String toString() {
+		return this.rateIdType();
+	}
+
 	public static final EnumSet<BSSRateType> BenefitSupplementSet = 
 		EnumSet.of( BEN_SUPP_EE, BEN_SUPP_SP, BEN_SUPP_DEP, BEN_SUPP_FAM, 
 			BEN_SUPP_NQ_ADULT, BEN_SUPP_NQ_CHILD, BEN_SUPP_NQ_ADULT_CHILD, BEN_SUPP_FAM_NQ_ADULT );
@@ -65,5 +69,6 @@ public enum BSSRateType {
 			map.put( b.covrgCd(), b );
 		}
 		System.out.printf( "Map contains %d entries%n", map.size() );
+		System.out.printf( "Lookup value for covrg cd 5: %s%n", map.get( "5" ) );
 	}
 }
