@@ -84,7 +84,7 @@ public class SolveFormula {
 			case "R":
 				System.out.println( "rounding operator" );
             // PERFORM SA000-ROUND-COVERAGE
-				this.roundCoverage( null, null, null );
+				calBase = this.roundCoverage( calBase, def.roundUpAmt, def.roundTo );
             // MOVE ZERO TO W-CNSTVALUE
 				wCnstValue = BigDecimal.ZERO;
 				break;
@@ -260,51 +260,37 @@ public class SolveFormula {
 
 	// SA000-ROUND-COVERAGE SECTION.
 	public BigDecimal roundCoverage( BigDecimal base, BigDecimal roundUpAmt, BigDecimal roundTo ) {
-/*
-       SA000.
-      *                                                                *
-      ******************************************************************
 
-           COMPUTE WK-ROUND-UNITS OF W-WK
-                   =  W-CALBASE OF W-WK
-                   /  ROUND-TO OF FRLTB(FRLTB-IDX FRLDEF-IDX)
+		// short-circuit method of not all parameters have been supplied
+		if( base == null || roundUpAmt == null || roundTo == null ) {
+			return base;
+		}
 
-           IF ROUND-UP-AMT OF FRLTB(FRLTB-IDX FRLDEF-IDX)
-                   <=  (W-CALBASE OF W-WK
-                            -  (WK-ROUND-UNITS OF W-WK
-                            *  ROUND-TO
-                                     OF FRLTB(FRLTB-IDX FRLDEF-IDX)))
+      // COMPUTE WK-ROUND-UNITS OF W-WK
+      //           =  W-CALBASE OF W-WK
+      //           /  ROUND-TO OF FRLTB(FRLTB-IDX FRLDEF-IDX)
+		BigDecimal wkRoundUnits = base.divide( roundTo, BigDecimal.ROUND_HALF_UP ).setScale( 0, BigDecimal.ROUND_DOWN );
 
-               ADD 1  TO  WK-ROUND-UNITS OF W-WK
-           END-IF
+      // IF ROUND-UP-AMT OF FRLTB(FRLTB-IDX FRLDEF-IDX)
+      //         <=  (W-CALBASE OF W-WK
+      //                  -  (WK-ROUND-UNITS OF W-WK
+      //                  *  ROUND-TO
+      //                           OF FRLTB(FRLTB-IDX FRLDEF-IDX)))
+		if( roundUpAmt.compareTo( base.subtract( wkRoundUnits.multiply( roundTo ) )) <= 0 ) {
+      //     ADD 1  TO  WK-ROUND-UNITS OF W-WK
+			wkRoundUnits = wkRoundUnits.add( BigDecimal.ONE );
+      // END-IF
+		}
 
-           COMPUTE W-CALBASE OF W-WK
-                   =  WK-ROUND-UNITS OF W-WK
-                   *  ROUND-TO OF FRLTB(FRLTB-IDX FRLDEF-IDX)
+      // COMPUTE W-CALBASE OF W-WK
+      //         =  WK-ROUND-UNITS OF W-WK
+      //         *  ROUND-TO OF FRLTB(FRLTB-IDX FRLDEF-IDX)
+		BigDecimal newBase = wkRoundUnits.multiply( roundTo );
 
-           COMPUTE WK-ROUND-UNITS OF W-WK
-                   =  W-CALPREM OF W-WK
-                   /  ROUND-TO OF FRLTB(FRLTB-IDX FRLDEF-IDX)
-
-           IF ROUND-UP-AMT OF FRLTB(FRLTB-IDX FRLDEF-IDX)
-                   <=  (W-CALPREM OF W-WK
-                           -  (WK-ROUND-UNITS OF W-WK
-                           *  ROUND-TO
-                                  OF FRLTB(FRLTB-IDX FRLDEF-IDX)))
-
-               ADD 1  TO  WK-ROUND-UNITS OF W-WK
-           END-IF
-
-           COMPUTE W-CALPREM OF W-WK
-                   =  WK-ROUND-UNITS OF W-WK
-                   *  ROUND-TO OF FRLTB(FRLTB-IDX FRLDEF-IDX)
-
-           .
-       ROUND-COVERAGE-EXIT.
-*/
-
-		return null;
+      // ROUND-COVERAGE-EXIT.
+		return newBase;
 	}
+
 
 //////////////// TESTING METHODS
 
