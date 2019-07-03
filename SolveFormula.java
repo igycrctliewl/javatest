@@ -18,13 +18,13 @@ public class SolveFormula {
 		System.out.println( "SolveFormula.main()" );
 		SolveFormula solver = new SolveFormula();
 		System.out.println( solver.bFn );
-		System.out.println( solver.solveFormula( new BigDecimal( "150000.01" ), null, null ) );
+		System.out.println( solver.solveFormula( new BigDecimal( "150000.01" ) ) );
 	}
 
 
 
 
-   public BigDecimal solveFormula( BigDecimal base, BigDecimal roundUpAmt, BigDecimal roundTo ) {
+   public BigDecimal solveFormula( BigDecimal base ) {
 		BigDecimal calBase = BigDecimal.ZERO;
 		BigDecimal calPrem = BigDecimal.ZERO;
 		// ported from the Cobol PSPDCOVG
@@ -49,7 +49,7 @@ public class SolveFormula {
 			case "-":
 			case "/":
 			case "*":
-				System.out.println( "arithmetic operator" );
+				System.out.printf( "arithmetic operator:%s:%n", def.benOperand );
             //  IF BN-ENTRY-TYP OF FRLTB(FRLTB-IDX FRLDEF-IDX)
             //                                             = 'CNST'
 				if( CNST_ENTRY.equals( def.bnEntryTyp ) ) {
@@ -321,6 +321,27 @@ public class SolveFormula {
 		f.bnFormulaDefs.add( new BnFormulaDef( "01AS0000T1","2018-04-01",70,")"," ",   0,0,0 ) );
 		f.bnFormulaDefs.add( new BnFormulaDef( "01AS0000T1","2018-04-01",80,")"," ",   0,0,0 ) );
 		f.bnFormulaDefs.add( new BnFormulaDef( "01AS0000T1","2018-04-01",90,"R"," ",   0,0.01,1000 ) );
+		return f;
+	}
+
+	// this one generates a monthly amount
+	private BnFormula getTestDSAS240KCA() {
+		BnFormula f = new BnFormula( "DSAS240KCA","2018-10-01","Dis, 240k Sal, Chk, No Rnd","Dis240K","2"
+			,"PRIM","T",6,1,"T",1,6,240000,"N","N","1",0,0 );
+
+		f.bnFormulaDefs.add( new BnFormulaDef( "DSAS240KCA","2018-10-01",10,"("," ",0,0,0 ) );
+		f.bnFormulaDefs.add( new BnFormulaDef( "DSAS240KCA","2018-10-01",20," ","BASE",0,0,0 ) );
+		f.bnFormulaDefs.add( new BnFormulaDef( "DSAS240KCA","2018-10-01",30,"/","CNST",12,0,0 ) );
+		f.bnFormulaDefs.add( new BnFormulaDef( "DSAS240KCA","2018-10-01",40,")"," ",0,0,0 ) );
+		return f;
+	}
+
+	// this one is a simple constant
+	private BnFormula getTest00AS010KQ4() {
+		BnFormula f = new BnFormula( "00AS010KQ4","2018-10-01","00AS010KQ4","00AS010KQ4","2","PRIM"
+			,"T",6,1,"T",1,6,0,"N","N","1",10000,10000 );
+
+		f.bnFormulaDefs.add( new BnFormulaDef( "00AS010KQ4","2018-10-01",10," ","CNST",10000,0,0 ) );
 		return f;
 	}
 
