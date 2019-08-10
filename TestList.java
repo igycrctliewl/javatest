@@ -3,12 +3,19 @@ import java.util.Collection;
 import java.util.List;
 
 public class TestList {
-	public static void main( String[] args ) {
-		main3( args );
+
+	public TestList() {
+	}
+
+	public void traverseList( List<String> lst ) {
+		for( String s : lst ) {
+			System.out.println( s );
+		}
+		System.out.println( "done" );
 	}
 
 
-   public static void main1(String[] args) {
+   public static void main(String[] args) {
       List<String> list = new ArrayList<String>();
 
       list.add( "23" );
@@ -16,11 +23,16 @@ public class TestList {
       list.add( "31" );
       list.add( "A3" );
 
-      for( String planType : list ) {
-         System.out.println( "===>  " + planType );
-      }
-
+		TestList tl = new TestList();
+		tl.traverseList( list );
+		list = null;
+		tl.traverseList( list );
    }
+
+
+	public static void main4( String[] args ) {
+		main3( args );
+	}
 
 
    public static void main2(String[] args) {

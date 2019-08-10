@@ -6,6 +6,11 @@ public class TestArrayList {
    public static void main(String[] args) {
 
       List<String> planTypeList =  new ArrayList<String>();
+		for( String s : planTypeList ) {
+			System.out.println( "inside loop of empty list" );
+		}
+		System.out.println( "after loop of empty list" );
+
 
       planTypeList.add( "11" );
       planTypeList.add( "11" );
