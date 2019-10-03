@@ -2,7 +2,7 @@
 <html>
 <head>
 <script>
-var season = "20182019";
+var season = "20192020";
 var part = "02";
 
 function launchReports() {
@@ -103,9 +103,28 @@ function launchSS( gameNumber ) {
 
 function launchSC( gameNumber ) {
 	var randomnumber = Math.floor((Math.random()*100)+1); 
-	window.open( "http://www.nhl.com/stats/shiftcharts?id=2018" + part + gameNumber );
+	window.open( "http://www.nhl.com/stats/shiftcharts?id=2019" + part + gameNumber );
 }
 
+function launchSO( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/SO" + part + gameNumber + ".HTM" );
+}
+
+
+function selectAll() {
+	document.forms["reports"]["gsRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["esRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["plRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["fsRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["fcRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["roRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["tvRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["thRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	//document.forms["reports"]["ssRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	//document.forms["reports"]["scRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	//document.forms["reports"]["soRptCk"].checked = document.forms["reports"]["allCk"].checked;
+}
 
 </script>
 </head>
@@ -115,6 +134,7 @@ function launchSC( gameNumber ) {
 <h2>NHL Game Reports</h2>
 
 <form name="reports" action="launchReports()">
+	<input type="checkbox" onclick="selectAll()" name="allCk" >Most Reports<br>
 	<input type="checkbox" name="gsRptCk" >Game Summary<br>
 	<input type="checkbox" name="esRptCk" >Event Summary<br>
 	<input type="checkbox" name="plRptCk" >Full Play-by-Play<br>
