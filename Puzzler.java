@@ -32,34 +32,29 @@ public class Puzzler {
 		if( str == null || str.length() == 0 ) {
 			return false;
 		}
-
-		String tempStr = str;
-		
-		while ( tempStr.length() > 0 ) {
-			if( tempStr.charAt( 0 ) == tempStr.charAt( tempStr.length() -1 ) ) {
-				tempStr = trimEnds( tempStr );
-			} else {
-				return false;
-			}
-		}
-		return true;
-	}
-
-
-	/**
-	 * Removes the first character and last character from a String and returns the remaining string.
-	 * @param arg a String which should have its first and last characters removed
-	 * @return the remaining String or a zero-length string if the arg was null or less than two characters long
-	 */
-	private static String trimEnds( String arg ) {
-		if( arg == null || arg.length() < 2 ) {
-			return "";
+		if( str.equals( reverse( str ) )) {
+			return true;
 		} else {
-			return arg.substring( 1, arg.length() - 1 );
-		}
+			return false;
+		}		
 	}
+
 	
-	
+	/**
+	 * A utility to reverse the order of characters in a string.
+	 * @param s a String to reverse. The parameter will not be altered.
+	 * @return a new String that is the reverse of the parameter
+	 */
+	private static String reverse( String s ) {
+		byte[] strBytes = s.getBytes();
+		byte[] newBytes = new byte[ strBytes.length ];
+		for( int j = 0; j < strBytes.length; j++ ) {
+			newBytes[j] = strBytes[ strBytes.length - 1 - j ];
+		}
+		return new String( newBytes );
+	}
+
+
 	/**
 	 * Formats an integer as a fixed-length string, padding on the left with zeros as needed
 	 * @param i integer to be formatted

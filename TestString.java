@@ -2,9 +2,21 @@
 public class TestString {
 
 	public static void main( String[] args ) {
-		TestString.substrTest( args );
+		String s = "cartalk";
+		TestString.reverse( s );
 	}
 
+	
+	public static String reverse( String s ) {
+		byte[] strBytes = s.getBytes();
+		byte[] newBytes = new byte[ strBytes.length ];
+		for( int j = 0; j < strBytes.length; j++ ) {
+			newBytes[j] = strBytes[ strBytes.length - 1 - j ];
+		}
+		return new String( newBytes );
+	}
+	
+	
 	public static void substrTest( String[] args ) {
 		String descrShort = "fifty-three thousand";
 		System.out.println( "Length of descrShort: " + descrShort.length() );

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+var season = "20192020";
+var part = "02";
+
+function launchReports() {
+	var x = document.forms["reports"]["gsRptCk"].checked;
+	var gameNum = numberFormat( document.forms["reports"]["gameNumber"].value );
+	
+	if( gameNum == "0000" ) {
+		alert( "Please provide a game number" );
+		throw( "arg missing" );
+	}
+	
+	if( document.forms["reports"]["gsRptCk"].checked ) {
+		launchGS( gameNum );
+	}
+	if( document.forms["reports"]["esRptCk"].checked ) {
+		launchES( gameNum );
+	}
+	if( document.forms["reports"]["plRptCk"].checked ) {
+		launchPL( gameNum );
+	}
+	if( document.forms["reports"]["fsRptCk"].checked ) {
+		launchFS( gameNum );
+	}
+	if( document.forms["reports"]["fcRptCk"].checked ) {
+		launchFC( gameNum );
+	}
+	if( document.forms["reports"]["roRptCk"].checked ) {
+		launchRO( gameNum );
+	}
+	if( document.forms["reports"]["tvRptCk"].checked ) {
+		launchTV( gameNum );
+	}
+	if( document.forms["reports"]["thRptCk"].checked ) {
+		launchTH( gameNum );
+	}
+	if( document.forms["reports"]["ssRptCk"].checked ) {
+		launchSS( gameNum );
+	}
+	if( document.forms["reports"]["scRptCk"].checked ) {
+		launchSC( gameNum );
+	}
+	if( document.forms["reports"]["soRptCk"].checked ) {
+		launchSO( gameNum );
+	}
+}
+
+function numberFormat( i ) {
+	var fmt = "" + i;
+	for( ; fmt.length < 4; fmt = "0" + fmt );
+	return fmt;
+}
+
+
+function launchGS( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/GS" + part + gameNumber + ".HTM" );
+}
+
+function launchES( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/ES" + part + gameNumber + ".HTM" );
+}
+
+function launchPL( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/PL" + part + gameNumber + ".HTM" );
+}
+
+function launchFS( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/FS" + part + gameNumber + ".HTM" );
+}
+
+function launchFC( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/FC" + part + gameNumber + ".HTM" );
+}
+
+function launchRO( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/RO" + part + gameNumber + ".HTM" );
+}
+
+function launchTH( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/TH" + part + gameNumber + ".HTM" );
+}
+
+function launchTV( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/TV" + part + gameNumber + ".HTM" );
+}
+
+function launchSS( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/SS" + part + gameNumber + ".HTM" );
+}
+
+function launchSC( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/stats/shiftcharts?id=2019" + part + gameNumber );
+}
+
+function launchSO( gameNumber ) {
+	var randomnumber = Math.floor((Math.random()*100)+1); 
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/SO" + part + gameNumber + ".HTM" );
+}
+
+
+function selectAll() {
+	document.forms["reports"]["gsRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["esRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["plRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["fsRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["fcRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["roRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["tvRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["thRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	//document.forms["reports"]["ssRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	//document.forms["reports"]["scRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	//document.forms["reports"]["soRptCk"].checked = document.forms["reports"]["allCk"].checked;
+}
+
+</script>
+</head>
+
+<body>
+
+<h2>NHL Game Reports</h2>
+
+<form name="reports" action="launchReports()">
+	<input type="checkbox" onclick="selectAll()" name="allCk" >Most Reports<br>
+	<input type="checkbox" name="gsRptCk" >Game Summary<br>
+	<input type="checkbox" name="esRptCk" >Event Summary<br>
+	<input type="checkbox" name="plRptCk" >Full Play-by-Play<br>
+	<input type="checkbox" name="fsRptCk" >Face-off Summary<br>
+	<input type="checkbox" name="fcRptCk" >Face-off Comparison<br>
+	<input type="checkbox" name="roRptCk" >Roster Report<br>
+	<input type="checkbox" name="tvRptCk" >TOI - Visitors<br>
+	<input type="checkbox" name="thRptCk" >TOI - Home<br>
+	<input type="checkbox" name="ssRptCk" >Shot Report<br>
+	<input type="checkbox" name="scRptCk" >Shift Chart<br>
+	<input type="checkbox" name="soRptCk" >Shootout Report<br><br>
+	Game Number:<br>  <input type="text" name="gameNumber"><br><br>
+	<button type="button" onclick="launchReports()">Launch</button>
+</form>
+
+</body>
+</html>
