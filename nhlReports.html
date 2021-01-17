@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>NHL Game Report Launcher</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+</head>
+
 <script>
 var season = "20202021";
 var part = "02";
@@ -127,7 +133,6 @@ function selectAll() {
 }
 
 </script>
-</head>
 
 <body>
 
@@ -149,6 +154,61 @@ function selectAll() {
 	Game Number:<br>  <input type="text" name="gameNumber"><br><br>
 	<button type="button" onclick="launchReports()">Launch</button>
 </form>
+
+
+<script language=javascript>
+
+function writeln( dataline ) {
+	document.write( dataline + "<br>" );
+}
+
+
+function padNumber( number ) {
+	var numberString = number.toString();
+	if( numberString.length == 1 ) {
+		numberString = "0" + numberString;
+	}
+	return numberString;
+}
+
+
+function Get(yourUrl){
+    var Httpreq = new XMLHttpRequest();
+    Httpreq.open("GET",yourUrl,false);
+    Httpreq.send(null);
+    return Httpreq.responseText;          
+}
+
+
+function eachGame( game, index ) {
+	var season = game.gamePk.toString().substring( 0, 4 );
+	var seasonPart = game.gamePk.toString().substring( 4, 6 );
+	var gameNumber = game.gamePk.toString().substring( 6, 10 );
+	var visitor = game.teams.away.team;
+	var home = game.teams.home.team;
+	writeln( gameNumber + " - " + visitor.name + " vs " + home.name );
+}
+
+
+var today = new Date();
+var year = today.getFullYear().toString();
+var month = ( today.getMonth() + 1 ).toString();
+var day = today.getDate().toString();
+
+month = padNumber( month );
+day = padNumber( day );
+var todayISO = ( year + "-" + month + "-" + day );
+
+//writeln( todayISO );
+
+var schedule = JSON.parse(Get( "https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + todayISO + "&endDate=" + todayISO ));
+//console.log( "this is the author name: " + schedule.copyright );
+
+document.write( "<h2>Today's Games</h2>" );
+var gameDate = schedule.dates[0];
+gameDate.games.forEach( eachGame );
+
+</script>
 
 </body>
 </html>
