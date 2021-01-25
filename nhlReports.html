@@ -198,7 +198,8 @@ function eachGame( game, index ) {
 	var gameNumber = game.gamePk.toString().substring( 6, 10 );
 	var visitor = game.teams.away.team;
 	var home = game.teams.home.team;
-	writeln( gameNumber + " - " + visitor.name + " vs " + home.name );
+	//writeln( gameNumber + " - " + visitor.name + " vs " + home.name );
+	htmlBuilder = htmlBuilder + gameNumber + " - " + visitor.name + " vs " + home.name + "<br>";
 }
 
 
@@ -216,16 +217,20 @@ var todayISO = ( year + "-" + month + "-" + day );
 var schedule = JSON.parse(Get( "https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + todayISO + "&endDate=" + todayISO ));
 //console.log( "this is the author name: " + schedule.copyright );
 
-document.write( "<h2>Today's Games</h2>" );
 </script>
 
-<form name="scoresToggle" action="launchReports()">
-	<input type="checkbox" name="showScores" onclick="toggleShowScores()">Show scores<br>
-</form>
+<p id="gameList"></p>
 
 <script language=javascript>
+
+var htmlBuilder = "<h2>Today's Live Games</h2>";
+htmlBuilder = htmlBuilder + "<form name=\"scoresToggle\" action=\"launchReports()\">";
+htmlBuilder = htmlBuilder + "	<input type=\"checkbox\" name=\"showScores\" onclick=\"toggleShowScores()\">Show scores<br>";
+htmlBuilder = htmlBuilder + "</form>";
+
 var gameDate = schedule.dates[0];
 gameDate.games.forEach( eachGame );
+document.getElementById("gameList").innerHTML = htmlBuilder;
 
 
 /* Game state codes
