@@ -14,12 +14,12 @@ var part = "02";
 function launchReports() {
 	var x = document.forms["reports"]["gsRptCk"].checked;
 	var gameNum = numberFormat( document.forms["reports"]["gameNumber"].value );
-	
+
 	if( gameNum == "0000" ) {
 		alert( "Please provide a game number" );
 		throw( "arg missing" );
 	}
-	
+
 	if( document.forms["reports"]["gsRptCk"].checked ) {
 		launchGS( gameNum );
 	}
@@ -62,58 +62,62 @@ function numberFormat( i ) {
 }
 
 
+/* I don't remember why all these "randomnumber" variables are created here.
+	I can't seem to see a use for them.  I wonder what happens if I remove them
+ */
+
 function launchGS( gameNumber ) {
-	var randomnumber = Math.floor((Math.random()*100)+1); 
+	//var randomnumber = Math.floor((Math.random()*100)+1);
 	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/GS" + part + gameNumber + ".HTM" );
 }
 
 function launchES( gameNumber ) {
-	var randomnumber = Math.floor((Math.random()*100)+1); 
+	//var randomnumber = Math.floor((Math.random()*100)+1);
 	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/ES" + part + gameNumber + ".HTM" );
 }
 
 function launchPL( gameNumber ) {
-	var randomnumber = Math.floor((Math.random()*100)+1); 
+	//var randomnumber = Math.floor((Math.random()*100)+1);
 	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/PL" + part + gameNumber + ".HTM" );
 }
 
 function launchFS( gameNumber ) {
-	var randomnumber = Math.floor((Math.random()*100)+1); 
+	//var randomnumber = Math.floor((Math.random()*100)+1);
 	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/FS" + part + gameNumber + ".HTM" );
 }
 
 function launchFC( gameNumber ) {
-	var randomnumber = Math.floor((Math.random()*100)+1); 
+	//var randomnumber = Math.floor((Math.random()*100)+1);
 	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/FC" + part + gameNumber + ".HTM" );
 }
 
 function launchRO( gameNumber ) {
-	var randomnumber = Math.floor((Math.random()*100)+1); 
+	//var randomnumber = Math.floor((Math.random()*100)+1);
 	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/RO" + part + gameNumber + ".HTM" );
 }
 
 function launchTH( gameNumber ) {
-	var randomnumber = Math.floor((Math.random()*100)+1); 
+	//var randomnumber = Math.floor((Math.random()*100)+1);
 	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/TH" + part + gameNumber + ".HTM" );
 }
 
 function launchTV( gameNumber ) {
-	var randomnumber = Math.floor((Math.random()*100)+1); 
+	//var randomnumber = Math.floor((Math.random()*100)+1);
 	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/TV" + part + gameNumber + ".HTM" );
 }
 
 function launchSS( gameNumber ) {
-	var randomnumber = Math.floor((Math.random()*100)+1); 
+	//var randomnumber = Math.floor((Math.random()*100)+1);
 	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/SS" + part + gameNumber + ".HTM" );
 }
 
 function launchSC( gameNumber ) {
-	var randomnumber = Math.floor((Math.random()*100)+1); 
+	//var randomnumber = Math.floor((Math.random()*100)+1);
 	window.open( "http://www.nhl.com/stats/shiftcharts?id=2019" + part + gameNumber );
 }
 
 function launchSO( gameNumber ) {
-	var randomnumber = Math.floor((Math.random()*100)+1); 
+	//var randomnumber = Math.floor((Math.random()*100)+1);
 	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/SO" + part + gameNumber + ".HTM" );
 }
 
@@ -163,6 +167,14 @@ function writeln( dataline ) {
 }
 
 
+function toggleShowScores() {
+	if( document.forms["scoresToggle"]["showScores"].checked ) {
+		alert( "Scores on (feature in-development)" );
+	} else {
+		alert( "Scores off (feature in-development)" );
+	}
+}
+
 function padNumber( number ) {
 	var numberString = number.toString();
 	if( numberString.length == 1 ) {
@@ -176,7 +188,7 @@ function Get(yourUrl){
     var Httpreq = new XMLHttpRequest();
     Httpreq.open("GET",yourUrl,false);
     Httpreq.send(null);
-    return Httpreq.responseText;          
+    return Httpreq.responseText;
 }
 
 
@@ -205,10 +217,66 @@ var schedule = JSON.parse(Get( "https://statsapi.web.nhl.com/api/v1/schedule?sta
 //console.log( "this is the author name: " + schedule.copyright );
 
 document.write( "<h2>Today's Games</h2>" );
+</script>
+
+<form name="scoresToggle" action="launchReports()">
+	<input type="checkbox" name="showScores" onclick="toggleShowScores()">Show scores<br>
+</form>
+
+<script language=javascript>
 var gameDate = schedule.dates[0];
 gameDate.games.forEach( eachGame );
 
+
+/* Game state codes
+ * 1 - Preview
+ * 2 - Preview
+ * 7 - Final
+ *
+ *
+ * Game status codes
+ * 1 - Scheduled
+ * 2 - Pre-Game
+ * 7 - Final
+ */
+
+
+
 </script>
+
+<!--
+/* Here is an example of HTML and Javascript working together
+ * to make the data on the page more interactive
+ * 
+ * <html>
+ * <body>
+ * 
+ * <h2>JavaScript Functions</h2>
+ * 
+ * <p>Outside myFunction() carName is undefined.</p>
+ * 
+ * <p id="demo1"></p>
+ * 
+ * <p id="demo2"></p>
+ * 
+ * <script>
+ * myFunction();
+ * 
+ * function myFunction() {
+ *   var carName = "Volvo";
+ *   document.getElementById("demo1").innerHTML =
+ *   typeof carName + " " + carName;
+ * }
+ * 
+ * document.getElementById("demo2").innerHTML =
+ * typeof carName;
+ * </script>
+ * 
+ * </body>
+ * </html>
+ * 
+ */
+-->
 
 </body>
 </html>
