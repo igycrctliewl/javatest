@@ -167,12 +167,14 @@ function writeln( dataline ) {
 }
 
 
+var showScoresOn = false;
+function isShowScoresOn() {
+	return showScoresOn;
+}
+
 function toggleShowScores() {
-	if( document.forms["scoresToggle"]["showScores"].checked ) {
-		alert( "Scores on (feature in-development)" );
-	} else {
-		alert( "Scores off (feature in-development)" );
-	}
+	showScoresOn = document.forms["scoresToggle"]["showScores"].checked;
+	rebuildGameList();
 }
 
 function padNumber( number ) {
@@ -199,7 +201,14 @@ function eachGame( game, index ) {
 	var visitor = game.teams.away.team;
 	var home = game.teams.home.team;
 	//writeln( gameNumber + " - " + visitor.name + " vs " + home.name );
-	htmlBuilder = htmlBuilder + gameNumber + " - " + visitor.name + " vs " + home.name + "<br>";
+	if( isShowScoresOn() ) {
+		var visScore = game.teams.away.score;
+		var homeScore = game.teams.home.score;
+		htmlBuilder = htmlBuilder + gameNumber + " - " + visitor.name + " " + visScore + " - "
+				+ homeScore + " " + home.name + " Final/NotFinal<br>";
+	} else {
+		htmlBuilder = htmlBuilder + gameNumber + " - " + visitor.name + " vs " + home.name + "<br>";
+	}
 }
 
 
@@ -212,10 +221,8 @@ month = padNumber( month );
 day = padNumber( day );
 var todayISO = ( year + "-" + month + "-" + day );
 
-//writeln( todayISO );
-
-var schedule = JSON.parse(Get( "https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + todayISO + "&endDate=" + todayISO ));
-//console.log( "this is the author name: " + schedule.copyright );
+var nhlURL = "https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + todayISO + "&endDate=" + todayISO + "&hydrate=linescore";
+var schedule = JSON.parse( Get( nhlURL ) );
 
 </script>
 
@@ -223,25 +230,37 @@ var schedule = JSON.parse(Get( "https://statsapi.web.nhl.com/api/v1/schedule?sta
 
 <script language=javascript>
 
-var htmlBuilder = "<h2>Today's Live Games</h2>";
-htmlBuilder = htmlBuilder + "<form name=\"scoresToggle\" action=\"launchReports()\">";
-htmlBuilder = htmlBuilder + "	<input type=\"checkbox\" name=\"showScores\" onclick=\"toggleShowScores()\">Show scores<br>";
-htmlBuilder = htmlBuilder + "</form>";
+var htmlBuilder = "";
 
-var gameDate = schedule.dates[0];
-gameDate.games.forEach( eachGame );
-document.getElementById("gameList").innerHTML = htmlBuilder;
+function rebuildGameList() {
+	htmlBuilder = "";
+	htmlBuilder = htmlBuilder + "<h2>Today's Live Games</h2>";
+	htmlBuilder = htmlBuilder + "<form name=\"scoresToggle\" action=\"launchReports()\">";
+	htmlBuilder = htmlBuilder + "	<input type=\"checkbox\" name=\"showScores\" ";
+	if( isShowScoresOn() ) {
+		htmlBuilder = htmlBuilder + " checked ";
+	}
+	htmlBuilder = htmlBuilder + "onclick=\"toggleShowScores()\">Show scores<br>";
+	htmlBuilder = htmlBuilder + "</form>";
 
+	var gameDate = schedule.dates[0];
+	gameDate.games.forEach( eachGame );
+	document.getElementById("gameList").innerHTML = htmlBuilder;
+}
+
+rebuildGameList();
 
 /* Game state codes
  * 1 - Preview
  * 2 - Preview
+ * 3 - Live
  * 7 - Final
  *
  *
  * Game status codes
  * 1 - Scheduled
  * 2 - Pre-Game
+ * 3 - In Progress
  * 7 - Final
  */
 
