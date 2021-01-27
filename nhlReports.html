@@ -167,7 +167,7 @@ function writeln( dataline ) {
 }
 
 
-var showScoresOn = false;
+var showScoresOn = true;
 function isShowScoresOn() {
 	return showScoresOn;
 }
@@ -202,13 +202,64 @@ function eachGame( game, index ) {
 	var home = game.teams.home.team;
 	//writeln( gameNumber + " - " + visitor.name + " vs " + home.name );
 	if( isShowScoresOn() ) {
-		var visScore = game.teams.away.score;
-		var homeScore = game.teams.home.score;
-		htmlBuilder = htmlBuilder + gameNumber + " - " + visitor.name + " " + visScore + " - "
-				+ homeScore + " " + home.name + " Final/NotFinal<br>";
+		htmlBuilder = htmlBuilder + gameNumber + " - " 
+				+ visitor.name + deriveScore( game ) + home.name
+				+ " - " + deriveGameStatus( game ) + "<br>";
 	} else {
 		htmlBuilder = htmlBuilder + gameNumber + " - " + visitor.name + " vs " + home.name + "<br>";
 	}
+}
+
+
+function deriveScore( game ) {
+	var scoreTag;
+	switch( game.status.statusCode ) {
+	case "1":
+	case "2":
+	case "8":
+	case "9":
+		scoreTag = " vs ";
+		break;
+	case "3":
+	case "4":
+	case "5":
+	case "6":
+	case "7":
+		scoreTag = " " + game.teams.away.score + " - " + game.teams.home.score + " ";
+		break;
+	}
+	return scoreTag;
+}
+
+
+function deriveGameStatus( game ) {
+	var statusTag;
+	switch( game.status.statusCode ) {
+	case "1":
+	case "8":
+		var gameTime = new Date( game.gameDate );
+		statusTag = gameTime.toLocaleTimeString( 'en-US', { timeZoneName: 'short' } ).replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
+		break;
+	case "9":
+		statusTag = "PPD";
+		break;
+	case "2":
+		statusTag = "Pre-Game";
+		break;
+	case "3":
+	case "4":
+		statusTag = "Period " + linescore.currentPeriod + " (" + linescore.currentPeriodTimeRemaining + ")";
+		break;
+	case "5":
+	case "6":
+	case "7":
+		statusTag = "Final";
+		if( game.linescore.currentPeriod > 3 ) {
+			statusTag = statusTag + " (" + game.linescore.currentPeriodOrdinal + ")";
+		}
+		break;
+	}
+	return statusTag;
 }
 
 
@@ -234,7 +285,7 @@ var htmlBuilder = "";
 
 function rebuildGameList() {
 	htmlBuilder = "";
-	htmlBuilder = htmlBuilder + "<h2>Today's Live Games</h2>";
+	htmlBuilder = htmlBuilder + "<h2>Today's Games</h2>";
 	htmlBuilder = htmlBuilder + "<form name=\"scoresToggle\" action=\"launchReports()\">";
 	htmlBuilder = htmlBuilder + "	<input type=\"checkbox\" name=\"showScores\" ";
 	if( isShowScoresOn() ) {
