@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -202,32 +203,18 @@ function eachGame( game, index ) {
 	var home = game.teams.home.team;
 	//writeln( gameNumber + " - " + visitor.name + " vs " + home.name );
 	if( isShowScoresOn() ) {
-		htmlBuilder = htmlBuilder +
-				+ openGameAnchor( gameNumber ) + gameNumber + " - " 
+		htmlBuilder = htmlBuilder + gameNumber + " - " 
 				+ visitor.name + deriveScore( game ) + home.name
-				+ " - " + deriveGameStatus( game ) + closeGameAnchor() + "<br>";
+				+ " - " + deriveGameStatus( game ) + "<br>";
 	} else {
-		htmlBuilder = htmlBuilder +
-				+ openGameAnchor( gameNumber ) + gameNumber + " - "
-				+ visitor.name + " vs " + home.name + closeGameAnchor() + "<br>";
+		htmlBuilder = htmlBuilder + gameNumber + " - " + visitor.name + " vs " + home.name + "<br>";
 	}
 }
 
 
 function clickGame( gameNo ) {
 	document.forms["reports"]["gameNumber"].value = gameNo;
-}
-
-
-function openGameAnchor( gameNumber ) {
-	var gameNo = parseInt( gameNumber );
-	var startAnchor = "<a onclick=\"clickGame( " + gameNo + " )\">";
-	return startAnchor;
-}
-
-function closeGameAnchor() {
-	var endAnchor = "</a>";
-	return endAnchor;
+	alert( "game " + gameNo + " was clicked" );
 }
 
 
@@ -297,7 +284,6 @@ var schedule = JSON.parse( Get( nhlURL ) );
 
 </script>
 
-<p id="gameList"></p>
 
 <script language=javascript>
 
@@ -319,7 +305,7 @@ function rebuildGameList() {
 	document.getElementById("gameList").innerHTML = htmlBuilder;
 }
 
-rebuildGameList();
+
 
 /* Game state codes
  * 1 - Preview
@@ -338,6 +324,20 @@ rebuildGameList();
 
 
 </script>
+
+
+<p id="gameList">
+<h2>Today's Games</h2>
+<form name="scoresToggle" action="launchReports()">
+	<input type="checkbox" name="showScores" checked="" onclick="toggleShowScores()">Show scores<br>
+</form>
+<a onclick="clickGame( 144 )">0144 - Pittsburgh Penguins 1 - 3 New York Rangers - Final</a><br>
+0145 - Boston Bruins 5 - 3 Washington Capitals - Final<br>
+0146 - Nashville Predators 2 - 5 Tampa Bay Lightning - Final<br>
+0147 - Vancouver Canucks 2 - 6 Montréal Canadiens - Final<br>
+0148 - Calgary Flames 4 - 3 Winnipeg Jets - Final (SO)<br>
+</p>
+
 
 <!--
 /* Here is an example of HTML and Javascript working together
