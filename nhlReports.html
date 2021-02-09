@@ -200,16 +200,27 @@ function eachGame( game, index ) {
 	var gameNumber = game.gamePk.toString().substring( 6, 10 );
 	var visitor = game.teams.away.team;
 	var home = game.teams.home.team;
-	//writeln( gameNumber + " - " + visitor.name + " vs " + home.name );
+
 	if( isShowScoresOn() ) {
-		htmlBuilder = htmlBuilder +
-				+ openGameAnchor( gameNumber ) + gameNumber + " - " 
-				+ visitor.name + deriveScore( game ) + home.name
-				+ " - " + deriveGameStatus( game ) + closeGameAnchor() + "<br>";
+		htmlBuilder = htmlBuilder.concat( openGameAnchor( gameNumber ) );
+		htmlBuilder = htmlBuilder.concat( gameNumber );
+		htmlBuilder = htmlBuilder.concat( " - " );
+		htmlBuilder = htmlBuilder.concat( visitor.name );
+		htmlBuilder = htmlBuilder.concat( deriveScore( game ) );
+		htmlBuilder = htmlBuilder.concat( home.name );
+		htmlBuilder = htmlBuilder.concat( " - " );
+		htmlBuilder = htmlBuilder.concat( deriveGameStatus( game ) );
+		htmlBuilder = htmlBuilder.concat( closeGameAnchor() );
+		htmlBuilder = htmlBuilder.concat( "<br>" );
 	} else {
-		htmlBuilder = htmlBuilder +
-				+ openGameAnchor( gameNumber ) + gameNumber + " - "
-				+ visitor.name + " vs " + home.name + closeGameAnchor() + "<br>";
+		htmlBuilder = htmlBuilder.concat( openGameAnchor( gameNumber ) );
+		htmlBuilder = htmlBuilder.concat( gameNumber );
+		htmlBuilder = htmlBuilder.concat( " - " );
+		htmlBuilder = htmlBuilder.concat( visitor.name );
+		htmlBuilder = htmlBuilder.concat( " vs " );
+		htmlBuilder = htmlBuilder.concat( home.name );
+		htmlBuilder = htmlBuilder.concat( closeGameAnchor() );
+		htmlBuilder = htmlBuilder.concat( "<br>" );
 	}
 }
 
@@ -221,7 +232,7 @@ function clickGame( gameNo ) {
 
 function openGameAnchor( gameNumber ) {
 	var gameNo = parseInt( gameNumber );
-	var startAnchor = "<a onclick=\"clickGame( " + gameNo + " )\">";
+	var startAnchor = "<a onclick=\"clickGame( " + gameNo.toString() + " )\">";
 	return startAnchor;
 }
 
@@ -338,40 +349,6 @@ rebuildGameList();
 
 
 </script>
-
-<!--
-/* Here is an example of HTML and Javascript working together
- * to make the data on the page more interactive
- * 
- * <html>
- * <body>
- * 
- * <h2>JavaScript Functions</h2>
- * 
- * <p>Outside myFunction() carName is undefined.</p>
- * 
- * <p id="demo1"></p>
- * 
- * <p id="demo2"></p>
- * 
- * <script>
- * myFunction();
- * 
- * function myFunction() {
- *   var carName = "Volvo";
- *   document.getElementById("demo1").innerHTML =
- *   typeof carName + " " + carName;
- * }
- * 
- * document.getElementById("demo2").innerHTML =
- * typeof carName;
- * </script>
- * 
- * </body>
- * </html>
- * 
- */
--->
 
 </body>
 </html>
