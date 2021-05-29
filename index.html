@@ -1,2 +1,358 @@
-<head><body><h1>welcome</h1></body></head>
+<!DOCTYPE html>
+<html>
+<head>
+<title>NHL Game Report Launcher</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+</head>
 
+<script>
+var season = "20202021";
+const REGULAR_SEASON = "02";
+const PLAYOFFS = "03";
+
+// use this to indicate which part of the season we are using
+var part = PLAYOFFS;
+
+function launchReports() {
+	var x = document.forms["reports"]["gsRptCk"].checked;
+	var gameNum = numberFormat( document.forms["reports"]["gameNumber"].value );
+
+	if( gameNum == "0000" ) {
+		alert( "Please provide a game number" );
+		throw( "arg missing" );
+	}
+
+	if( document.forms["reports"]["gsRptCk"].checked ) {
+		launchGS( gameNum );
+	}
+	if( document.forms["reports"]["esRptCk"].checked ) {
+		launchES( gameNum );
+	}
+	if( document.forms["reports"]["plRptCk"].checked ) {
+		launchPL( gameNum );
+	}
+	if( document.forms["reports"]["fsRptCk"].checked ) {
+		launchFS( gameNum );
+	}
+	if( document.forms["reports"]["fcRptCk"].checked ) {
+		launchFC( gameNum );
+	}
+	if( document.forms["reports"]["roRptCk"].checked ) {
+		launchRO( gameNum );
+	}
+	if( document.forms["reports"]["tvRptCk"].checked ) {
+		launchTV( gameNum );
+	}
+	if( document.forms["reports"]["thRptCk"].checked ) {
+		launchTH( gameNum );
+	}
+	if( document.forms["reports"]["ssRptCk"].checked ) {
+		launchSS( gameNum );
+	}
+	if( document.forms["reports"]["scRptCk"].checked ) {
+		launchSC( gameNum );
+	}
+	if( document.forms["reports"]["soRptCk"].checked ) {
+		launchSO( gameNum );
+	}
+}
+
+function numberFormat( i ) {
+	var fmt = "" + i;
+	for( ; fmt.length < 4; fmt = "0" + fmt );
+	return fmt;
+}
+
+
+/* I don't remember why all these "randomnumber" variables are created here.
+	I can't seem to see a use for them.  I wonder what happens if I remove them
+ */
+
+function launchGS( gameNumber ) {
+	//var randomnumber = Math.floor((Math.random()*100)+1);
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/GS" + part + gameNumber + ".HTM" );
+}
+
+function launchES( gameNumber ) {
+	//var randomnumber = Math.floor((Math.random()*100)+1);
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/ES" + part + gameNumber + ".HTM" );
+}
+
+function launchPL( gameNumber ) {
+	//var randomnumber = Math.floor((Math.random()*100)+1);
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/PL" + part + gameNumber + ".HTM" );
+}
+
+function launchFS( gameNumber ) {
+	//var randomnumber = Math.floor((Math.random()*100)+1);
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/FS" + part + gameNumber + ".HTM" );
+}
+
+function launchFC( gameNumber ) {
+	//var randomnumber = Math.floor((Math.random()*100)+1);
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/FC" + part + gameNumber + ".HTM" );
+}
+
+function launchRO( gameNumber ) {
+	//var randomnumber = Math.floor((Math.random()*100)+1);
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/RO" + part + gameNumber + ".HTM" );
+}
+
+function launchTH( gameNumber ) {
+	//var randomnumber = Math.floor((Math.random()*100)+1);
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/TH" + part + gameNumber + ".HTM" );
+}
+
+function launchTV( gameNumber ) {
+	//var randomnumber = Math.floor((Math.random()*100)+1);
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/TV" + part + gameNumber + ".HTM" );
+}
+
+function launchSS( gameNumber ) {
+	//var randomnumber = Math.floor((Math.random()*100)+1);
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/SS" + part + gameNumber + ".HTM" );
+}
+
+function launchSC( gameNumber ) {
+	//var randomnumber = Math.floor((Math.random()*100)+1);
+	window.open( "http://www.nhl.com/stats/shiftcharts?id=2019" + part + gameNumber );
+}
+
+function launchSO( gameNumber ) {
+	//var randomnumber = Math.floor((Math.random()*100)+1);
+	window.open( "http://www.nhl.com/scores/htmlreports/" + season + "/SO" + part + gameNumber + ".HTM" );
+}
+
+
+function selectAll() {
+	document.forms["reports"]["gsRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["esRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["plRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["fsRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["fcRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["roRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["tvRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	document.forms["reports"]["thRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	//document.forms["reports"]["ssRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	//document.forms["reports"]["scRptCk"].checked = document.forms["reports"]["allCk"].checked;
+	//document.forms["reports"]["soRptCk"].checked = document.forms["reports"]["allCk"].checked;
+}
+
+</script>
+
+<body>
+
+<h2>NHL Game Reports</h2>
+
+<form name="reports" action="noPage">
+	<input type="checkbox" onclick="selectAll()" name="allCk" >Most Reports<br>
+	<input type="checkbox" name="gsRptCk" >Game Summary<br>
+	<input type="checkbox" name="esRptCk" >Event Summary<br>
+	<input type="checkbox" name="plRptCk" >Full Play-by-Play<br>
+	<input type="checkbox" name="fsRptCk" >Face-off Summary<br>
+	<input type="checkbox" name="fcRptCk" >Face-off Comparison<br>
+	<input type="checkbox" name="roRptCk" >Roster Report<br>
+	<input type="checkbox" name="tvRptCk" >TOI - Visitors<br>
+	<input type="checkbox" name="thRptCk" >TOI - Home<br>
+	<input type="checkbox" name="ssRptCk" >Shot Report<br>
+	<input type="checkbox" name="scRptCk" >Shift Chart<br>
+	<input type="checkbox" name="soRptCk" >Shootout Report<br><br>
+	Game Number:<br>  <input type="text" name="gameNumber"><br><br>
+	<button type="button" onclick="launchReports()">Launch</button>
+</form>
+
+
+<script language=javascript>
+
+function writeln( dataline ) {
+	document.write( dataline + "<br>" );
+}
+
+
+var showScoresOn = true;
+function isShowScoresOn() {
+	return showScoresOn;
+}
+
+function toggleShowScores() {
+	showScoresOn = document.forms["scoresToggle"]["showScores"].checked;
+	rebuildGameList();
+}
+
+function padNumber( number ) {
+	var numberString = number.toString();
+	if( numberString.length == 1 ) {
+		numberString = "0" + numberString;
+	}
+	return numberString;
+}
+
+
+function Get(yourUrl){
+    var Httpreq = new XMLHttpRequest();
+    Httpreq.open("GET",yourUrl,false);
+    Httpreq.send(null);
+    return Httpreq.responseText;
+}
+
+
+function eachGame( game, index ) {
+	var season = game.gamePk.toString().substring( 0, 4 );
+	var seasonPart = game.gamePk.toString().substring( 4, 6 );
+	var gameNumber = game.gamePk.toString().substring( 6, 10 );
+	var visitor = game.teams.away.team;
+	var home = game.teams.home.team;
+
+	if( isShowScoresOn() ) {
+		htmlBuilder = htmlBuilder.concat( openGameAnchor( gameNumber ) );
+		htmlBuilder = htmlBuilder.concat( gameNumber );
+		htmlBuilder = htmlBuilder.concat( " - " );
+		htmlBuilder = htmlBuilder.concat( visitor.name );
+		htmlBuilder = htmlBuilder.concat( deriveScore( game ) );
+		htmlBuilder = htmlBuilder.concat( home.name );
+		htmlBuilder = htmlBuilder.concat( " - " );
+		htmlBuilder = htmlBuilder.concat( deriveGameStatus( game ) );
+		htmlBuilder = htmlBuilder.concat( closeGameAnchor() );
+		htmlBuilder = htmlBuilder.concat( "<br>" );
+	} else {
+		htmlBuilder = htmlBuilder.concat( openGameAnchor( gameNumber ) );
+		htmlBuilder = htmlBuilder.concat( gameNumber );
+		htmlBuilder = htmlBuilder.concat( " - " );
+		htmlBuilder = htmlBuilder.concat( visitor.name );
+		htmlBuilder = htmlBuilder.concat( " vs " );
+		htmlBuilder = htmlBuilder.concat( home.name );
+		htmlBuilder = htmlBuilder.concat( closeGameAnchor() );
+		htmlBuilder = htmlBuilder.concat( "<br>" );
+	}
+}
+
+
+function clickGame( gameNo ) {
+	document.forms["reports"]["gameNumber"].value = gameNo;
+}
+
+
+function openGameAnchor( gameNumber ) {
+	var gameNo = parseInt( gameNumber );
+	var startAnchor = "<a onclick=\"clickGame( " + gameNo.toString() + " )\">";
+	return startAnchor;
+}
+
+function closeGameAnchor() {
+	var endAnchor = "</a>";
+	return endAnchor;
+}
+
+
+function deriveScore( game ) {
+	var scoreTag;
+	switch( game.status.statusCode ) {
+	case "1":
+	case "2":
+	case "8":
+	case "9":
+		scoreTag = " vs ";
+		break;
+	case "3":
+	case "4":
+	case "5":
+	case "6":
+	case "7":
+		scoreTag = " " + game.teams.away.score + " - " + game.teams.home.score + " ";
+		break;
+	}
+	return scoreTag;
+}
+
+
+function deriveGameStatus( game ) {
+	var statusTag;
+	switch( game.status.statusCode ) {
+	case "1":
+	case "8":
+		var gameTime = new Date( game.gameDate );
+		statusTag = gameTime.toLocaleTimeString( 'en-US', { timeZoneName: 'short' } ).replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
+		break;
+	case "9":
+		statusTag = "PPD";
+		break;
+	case "2":
+		statusTag = "Pre-Game";
+		break;
+	case "3":
+	case "4":
+		statusTag = "Period " + game.linescore.currentPeriod + " (" + game.linescore.currentPeriodTimeRemaining + ")";
+		break;
+	case "5":
+	case "6":
+	case "7":
+		statusTag = "Final";
+		if( game.linescore.currentPeriod > 3 ) {
+			statusTag = statusTag + " (" + game.linescore.currentPeriodOrdinal + ")";
+		}
+		break;
+	}
+	return statusTag;
+}
+
+
+var today = new Date();
+var year = today.getFullYear().toString();
+var month = ( today.getMonth() + 1 ).toString();
+var day = today.getDate().toString();
+
+month = padNumber( month );
+day = padNumber( day );
+var todayISO = ( year + "-" + month + "-" + day );
+
+var nhlURL = "https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + todayISO + "&endDate=" + todayISO + "&hydrate=linescore";
+var schedule = JSON.parse( Get( nhlURL ) );
+
+</script>
+
+<p id="gameList"></p>
+
+<script language=javascript>
+
+var htmlBuilder = "";
+
+function rebuildGameList() {
+	htmlBuilder = "";
+	htmlBuilder = htmlBuilder + "<h2>Today's Games</h2>";
+	htmlBuilder = htmlBuilder + "<form name=\"scoresToggle\" action=\"launchReports()\">";
+	htmlBuilder = htmlBuilder + "	<input type=\"checkbox\" name=\"showScores\" ";
+	if( isShowScoresOn() ) {
+		htmlBuilder = htmlBuilder + " checked ";
+	}
+	htmlBuilder = htmlBuilder + "onclick=\"toggleShowScores()\">Show scores<br>";
+	htmlBuilder = htmlBuilder + "</form>";
+
+	var gameDate = schedule.dates[0];
+	gameDate.games.forEach( eachGame );
+	document.getElementById("gameList").innerHTML = htmlBuilder;
+}
+
+rebuildGameList();
+
+/* Game state codes
+ * 1 - Preview
+ * 2 - Preview
+ * 3 - Live
+ * 7 - Final
+ *
+ *
+ * Game status codes
+ * 1 - Scheduled
+ * 2 - Pre-Game
+ * 3 - In Progress
+ * 7 - Final
+ */
+
+
+
+</script>
+
+</body>
+</html>
