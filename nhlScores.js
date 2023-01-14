@@ -9,7 +9,8 @@ function isShowScoresOn() {
 }
 
 function toggleShowScores() {
-	showScoresOn = document.forms["scoresToggle"]["showScores"].checked;
+	var showScoresFields = document.getElementsByName("showScores");
+	showScoresOn = showScoresFields[0].checked;
 	rebuildGameList();
 }
 

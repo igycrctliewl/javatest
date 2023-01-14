@@ -87,6 +87,11 @@
 
 <script language="javascript">
 rebuildGameList();
+
+setInterval(function () {
+	schedule = JSON.parse( Get( nhlURL ) );
+	rebuildGameList();
+}, 60000);
 </script>
 
 </body>
