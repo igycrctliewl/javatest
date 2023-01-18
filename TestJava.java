@@ -17,7 +17,6 @@ public class TestJava {
 		myString = java.lang.System.getProperty( "java.version" );
 		System.out.println( "java version:" + myString + ":" );
 
-		System.out.println( "my class test:" + ClassTest.getMessage() + ":" );
 
 		System.out.println( "java time millis:" + java.lang.System.currentTimeMillis() + ":" );
 
@@ -29,6 +28,9 @@ public class TestJava {
 		DateFormat dateFormat = new SimpleDateFormat( "MM-dd-yyyy" );
 		System.out.println( "java formatted date:" + dateFormat.format( javaDate ) + ":" );
 
+		java.sql.Date sqlDate = new java.sql.Date( javaDate.getTime() );
+		System.out.println( "SQL date:" + sqlDate + ":" );
+		
 		System.out.println( "\n --- Done --- " );
 
 	}
