@@ -107,7 +107,7 @@ function launchSS( gameNo ) {
 
 function launchSC( gameNo ) {
 	//var randomnumber = Math.floor((Math.random()*100)+1);
-	window.open( "http://www.nhl.com/stats/shiftcharts?id=2019" + part + gameNo );
+	window.open( "http://www.nhl.com/stats/shiftcharts?id=" + season.substring(0,4) + part + gameNo );
 }
 
 function launchSO( gameNo ) {
